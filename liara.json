@@ -1,0 +1,10 @@
+{
+  "disks": [
+    {
+      "name": "prisma",
+      "mountTo": "prisma/migrations"
+    }
+  ],
+  "platform": "next",
+  "app": "savis-app"
+}

@@ -1,0 +1,29 @@
+.swiper-pagination-bullet {
+  width: 6px !important;
+  height: 6px !important;
+  display: inline-block !important;
+  border-radius: 0px !important;
+  background: #2d5b75 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #2d5b75 !important;
+  width: 20px !important;
+  height: 6px !important;
+}
+
+@media screen and (min-width: 1024px) {
+  .swiper-pagination-bullet {
+    display: none !important;
+  }
+
+  .swiper-pagination-bullet-active {
+    display: none !important;
+  }
+}
+
+/* ------------------ video--------------------------- */
+
+.autoplay-progress span {
+  display: none;
+}

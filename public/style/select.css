@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "PeydaWeb-Regular";
+  src:
+    local("PeydaWeb-Regular"),
+    url("/fonts/peyda/PeydaWeb-Regular.woff") format("woff");
+}
+.css-1jqq78o-placeholder {
+  font-size: 12px !important;
+
+  font-family: PeydaWeb-Regular;
+}
+
+.css-13cymwt-control {
+  border-radius: 8px !important;
+}

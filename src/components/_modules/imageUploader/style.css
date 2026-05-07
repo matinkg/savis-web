@@ -1,0 +1,32 @@
+.dropzone {
+  text-align: center;
+  padding: 40px;
+  border: 2px dashed #2d5b753d;
+  background-color: transparent;
+  color: #bdbdbd;
+  border-radius: 8px;
+}
+.dropzoneError {
+  text-align: center;
+  padding: 40px;
+  border: 2px dashed #f34f53;
+  background-color: transparent;
+  color: #bdbdbd;
+  border-radius: 8px;
+}
+
+.accept {
+  border-color: #107c10 !important;
+}
+
+.reject {
+  border-color: #d83b01 !important;
+}
+
+/* .dropzone img {
+  height: auto;
+  height: auto;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: contain;
+} */

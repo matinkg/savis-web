@@ -1,0 +1,131 @@
+.swiper-button-next_ads {
+  position: absolute !important;
+  top: 10% !important;
+  right: 9% !important;
+  width: 48px !important;
+  height: 48px !important;
+  border: 1px solid #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #00000033 !important;
+  color: #fff !important;
+  padding: 12px !important;
+  z-index: 10;
+}
+.swiper-button-prev_ads {
+  position: absolute !important;
+  top: 10% !important;
+  right: 16px !important;
+
+  width: 48px !important;
+  height: 48px !important;
+  border: 1px solid #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #00000033 !important;
+  color: #fff !important;
+  padding: 12px !important;
+  z-index: 10;
+}
+
+.swiper-button-next_ads::after {
+  color: transparent !important;
+  font-size: 0px !important;
+  display: none !important;
+}
+.swiper-button-prev_ads::after {
+  color: transparent !important;
+  font-size: 0px !important;
+  display: none !important;
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1400px) {
+  .swiper-button-next_ads {
+    position: absolute !important;
+    top: 10% !important;
+    right: 13% !important;
+    width: 48px !important;
+    height: 48px !important;
+    border: 1px solid #fff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #00000033 !important;
+    color: #fff !important;
+    padding: 12px !important;
+    z-index: 10;
+  }
+  .swiper-button-prev_ads {
+    position: absolute !important;
+    top: 10% !important;
+    right: 1% !important;
+
+    width: 48px !important;
+    height: 48px !important;
+    border: 1px solid #fff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #00000033 !important;
+    color: #fff !important;
+    padding: 12px !important;
+    z-index: 10;
+  }
+
+  .swiper-button-next_ads::after {
+    color: transparent !important;
+    font-size: 0px !important;
+    display: none !important;
+  }
+  .swiper-button-prev_ads::after {
+    color: transparent !important;
+    font-size: 0px !important;
+    display: none !important;
+  }
+}
+@media screen and (min-width: 1440px) and (max-width: 1540px) {
+  .swiper-button-next_ads {
+    position: absolute !important;
+    top: 10% !important;
+    right: 10% !important;
+    width: 48px !important;
+    height: 48px !important;
+    border: 1px solid #fff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #00000033 !important;
+    color: #fff !important;
+    padding: 12px !important;
+    z-index: 10;
+  }
+  .swiper-button-prev_ads {
+    position: absolute !important;
+    top: 10% !important;
+    right: 1% !important;
+
+    width: 48px !important;
+    height: 48px !important;
+    border: 1px solid #fff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #00000033 !important;
+    color: #fff !important;
+    padding: 12px !important;
+    z-index: 10;
+  }
+
+  .swiper-button-next_ads::after {
+    color: transparent !important;
+    font-size: 0px !important;
+    display: none !important;
+  }
+  .swiper-button-prev_ads::after {
+    color: transparent !important;
+    font-size: 0px !important;
+    display: none !important;
+  }
+}

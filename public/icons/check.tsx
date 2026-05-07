@@ -1,0 +1,20 @@
+import { icon } from "../../libs/interface/icon";
+import React from "react";
+
+export default function Check({ className, style, onClick }: icon) {
+  return (
+    <div onClick={onClick}>
+      <svg
+        className={className}
+        style={style}
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M2.25709 14.4503L6.07292 18.2661C7.14595 19.3388 8.88532 19.3388 9.95835 18.2661L21.7429 6.48158C22.0943 6.1177 22.0842 5.53787 21.7203 5.18645C21.3654 4.84361 20.8027 4.84361 20.4477 5.18645L8.66322 16.971C8.30553 17.3285 7.72574 17.3285 7.36809 16.971L3.55226 13.1552C3.18839 12.8037 2.60855 12.8138 2.25713 13.1777C1.9143 13.5326 1.9143 14.0953 2.25709 14.4503Z"
+          fill="currentColor"
+        />
+      </svg>
+    </div>
+  );
+}
