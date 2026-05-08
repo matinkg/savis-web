@@ -70,7 +70,7 @@ export default function Header({ noFixed, data }: propsType) {
               {data?.map((item: any, index: number) => (
                 <div key={item?.id} className="flex items-center gap-x-2">
                   <Link
-                    href={`/${item?.href || "#"}`}
+                    href={`${item?.href || "#"}`}
                     className="text-center font-peyda-600 text-lg text-blue-1050 xl:text-xl"
                   >
                     {item?.title}
