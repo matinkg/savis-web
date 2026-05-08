@@ -16,7 +16,7 @@ export default function PageBannerWithGradient({
   return (
     <div
       style={{
-        background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, #000000 100%),url('${imgUrl}')`,
+        background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, #000000 100%),url('${imgUrl}') center center / cover no-repeat`,
       }}
       className="banner_size mb-10 flex items-center lg:mb-[60px]"
     >
