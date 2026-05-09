@@ -48,7 +48,7 @@ export default function JewelryCategories({ savisCats }: any) {
       <section className="mx-auto w-[91.12%] pb-5 lg:w-[91.67%] lg:pb-[120px] 4xl:w-[85%]">
         <div className="mb-8 mt-10 flex flex-col items-center lg:my-[60px]">
           <span className="block pb-10 font-peyda-800 text-2xl text-blue-1050 lg:text-2xl 2xl:text-3xl">
-            زیورالات ساویس
+            زیورالات نیسا
           </span>
 
           {/* category */}

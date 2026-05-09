@@ -88,7 +88,7 @@ export default function CareerOpportunities() {
           </h1>
 
           <span className="text-center font-peyda-400 text-lg text-white lg:text-2xl">
-            تو هم جزئی از خانواده ساویس شو و کنار ما خانواده ساویس رو بزرگ تر کن
+            تو هم جزئی از خانواده نیسا شو و کنار ما خانواده نیسا رو بزرگ تر کن
           </span>
         </div>
       </div>
@@ -97,7 +97,7 @@ export default function CareerOpportunities() {
       <section className="mx-auto mt-10 w-[91.12%] text-blue-1050 lg:mt-[60px] lg:w-[91.67%] 4xl:w-[85%]">
         <div className="mx-auto mb-10 flex flex-col items-center gap-[18px] lg:mb-[60px] lg:w-[760px] lg:gap-y-6">
           <h2 className="font-peyda-600 text-2xl lg:text-[38px]">
-            درباره فرصت های شغلی ساویس
+            درباره فرصت های شغلی نیسا
           </h2>
 
           <p className="text-center font-peyda-400 text-sm lg:text-lg">
@@ -115,7 +115,7 @@ export default function CareerOpportunities() {
         {/* ---------------------------------------- */}
         <div className="my-10 flex flex-col items-center gap-y-6 lg:my-[30px] lg:gap-y-10">
           <span className="font-peyda-400 text-lg text-blue-1050 lg:text-2xl">
-            مزایای همکاری با ساویس
+            مزایای همکاری با نیسا
           </span>
           <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-6">
             {Advantages?.map((item, index) => (
@@ -163,7 +163,7 @@ export default function CareerOpportunities() {
 
         <div className="mx-auto my-[60px] flex flex-col items-center gap-[18px] text-blue-1050 lg:mb-[60px] lg:mt-[120px] lg:w-[760px] lg:gap-y-6">
           <h2 className="font-peyda-600 text-2xl lg:text-[38px]">
-            فرم استخدام در ساویس
+            فرم استخدام در نیسا
           </h2>
 
           <p className="text-center font-peyda-400 text-sm lg:text-lg">

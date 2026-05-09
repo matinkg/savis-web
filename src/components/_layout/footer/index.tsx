@@ -102,7 +102,7 @@ export default function Footer() {
           <div className="flex flex-col items-center">
             <div className="flex flex-col items-start">
               <span className="mb-4 font-peyda-500 text-lg text-blue-1050 lg:text-xl">
-                ساویس
+                نیسا
               </span>
               {siteSetting?.["footer"]?.savis?.map((link: any, index: any) => (
                 <Link
@@ -137,7 +137,7 @@ export default function Footer() {
         <div className="my-10 block lg:hidden">
           <DropDownMenu
             titleStyle="text-lg"
-            title={"ساویس"}
+            title={"نیسا"}
             type="down"
             className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
           >

@@ -42,7 +42,7 @@ export default function Branches() {
 
       <section className="mx-auto mt-10 w-[91.12%] lg:mt-[60px] lg:w-[91.67%] 4xl:w-[85%]">
         <h1 className="text-center font-peyda-600 text-2xl text-blue-1050 lg:text-[32px]">
-          شعب ساویس
+          شعب نیسا
         </h1>
         <div className="mb-[80px] mt-[60px] lg:mb-[120px] lg:mt-[80px]">
           <div className="hidden w-full space-y-6 lg:block">

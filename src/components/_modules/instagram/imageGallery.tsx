@@ -120,7 +120,7 @@ export default function ImageGallery({
         </p>
 
         <div className="flex-center gap-x-1 py-6 font-peyda-600 text-sm lg:py-10 lg:text-base">
-          <span>پیج اینستاگرام ساویس </span>,
+          <span>پیج اینستاگرام نیسا </span>,
           {/* <span>{showModal?.data?.created_at?.toLocaleDateString("fa-IR")}</span> */}
         </div>
 

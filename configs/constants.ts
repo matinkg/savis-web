@@ -181,7 +181,7 @@ const blogInitialValue = {
   short_desc: "",
   full_desc: "",
   image: "",
-  author: "کارشناس ساویس",
+  author: "کارشناس نیسا",
   status: status?.DRAFT,
   category_id: null,
   related_posts: [],
@@ -434,7 +434,7 @@ const days = [
 const pages = [
   {
     id: "19cd6095-6653-4d39-85de-3b6d9441f34c",
-    name: "  صحفه ی  درباره ساویس ",
+    name: "  صحفه ی  درباره نیسا ",
     en_name: "about_us",
   },
   {
