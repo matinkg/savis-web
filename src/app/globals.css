@@ -55,34 +55,6 @@
       url("/fonts/peyda/PeydaWeb-ExtraBold.woff") format("woff");
   }
 
-  /* GILROY */
-
-  /* @font-face {
-    font-family: "Gilroy-Regular";
-    src: local("Gilroy-Regular"),
-      url("/fonts/gilroy/Gilroy-Regular.woff") format("woff");
-  }
-  @font-face {
-    font-family: "Gilroy-Light";
-    src: local("Gilroy-Light"),
-      url("/fonts/gilroy/Gilroy-Light.woff") format("woff");
-  }
-  @font-face {
-    font-family: "Gilroy-Medium";
-    src: local("Gilroy-Medium"),
-      url("/fonts/gilroy/Gilroy-Medium.woff") format("woff");
-  }
-  @font-face {
-    font-family: "Gilroy-SemiBold";
-    src: local("Gilroy-SemiBold"),
-      url("/fonts/gilroy/Gilroy-SemiBold.woff") format("woff");
-  }
-  @font-face {
-    font-family: "Gilroy-Black";
-    src: local("Gilroy-Black"),
-      url("/fonts/gilroy/Gilroy-Black.woff") format("woff");
-  } */
-
   body {
     @apply !font-peyda-400;
   }
@@ -95,31 +67,6 @@
 }
 
 @layer components {
-  /* .home-baaner {
-    background: linear-gradient(
-        270deg,
-        rgba(255, 255, 255, 0.66) 0%,
-        rgba(255, 255, 255, 0) 54.31%
-      ),
-      url("/images/home/banner.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    @apply h-[100vh];
-  }
-  .home-baaner_mobile {
-    background: linear-gradient(
-        270deg,
-        rgba(255, 255, 255, 0.66) 0%,
-        rgba(255, 255, 255, 0) 100%
-      ),
-      url("/images/home/banner-mobile.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    @apply h-[600px] md:h-[100vh];
-  } */
-
   .gift-banner {
     background: linear-gradient(
         90deg,
@@ -227,7 +174,7 @@
     @apply h-[225px];
   }
 
-  /*  */
+
   .blog_banner_ads_header_desk {
     background: linear-gradient(-90deg, #000000 0%, rgba(0, 0, 0, 0) 51.5%),
       url("/images/banner2.png");
