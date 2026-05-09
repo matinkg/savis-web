@@ -1,6 +1,6 @@
 import Close from "@/public/icons/close";
 import SearchIcon from "@/public/icons/Search";
-import Logo from "@/components/_modules/logo";
+import nisaLogoImg from "@/lib/assets/images/nisa-logo.webp";
 import SearchInput from "@/components/_modules/search";
 import SocialMedia from "@/components/_modules/socialMedia";
 import {
@@ -11,8 +11,8 @@ import {
 
 import Link from "next/link";
 import React, { useState } from "react";
-import { headerMenu } from "@/static_data/header";
 import { navMenu } from "@/static_data/header/nav";
+import Image from "next/image";
 
 export default function NavMenu({
   showNavMenu,
@@ -29,7 +29,7 @@ export default function NavMenu({
         {
           title: "",
           href: "",
-          children: []
+          children: [],
         },
       ],
     },
@@ -43,7 +43,7 @@ export default function NavMenu({
     data: [],
   });
 
-  console.log(showExtraSubMenu)
+  console.log(showExtraSubMenu);
 
   return (
     <>
@@ -60,7 +60,7 @@ export default function NavMenu({
             />
           </div>
           <div className="flex-center grow">
-            <Logo type="secondary" className="h-[47px] w-[104] text-white" />
+            <Image className="w-[70px]" src={nisaLogoImg} alt="nisa-logo" />
           </div>
         </div>
 
@@ -131,7 +131,7 @@ export default function NavMenu({
                             {
                               title: "",
                               href: "",
-                              children: []
+                              children: [],
                             },
                           ],
                         },
@@ -158,12 +158,12 @@ export default function NavMenu({
                 {showSubMenu?.data?.children?.map((item, index) => (
                   <div
                     key={index}
-                    onClick={() =>{
+                    onClick={() => {
                       setExtraShowSubMenu({
                         subCategoryName: String(item?.title || ""),
                         data: item?.children,
-                      })}
-                    }
+                      });
+                    }}
                     className="flex items-center justify-between py-3"
                   >
                     <span className="font-peyda-400 text-lg text-white">
@@ -194,8 +194,8 @@ export default function NavMenu({
                 <div
                   key={index}
                   onClick={() => {
-                    setShowSubMenu({ status: true, data: item })
-                    console.log(item)
+                    setShowSubMenu({ status: true, data: item });
+                    console.log(item);
                   }}
                   className="flex items-center justify-between border-b border-solid border-b-white py-3"
                 >

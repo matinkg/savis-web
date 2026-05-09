@@ -62,7 +62,9 @@ export default function Header({ noFixed, data }: propsType) {
           }`}
         >
           <div className="mx-auto flex w-[91.67%] items-center justify-between py-4">
-            <Image className="w-20" src={nisaLogoImg} alt="nisa-logo" />
+            <Link href={"/"}>
+              <Image className="w-20" src={nisaLogoImg} alt="nisa-logo" />
+            </Link>
             {/* /=======================Header menu ====================== */}
             <div className="flex gap-x-8">
               {data?.map((item: any) => (
@@ -124,7 +126,9 @@ export default function Header({ noFixed, data }: propsType) {
                 />
               )}
             </div>
-            <Image className="w-[80px]" src={nisaLogoImg} alt="nisa-logo" />
+            <Link href={"/"}>
+              <Image className="w-[80px]" src={nisaLogoImg} alt="nisa-logo" />
+            </Link>
             <HeaderProfile />
           </div>
         </header>
