@@ -1,6 +1,5 @@
 "use client";
 import Nav from "./nav";
-import Logo from "@/components/_modules/logo";
 import Link from "next/link";
 import ArrowDown from "@/public/icons/arrowDown";
 import Menu from "@/public/icons/menu";
@@ -10,6 +9,8 @@ import SearchComponents from "@/components/_modules/searchComponents";
 import SearchIcon from "@/public/icons/Search";
 import HeaderProfile from "./headerProfile";
 import useMegaMenuOperation from "./hook/useMegaMenuOperation";
+import nisaLogoImg from "@/lib/assets/images/nisa-logo.webp";
+import Image from "next/image";
 
 type propsType = { noFixed: boolean; data?: any };
 
@@ -60,14 +61,11 @@ export default function Header({ noFixed, data }: propsType) {
                 }`
           }`}
         >
-          <div className="mx-auto flex w-[91.67%] items-center justify-between py-3">
-            <div>
-              <Logo type="primary" className="h-[59px] w-[82px]" />
-            </div>
-
+          <div className="mx-auto flex w-[91.67%] items-center justify-between py-4">
+            <Image className="w-20" src={nisaLogoImg} alt="nisa-logo" />
             {/* /=======================Header menu ====================== */}
             <div className="flex gap-x-8">
-              {data?.map((item: any, index: number) => (
+              {data?.map((item: any) => (
                 <div key={item?.id} className="flex items-center gap-x-2">
                   <Link
                     href={`${item?.href || "#"}`}
@@ -126,8 +124,7 @@ export default function Header({ noFixed, data }: propsType) {
                 />
               )}
             </div>
-
-            <Logo type="secondary" className="h-[40px] w-[90px]" />
+            <Image className="w-[80px]" src={nisaLogoImg} alt="nisa-logo" />
             <HeaderProfile />
           </div>
         </header>

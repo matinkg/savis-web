@@ -3,11 +3,12 @@ import Button from "@/components/_modules/button";
 import DropDownMenu from "@/components/_modules/dropDownMenu";
 import ArrowLeft from "@/public/icons/arrowLeft";
 import Input from "@/components/_modules/input/inex";
-import Logo from "@/components/_modules/logo";
+import nisaLogoImg from "@/lib/assets/images/nisa-logo.webp";
 import SocialMedia from "@/components/_modules/socialMedia";
 import Link from "next/link";
 import React from "react";
 import useOperation from "@/components/_templates/clientLayout/hook/useOperation";
+import Image from "next/image";
 
 export default function Footer() {
   const { siteSetting } = useOperation();
@@ -134,45 +135,45 @@ export default function Footer() {
         {/* in mobile mode */}
 
         <div className="my-10 block lg:hidden">
-            <DropDownMenu
-              titleStyle="text-lg"
-              title={"ساویس"}
-              type="down"
-              className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
-            >
-              {siteSetting?.["footer"]?.savis?.map((link: any, index: any) => (
-                <div key={index} className="flex flex-col gap-y-5">
-                  <Link
-                    href={link?.link}
-                    className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
-                  >
-                    {link?.title}
-                  </Link>
-                </div>
-              ))}
-            </DropDownMenu>
-            <DropDownMenu
-              titleStyle="text-lg"
-              title={"راهنمای خرید"}
-              type="down"
-              className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
-            >
-              {siteSetting?.["footer"]?.buy?.map((link: any, index: any) => (
-                <div key={index} className="flex flex-col gap-y-5">
-                  <Link
-                    href={link?.link}
-                    className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
-                  >
-                    {link?.title}
-                  </Link>
-                </div>
-              ))}
-            </DropDownMenu>
+          <DropDownMenu
+            titleStyle="text-lg"
+            title={"ساویس"}
+            type="down"
+            className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
+          >
+            {siteSetting?.["footer"]?.savis?.map((link: any, index: any) => (
+              <div key={index} className="flex flex-col gap-y-5">
+                <Link
+                  href={link?.link}
+                  className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
+                >
+                  {link?.title}
+                </Link>
+              </div>
+            ))}
+          </DropDownMenu>
+          <DropDownMenu
+            titleStyle="text-lg"
+            title={"راهنمای خرید"}
+            type="down"
+            className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
+          >
+            {siteSetting?.["footer"]?.buy?.map((link: any, index: any) => (
+              <div key={index} className="flex flex-col gap-y-5">
+                <Link
+                  href={link?.link}
+                  className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
+                >
+                  {link?.title}
+                </Link>
+              </div>
+            ))}
+          </DropDownMenu>
         </div>
 
         {/* in mobile mode */}
         <div className="flex flex-col">
-          <Logo type="secondary" className="h-[46px] w-[104px]" />
+          <Image className="w-20" src={nisaLogoImg} alt="nisa-logo" />
 
           <p className="mb-8 mt-6 font-peyda-400 text-base text-blue-1050 lg:text-xl">
             گالری <span className="font-peyda-600">ساویس</span> برند شانت
