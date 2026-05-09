@@ -11,7 +11,6 @@ import {
 
 import Link from "next/link";
 import React, { useState } from "react";
-import { headerMenu } from "@/static_data/header";
 import { navMenu } from "@/static_data/header/nav";
 
 export default function NavMenu({
@@ -19,6 +18,21 @@ export default function NavMenu({
   setShowNavMenu,
   data,
 }: navMenuProps) {
+  const resolveHref = (href?: string) => {
+    const value = String(href || "").trim();
+    if (!value) return "#";
+    if (
+      value.startsWith("http://") ||
+      value.startsWith("https://") ||
+      value.startsWith("tel:") ||
+      value.startsWith("mailto:")
+    ) {
+      return value;
+    }
+    if (value.startsWith("//")) return value.slice(1);
+    return value.startsWith("/") ? value : `/${value}`;
+  };
+
   const [showSubMenu, setShowSubMenu] = useState<SubMenuState>({
     status: false,
     data: {
@@ -29,7 +43,7 @@ export default function NavMenu({
         {
           title: "",
           href: "",
-          children: []
+          children: [],
         },
       ],
     },
@@ -42,8 +56,6 @@ export default function NavMenu({
     subCategoryName: "",
     data: [],
   });
-
-  console.log(showExtraSubMenu)
 
   return (
     <>
@@ -108,7 +120,7 @@ export default function NavMenu({
                 {showExtraSubMenu?.data?.map((item, index) => (
                   <div key={index} className="flex-center py-3">
                     <Link
-                      href={item?.href || "#"}
+                      href={resolveHref(item?.href)}
                       className="font-peyda-400 text-lg text-white"
                     >
                       {item?.title}
@@ -156,32 +168,42 @@ export default function NavMenu({
                   </h1>
                 </div>
                 {showSubMenu?.data?.children?.map((item, index) => (
-                  <div
-                    key={index}
-                    onClick={() =>{
-                      setExtraShowSubMenu({
-                        subCategoryName: String(item?.title || ""),
-                        data: item?.children,
-                      })}
-                    }
-                    className="flex items-center justify-between py-3"
-                  >
-                    <span className="font-peyda-400 text-lg text-white">
-                      {item?.title}
-                    </span>
-                    <div>
-                      <svg
-                        className="h-[18px] w-[18px] text-white"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
+                  <div key={index} className="py-3">
+                    {item?.children?.length > 0 ? (
+                      <div
+                        onClick={() => {
+                          setExtraShowSubMenu({
+                            subCategoryName: String(item?.title || ""),
+                            data: item?.children,
+                          });
+                        }}
+                        className="flex items-center justify-between"
                       >
-                        <path
-                          d="M14.9998 20.67C14.8098 20.67 14.6198 20.6 14.4698 20.45L7.94979 13.93C6.88979 12.87 6.88979 11.13 7.94979 10.07L14.4698 3.55C14.7598 3.26 15.2398 3.26 15.5298 3.55C15.8198 3.84 15.8198 4.32 15.5298 4.61L9.00979 11.13C8.52979 11.61 8.52979 12.39 9.00979 12.87L15.5298 19.39C15.8198 19.68 15.8198 20.16 15.5298 20.45C15.3798 20.59 15.1898 20.67 14.9998 20.67Z"
-                          fill="currentColor"
-                        />
-                      </svg>
-                    </div>
+                        <span className="font-peyda-400 text-lg text-white">
+                          {item?.title}
+                        </span>
+                        <div>
+                          <svg
+                            className="h-[18px] w-[18px] text-white"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M14.9998 20.67C14.8098 20.67 14.6198 20.6 14.4698 20.45L7.94979 13.93C6.88979 12.87 6.88979 11.13 7.94979 10.07L14.4698 3.55C14.7598 3.26 15.2398 3.26 15.5298 3.55C15.8198 3.84 15.8198 4.32 15.5298 4.61L9.00979 11.13C8.52979 11.61 8.52979 12.39 9.00979 12.87L15.5298 19.39C15.8198 19.68 15.8198 20.16 15.5298 20.45C15.3798 20.59 15.1898 20.67 14.9998 20.67Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    ) : (
+                      <Link
+                        href={resolveHref(item?.href)}
+                        className="font-peyda-400 text-lg text-white"
+                      >
+                        {item?.title}
+                      </Link>
+                    )}
                   </div>
                 ))}
               </div>
@@ -191,30 +213,40 @@ export default function NavMenu({
           <>
             <div className="mb-6">
               {data?.map((item: any, index: any) => (
-                <div
-                  key={index}
-                  onClick={() => {
-                    setShowSubMenu({ status: true, data: item })
-                    console.log(item)
-                  }}
-                  className="flex items-center justify-between border-b border-solid border-b-white py-3"
-                >
-                  <span className="font-peyda-400 text-lg text-white">
-                    {item?.title}
-                  </span>
-                  <div>
-                    <svg
-                      className="h-[18px] w-[18px] text-white"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                <div key={index} className="border-b border-solid border-b-white py-3">
+                  {item?.children?.length > 0 ? (
+                    <div
+                      onClick={() => {
+                        setShowSubMenu({ status: true, data: item });
+                        setExtraShowSubMenu({ subCategoryName: "", data: [] });
+                      }}
+                      className="flex items-center justify-between"
                     >
-                      <path
-                        d="M14.9998 20.67C14.8098 20.67 14.6198 20.6 14.4698 20.45L7.94979 13.93C6.88979 12.87 6.88979 11.13 7.94979 10.07L14.4698 3.55C14.7598 3.26 15.2398 3.26 15.5298 3.55C15.8198 3.84 15.8198 4.32 15.5298 4.61L9.00979 11.13C8.52979 11.61 8.52979 12.39 9.00979 12.87L15.5298 19.39C15.8198 19.68 15.8198 20.16 15.5298 20.45C15.3798 20.59 15.1898 20.67 14.9998 20.67Z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </div>
+                      <span className="font-peyda-400 text-lg text-white">
+                        {item?.title}
+                      </span>
+                      <div>
+                        <svg
+                          className="h-[18px] w-[18px] text-white"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M14.9998 20.67C14.8098 20.67 14.6198 20.6 14.4698 20.45L7.94979 13.93C6.88979 12.87 6.88979 11.13 7.94979 10.07L14.4698 3.55C14.7598 3.26 15.2398 3.26 15.5298 3.55C15.8198 3.84 15.8198 4.32 15.5298 4.61L9.00979 11.13C8.52979 11.61 8.52979 12.39 9.00979 12.87L15.5298 19.39C15.8198 19.68 15.8198 20.16 15.5298 20.45C15.3798 20.59 15.1898 20.67 14.9998 20.67Z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      href={resolveHref(item?.href)}
+                      className="font-peyda-400 text-lg text-white"
+                    >
+                      {item?.title}
+                    </Link>
+                  )}
                 </div>
               ))}
             </div>

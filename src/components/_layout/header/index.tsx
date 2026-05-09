@@ -24,6 +24,20 @@ export default function Header({ noFixed, data }: propsType) {
     setShowSearchModal,
     showSearchModal,
   } = useMegaMenuOperation();
+  const resolveHref = (href?: string) => {
+    const value = String(href || "").trim();
+    if (!value) return "#";
+    if (
+      value.startsWith("http://") ||
+      value.startsWith("https://") ||
+      value.startsWith("tel:") ||
+      value.startsWith("mailto:")
+    ) {
+      return value;
+    }
+    if (value.startsWith("//")) return value.slice(1);
+    return value.startsWith("/") ? value : `/${value}`;
+  };
   // ----------------------------------------------------------------
   return (
     <>
@@ -70,7 +84,7 @@ export default function Header({ noFixed, data }: propsType) {
               {data?.map((item: any, index: number) => (
                 <div key={item?.id} className="flex items-center gap-x-2">
                   <Link
-                    href={`${item?.href || "#"}`}
+                    href={resolveHref(item?.href)}
                     className="text-center font-peyda-600 text-lg text-blue-1050 xl:text-xl"
                   >
                     {item?.title}

@@ -26,6 +26,20 @@ const navMenu = [
 export default function Nav() {
   const { goldData, goldError, isLoading } = useGoldPrice();
   const { siteSetting } = useOperation();
+  const resolveHref = (href?: string) => {
+    const value = String(href || "").trim();
+    if (!value) return "#";
+    if (
+      value.startsWith("http://") ||
+      value.startsWith("https://") ||
+      value.startsWith("tel:") ||
+      value.startsWith("mailto:")
+    ) {
+      return value;
+    }
+    if (value.startsWith("//")) return value.slice(1);
+    return value.startsWith("/") ? value : `/${value}`;
+  };
   // =============================================================================
   return (
     <>
@@ -40,7 +54,7 @@ export default function Nav() {
           </div>
           <div>
             <a
-              href={siteSetting?.top_text_link}
+              href={resolveHref(siteSetting?.top_text_link)}
               className="font-peyda-600 text-lg xl:text-xl"
             >
               {siteSetting?.top_text}
@@ -69,7 +83,7 @@ export default function Nav() {
       <nav className="flex lg:hidden bg-secendry text-white w-full flex-col items-center py-2">
         <div>
           <a
-            href={siteSetting?.top_text_link}
+            href={resolveHref(siteSetting?.top_text_link)}
             className="font-peyda-600 text-xs md:text-base"
           >
             {siteSetting?.top_text}
