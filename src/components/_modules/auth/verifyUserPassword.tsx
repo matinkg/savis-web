@@ -74,7 +74,7 @@ export default function VerifyUserPassword({ userPhone }: StepsProps) {
         </small>
       )}
 
-      <Button className="mt-6 h-[48px] w-full bg-white font-peyda-400 text-blue-1050 lg:mt-8 lg:text-lg">
+      <Button className="mt-6 h-[48px] w-full bg-secendry font-peyda-400 text-white lg:mt-8 lg:text-lg">
         {loading ? (
           <>
             <Spinner type="spinner" className="w-8 h-8" />

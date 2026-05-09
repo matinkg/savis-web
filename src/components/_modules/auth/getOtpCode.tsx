@@ -58,7 +58,7 @@ export default function GetOtpCode({
       <div className="grid w-full grid-cols-2 gap-x-4">
         <Button
           onClick={() => verifyCode()}
-          className="mb-6 h-[48px] w-full bg-white font-peyda-400 text-sm text-blue-1050 lg:mb-[18px] lg:text-lg"
+          className="mb-6 h-[48px] w-full bg-secendry font-peyda-400 text-sm text-white lg:mb-[18px] lg:text-lg"
         >
           {loading?.continuation ? (
             <>

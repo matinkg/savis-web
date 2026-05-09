@@ -37,7 +37,7 @@ export default function GetNumber({
         label="شماره موبایل"
         type="text"
         name="phone"
-        className="ltrDir h-[48px] border border-solid border-white/40 bg-white/20 px-3 outline-none"
+        className="ltrDir h-[48px] border border-solid border-white/40 bg-[#0000000D] px-3 outline-none"
         labelStyle="font-peyda-400  text-xs lg:text-base mb-4  "
         validate={{
           ...register("phone", {
@@ -59,7 +59,7 @@ export default function GetNumber({
         )}
       </Input>
 
-      <Button className="my-8 h-[48px] w-full bg-white font-peyda-400 text-blue-1050 lg:my-10 lg:text-lg">
+      <Button className="my-8 h-[48px] w-full bg-secendry font-peyda-400 text-white lg:my-10 lg:text-lg">
         {loading ? (
           <>
             <Spinner type="spinner" className="w-8 h-8" />

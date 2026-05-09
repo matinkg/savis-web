@@ -1,6 +1,6 @@
 import Close from "@/public/icons/close";
 import SearchIcon from "@/public/icons/Search";
-import nisaLogoImg from "@/lib/assets/images/nisa-logo.webp";
+import nisaLightLogoImg from "@/lib/assets/images/nisa-light-logo.webp";
 import SearchInput from "@/components/_modules/search";
 import SocialMedia from "@/components/_modules/socialMedia";
 import {
@@ -60,7 +60,7 @@ export default function NavMenu({
             />
           </div>
           <div className="flex-center grow">
-            <Image className="w-[70px]" src={nisaLogoImg} alt="nisa-logo" />
+            <Image className="w-[70px]" src={nisaLightLogoImg} alt="nisa-light-logo" />
           </div>
         </div>
 

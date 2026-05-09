@@ -13,7 +13,7 @@ export default function RenderSigninStep() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<Step>("GetNumber");
   const [userPhone, setUserPhone] = useState(getLocalPhone());
-  
+
   switch (currentStep) {
     case "GetNumber":
       return (
@@ -32,7 +32,7 @@ export default function RenderSigninStep() {
             }}
             className="mt-3 cursor-pointer font-peyda-600 text-xs"
           >
-            حساب کاربری ندارید؟ از اینجا حساب کاربری خود را ایجاد کنید
+            حساب کاربری دارید؟ از اینجا وارد شوید
           </p>
         </>
       );

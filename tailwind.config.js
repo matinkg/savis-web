@@ -11,6 +11,7 @@ module.exports = {
         primary: "#B51818",
         secendry: "#780000",
         third: "#D3BD88",
+        acsent: "#F9EFDF",
         blue: {
           750: "#19bfd3",
           1000: "#0796B2",
