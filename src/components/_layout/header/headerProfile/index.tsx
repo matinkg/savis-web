@@ -37,7 +37,7 @@ export default function HeaderProfile() {
         <div className="relative">
           <Bag className="h-6 w-6 text-blue-1050" href="/cart" />
 
-          <Notify className="flex-center absolute -right-1 -top-1 h-4 w-4 rounded-full bg-primary font-peyda-400 text-[8px] text-white">
+          <Notify className="flex-center absolute pt-0.5 -right-1 -top-1 h-4 w-4 rounded-full bg-primary font-peyda-400 text-[8px] text-white">
             {state?.items?.length}
           </Notify>
         </div>

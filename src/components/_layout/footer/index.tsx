@@ -176,7 +176,7 @@ export default function Footer() {
           <Image className="w-20" src={nisaLogoImg} alt="nisa-logo" />
 
           <p className="mb-8 mt-6 font-peyda-400 text-base text-blue-1050 lg:text-xl">
-            گالری <span className="font-peyda-600">ساویس</span> برند شانت
+            گالری <span className="font-peyda-600">نیسا</span> برند شانت
             باباییان با بیشتر از ۱4 سال تجربه‌ی درخشان در زمینه طلا و جواهرات
             زیباترین و باکیفیت‌ترین زیورآلات را با پشتیبانی و ضمانت به صورت
             آنلاین و حضوری به شما تقدیم می‌کند.

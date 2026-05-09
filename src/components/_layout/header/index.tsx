@@ -113,7 +113,7 @@ export default function Header({ noFixed, data }: propsType) {
                 onClick={() => {
                   setShowNavMenu(true);
                 }}
-                className="h-6 w-6 text-blue-1050"
+                className="h-6 w-6 text-blue-1050 cursor-pointer"
               />
 
               {showNavMenu && (

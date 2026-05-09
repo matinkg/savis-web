@@ -56,7 +56,7 @@ export default function NavMenu({
           <div className="flex-none">
             <Close
               onClick={() => setShowNavMenu(false)}
-              className="h-6 w-6 text-white"
+              className="h-6 w-6 text-white cursor-pointer"
             />
           </div>
           <div className="flex-center grow">
