@@ -82,14 +82,14 @@ export default function CustomJewelry() {
       )} */}
       {/* banner  */}
 
-      <section className="mx-auto mt-10 w-[91.12%] lg:mt-[60px] lg:w-[91.67%] 4xl:w-[85%]">
+      <section className="mx-auto !mt-40 w-[91.12%] lg:mt-[60px] lg:w-[91.67%] 4xl:w-[85%]">
         <div className="mx-auto mb-10 flex flex-col items-center gap-[18px] lg:mb-[60px] lg:w-[760px] lg:gap-y-6">
           <h1 className="font-peyda-600 text-2xl lg:text-[38px]">
             طراحی سفارشی
           </h1>
 
           <p className="text-center font-peyda-400 lg:text-xl">
-           نیسا، به عنوان نخبه در طراحی منحصر به فرد، با ترکیب خلاقیت و هنر،
+            نیسا، به عنوان نخبه در طراحی منحصر به فرد، با ترکیب خلاقیت و هنر،
             هویت‌هایی استثنایی را ایجاد می‌کند.این گالری با دقت به جزئیات،
             هماهنگی با ارزش‌ها و نیازهای مشتریان، آثاری استثنایی و جذاب را به
             وجود می‌آورد. افتخار دارد که در جهان هنر و طراحی، نام خود را به
@@ -236,7 +236,7 @@ export default function CustomJewelry() {
                 className="font-peyda-600 text-sm lg:text-lg"
                 style={{ direction: "ltr" }}
               >
-                ۰۹۳۳ ۴۳۲ ۸۷۴۳
+                09005550492
               </a>
             </div>
             <div className="flex flex-col items-center text-[#6EBAE0] lg:gap-y-6">
@@ -251,14 +251,14 @@ export default function CustomJewelry() {
                 پیشتیبانی تلگرام
               </span>
               <a href="" className="font-peyda-600 text-sm lg:text-lg">
-                @savis.support
+                @nissa.support
               </a>
               <a
                 href=""
                 className="font-peyda-600 text-sm lg:text-lg"
                 style={{ direction: "ltr" }}
               >
-                ۰۹۳۳ ۴۳۲ ۸۷۴۳
+                09005550492
               </a>
             </div>
           </div>

@@ -174,7 +174,6 @@
     @apply h-[225px];
   }
 
-
   .blog_banner_ads_header_desk {
     background: linear-gradient(-90deg, #000000 0%, rgba(0, 0, 0, 0) 51.5%),
       url("/images/banner2.png");
@@ -563,18 +562,46 @@
   }
 }
 
-.size-guide-table td{
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.size-guide-table td {
   border-left: 1.5px solid #7e8183 !important;
 }
 
-.size-guide-table td.ignore-styling, .size-guide-table th.ignore-styling {
-  border-left: none !important; 
+.size-guide-table td.ignore-styling,
+.size-guide-table th.ignore-styling {
+  border-left: none !important;
 }
 
-.calc-price{
+.calc-price {
   left: 2rem;
 }
 
-.ml-4{
+.ml-4 {
   margin-left: 1rem;
 }

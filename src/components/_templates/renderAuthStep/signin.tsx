@@ -32,7 +32,7 @@ export default function RenderSigninStep() {
             }}
             className="mt-3 cursor-pointer font-peyda-600 text-xs"
           >
-            حساب کاربری دارید؟ از اینجا وارد شوید
+            حساب کاربری ندارید؟ از اینجا حساب کاربری خود را ایجاد کنید
           </p>
         </>
       );

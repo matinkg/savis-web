@@ -68,7 +68,7 @@ export default function JewelryCategories({ savisCats }: any) {
                 spaceBetween: 0,
               },
             }}
-            className="flex-center mb-8 w-full lg:mb-[60px] lg:w-[68%]"
+            className="flex-center mb-8 w-full lg:mb-[60px] lg:w-[80%]"
             wrapperClass="justify-center"
           >
             {savisCats?.map((item: any) => (

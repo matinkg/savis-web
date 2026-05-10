@@ -3,15 +3,28 @@ import Button from "@/components/_modules/button";
 import DropDownMenu from "@/components/_modules/dropDownMenu";
 import ArrowLeft from "@/public/icons/arrowLeft";
 import Input from "@/components/_modules/input/inex";
-import nisaLogoImg from "@/lib/assets/images/nisa-logo.webp";
 import SocialMedia from "@/components/_modules/socialMedia";
 import Link from "next/link";
 import React from "react";
 import useOperation from "@/components/_templates/clientLayout/hook/useOperation";
-import Image from "next/image";
+import Logo from "@/components/_modules/logo";
 
 export default function Footer() {
   const { siteSetting } = useOperation();
+  const resolveHref = (href?: string) => {
+    const value = String(href || "").trim();
+    if (!value) return "#";
+    if (
+      value.startsWith("http://") ||
+      value.startsWith("https://") ||
+      value.startsWith("tel:") ||
+      value.startsWith("mailto:")
+    ) {
+      return value;
+    }
+    if (value.startsWith("//")) return value.slice(1);
+    return value.startsWith("/") ? value : `/${value}`;
+  };
 
   return (
     <footer className="w-full bg-white">
@@ -102,12 +115,12 @@ export default function Footer() {
           <div className="flex flex-col items-center">
             <div className="flex flex-col items-start">
               <span className="mb-4 font-peyda-500 text-lg text-blue-1050 lg:text-xl">
-                نیسا
+                {siteSetting?.["footer_savis_title"] || "ساویس"}
               </span>
               {siteSetting?.["footer"]?.savis?.map((link: any, index: any) => (
                 <Link
                   key={index}
-                  href={link?.link}
+                  href={resolveHref(link?.link)}
                   className="text-[# ] py2 font-peyda-400 text-lg hover:text-primary"
                 >
                   {link?.title}
@@ -118,12 +131,12 @@ export default function Footer() {
           <div className="flex flex-col items-center">
             <div className="flex flex-col items-start">
               <span className="mb-4 font-peyda-500 text-lg text-blue-1050 lg:text-xl">
-                راهنمای خرید
+                {siteSetting?.["footer_buy_title"] || "راهنمای خرید"}
               </span>
               {siteSetting?.["footer"]?.buy?.map((link: any, index: any) => (
                 <Link
                   key={index}
-                  href={link?.link}
+                  href={resolveHref(link?.link)}
                   className="text-[# ] py2 font-peyda-400 text-lg hover:text-primary"
                 >
                   {link?.title}
@@ -135,51 +148,57 @@ export default function Footer() {
         {/* in mobile mode */}
 
         <div className="my-10 block lg:hidden">
-          <DropDownMenu
-            titleStyle="text-lg"
-            title={"نیسا"}
-            type="down"
-            className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
-          >
-            {siteSetting?.["footer"]?.savis?.map((link: any, index: any) => (
-              <div key={index} className="flex flex-col gap-y-5">
-                <Link
-                  href={link?.link}
-                  className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
-                >
-                  {link?.title}
-                </Link>
-              </div>
-            ))}
-          </DropDownMenu>
-          <DropDownMenu
-            titleStyle="text-lg"
-            title={"راهنمای خرید"}
-            type="down"
-            className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
-          >
-            {siteSetting?.["footer"]?.buy?.map((link: any, index: any) => (
-              <div key={index} className="flex flex-col gap-y-5">
-                <Link
-                  href={link?.link}
-                  className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
-                >
-                  {link?.title}
-                </Link>
-              </div>
-            ))}
-          </DropDownMenu>
+            <DropDownMenu
+              titleStyle="text-lg"
+              title={siteSetting?.["footer_savis_title"] || "ساویس"}
+              type="down"
+              className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
+            >
+              {siteSetting?.["footer"]?.savis?.map((link: any, index: any) => (
+                <div key={index} className="flex flex-col gap-y-5">
+                  <Link
+                    href={resolveHref(link?.link)}
+                    className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
+                  >
+                    {link?.title}
+                  </Link>
+                </div>
+              ))}
+            </DropDownMenu>
+            <DropDownMenu
+              titleStyle="text-lg"
+              title={siteSetting?.["footer_buy_title"] || "راهنمای خرید"}
+              type="down"
+              className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
+            >
+              {siteSetting?.["footer"]?.buy?.map((link: any, index: any) => (
+                <div key={index} className="flex flex-col gap-y-5">
+                  <Link
+                    href={resolveHref(link?.link)}
+                    className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
+                  >
+                    {link?.title}
+                  </Link>
+                </div>
+              ))}
+            </DropDownMenu>
         </div>
 
         {/* in mobile mode */}
         <div className="flex flex-col">
-          <Image className="w-20" src={nisaLogoImg} alt="nisa-logo" />
+          {siteSetting?.["footer_logo"] ? (
+            <img
+              src={siteSetting["footer_logo"]}
+              alt="logo"
+              className="h-[46px] w-[104px] object-contain"
+            />
+          ) : (
+            <Logo type="secondary" className="h-[46px] w-[104px]" />
+          )}
 
           <p className="mb-8 mt-6 font-peyda-400 text-base text-blue-1050 lg:text-xl">
-            گالری <span className="font-peyda-600">نیسا</span> برند شانت
-            باباییان با بیشتر از ۱4 سال تجربه‌ی درخشان در زمینه طلا و جواهرات
-            زیباترین و باکیفیت‌ترین زیورآلات را با پشتیبانی و ضمانت به صورت
-            آنلاین و حضوری به شما تقدیم می‌کند.
+            {siteSetting?.["footer_description"] ||
+              "گالری ساویس برند شانت باباییان با بیشتر از 14 سال تجربه در زمینه طلا و جواهرات، زیباترین و باکیفیت ترین زیورآلات را با پشتیبانی و ضمانت به صورت آنلاین و حضوری به شما تقدیم می کند."}
           </p>
 
           <div className="grid grid-cols-3 items-end lg:grid-cols-4 lg:gap-x-5">

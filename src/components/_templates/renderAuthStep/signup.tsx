@@ -42,7 +42,7 @@ export default function RenderSignUpStep() {
               clearLocalStorageKey();
               router.push("/auth/signin");
             }}
-            className="block text-center font-peyda-600 text-xs"
+            className="block text-center font-peyda-600 text-xs cursor-pointer"
           >
             حساب کاربری دارید؟ از اینجا وارد شوید
           </p>
