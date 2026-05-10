@@ -1,4 +1,4 @@
-import nisaLoadingLogo from "@/lib/assets/images/nisa-loading-logo.png";
+import nisaLoadingLogo from "@/lib/assets/images/nisa-loading-logo.webp";
 import React from "react";
 import Image from "next/image";
 

@@ -1,4 +1,4 @@
-import nisaLoadingLogo from "@/lib/assets/images/nisa-loading-logo.png";
+import nisaLoadingLogo from "@/lib/assets/images/nisa-loading-logo.webp";
 import Image from "next/image";
 
 export default function Loading() {
