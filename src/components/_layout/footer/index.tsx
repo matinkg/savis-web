@@ -7,7 +7,8 @@ import SocialMedia from "@/components/_modules/socialMedia";
 import Link from "next/link";
 import React from "react";
 import useOperation from "@/components/_templates/clientLayout/hook/useOperation";
-import Logo from "@/components/_modules/logo";
+import nisaLogo from "@/lib/assets/images/nisa-logo.webp";
+import Image from "next/image";
 
 export default function Footer() {
   const { siteSetting } = useOperation();
@@ -115,7 +116,7 @@ export default function Footer() {
           <div className="flex flex-col items-center">
             <div className="flex flex-col items-start">
               <span className="mb-4 font-peyda-500 text-lg text-blue-1050 lg:text-xl">
-                {siteSetting?.["footer_savis_title"] || "ساویس"}
+                {siteSetting?.["footer_savis_title"] || "نیسا"}
               </span>
               {siteSetting?.["footer"]?.savis?.map((link: any, index: any) => (
                 <Link
@@ -148,40 +149,40 @@ export default function Footer() {
         {/* in mobile mode */}
 
         <div className="my-10 block lg:hidden">
-            <DropDownMenu
-              titleStyle="text-lg"
-              title={siteSetting?.["footer_savis_title"] || "ساویس"}
-              type="down"
-              className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
-            >
-              {siteSetting?.["footer"]?.savis?.map((link: any, index: any) => (
-                <div key={index} className="flex flex-col gap-y-5">
-                  <Link
-                    href={resolveHref(link?.link)}
-                    className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
-                  >
-                    {link?.title}
-                  </Link>
-                </div>
-              ))}
-            </DropDownMenu>
-            <DropDownMenu
-              titleStyle="text-lg"
-              title={siteSetting?.["footer_buy_title"] || "راهنمای خرید"}
-              type="down"
-              className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
-            >
-              {siteSetting?.["footer"]?.buy?.map((link: any, index: any) => (
-                <div key={index} className="flex flex-col gap-y-5">
-                  <Link
-                    href={resolveHref(link?.link)}
-                    className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
-                  >
-                    {link?.title}
-                  </Link>
-                </div>
-              ))}
-            </DropDownMenu>
+          <DropDownMenu
+            titleStyle="text-lg"
+            title={siteSetting?.["footer_savis_title"] || "نیسا"}
+            type="down"
+            className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
+          >
+            {siteSetting?.["footer"]?.savis?.map((link: any, index: any) => (
+              <div key={index} className="flex flex-col gap-y-5">
+                <Link
+                  href={resolveHref(link?.link)}
+                  className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
+                >
+                  {link?.title}
+                </Link>
+              </div>
+            ))}
+          </DropDownMenu>
+          <DropDownMenu
+            titleStyle="text-lg"
+            title={siteSetting?.["footer_buy_title"] || "راهنمای خرید"}
+            type="down"
+            className="border-y border-solid border-y-gray-150 py-3 text-blue-1050"
+          >
+            {siteSetting?.["footer"]?.buy?.map((link: any, index: any) => (
+              <div key={index} className="flex flex-col gap-y-5">
+                <Link
+                  href={resolveHref(link?.link)}
+                  className="my-1 font-peyda-400 text-base text-[#8A8E8E]"
+                >
+                  {link?.title}
+                </Link>
+              </div>
+            ))}
+          </DropDownMenu>
         </div>
 
         {/* in mobile mode */}
@@ -193,12 +194,12 @@ export default function Footer() {
               className="h-[46px] w-[104px] object-contain"
             />
           ) : (
-            <Logo type="secondary" className="h-[46px] w-[104px]" />
+            <Image className="w-[104px]" src={nisaLogo} alt="nisa-logo" />
           )}
 
           <p className="mb-8 mt-6 font-peyda-400 text-base text-blue-1050 lg:text-xl">
             {siteSetting?.["footer_description"] ||
-              "گالری ساویس برند شانت باباییان با بیشتر از 14 سال تجربه در زمینه طلا و جواهرات، زیباترین و باکیفیت ترین زیورآلات را با پشتیبانی و ضمانت به صورت آنلاین و حضوری به شما تقدیم می کند."}
+              "گالری نیسا برند شانت باباییان با بیشتر از 14 سال تجربه در زمینه طلا و جواهرات، زیباترین و باکیفیت ترین زیورآلات را با پشتیبانی و ضمانت به صورت آنلاین و حضوری به شما تقدیم می کند."}
           </p>
 
           <div className="grid grid-cols-3 items-end lg:grid-cols-4 lg:gap-x-5">
@@ -212,7 +213,7 @@ export default function Footer() {
         <div className="mx-auto flex w-[91.12%] flex-col items-center justify-between gap-y-3 py-3 lg:w-[91.67%] lg:flex-row 4xl:w-[85%]">
           <span className="font-peyda-400 text-sm lg:text-lg">
             {" "}
-            تمام حقوق برای savis.com محفوظ است
+            تمام حقوق برای nisa-jewellery.com محفوظ است
           </span>
 
           <SocialMedia className="h-6 w-6 text-white" />
