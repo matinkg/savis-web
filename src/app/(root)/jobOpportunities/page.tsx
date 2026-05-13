@@ -116,7 +116,7 @@ export default function JobOpportunities() {
 
         <EmploymentForm jobs={data?.jobs} />
 
-        <FrequentlyAskedQuestions />
+        <FrequentlyAskedQuestions faq={data?.faq} />
       </section>
     </>
   );
