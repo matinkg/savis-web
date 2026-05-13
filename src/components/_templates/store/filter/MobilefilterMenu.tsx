@@ -98,7 +98,7 @@ export default function MobilefilterMenu({
             </div>
             <div className="flex items-center justify-between bg-white/50 font-peyda-400 text-base text-blue-1050">
               <div className="p-2">
-                <span>ساویس</span>
+                <span>نیسا</span>
               </div>
               <div className="border-r border-solid border-r-blue-1050 px-4 py-2">
                 2

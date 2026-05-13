@@ -95,7 +95,7 @@ export default function Filter() {
         </div>
         <div className="bg-white/50 flex items-center justify-between text-blue-1050 font-peyda-400 text-base">
           <div className=" p-2 ">
-            <span>ساویس</span>
+            <span>نیسا</span>
           </div>
           <div className="border-solid border-r border-r-blue-1050 py-2 px-4">
             2

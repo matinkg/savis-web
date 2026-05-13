@@ -47,7 +47,7 @@ export default function useVerifyUserPassword(userPhone: string) {
         }
 
         setLoading(false);
-        toast.success(" به ساویس خوش امدید");
+        toast.success(" به نیسا خوش امدید");
         router.push("/user-panel");
       } else if (res?.status === 401 || res?.status === 404) {
         setPasswordError(true);

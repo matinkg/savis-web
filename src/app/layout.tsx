@@ -8,7 +8,7 @@ import ReferralTracker from "@/components/_layout/ReferralTracker";
 import { Suspense } from "react";
 
 // export const metadata = {
-//   title: " فروشگاه اینترنتی  ساویس ",
+//   title: " فروشگاه اینترنتی  نیسا ",
 //   description: "",
 //   icons: {
 //     icon: "/images/logo/Logo.svg",
@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">
       <head>
         <link rel="shortcut icon" href={"/images/logo/Logo.svg"} />
-        <title>فروشگاه اینترنتی ساویس</title>
+        <title>فروشگاه اینترنتی نیسا</title>
         {/* <meta name="description" content={`${SeoSite.description}`} />
         <meta name="keywords" content={`${SeoSite.keywords}`} />
         <meta name="robots" content="index, follow" />

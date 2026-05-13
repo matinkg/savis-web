@@ -17,7 +17,7 @@ export default function HomeOffer({ savisOffers }: any) {
     <section className="mx-auto mb-[60px] w-[91.12%] lg:w-[91.67%] 4xl:w-[85%]">
       <div className="mb-8 mt-10 flex flex-col items-center lg:my-[60px]">
         <span className="block pb-10 font-peyda-800 text-2xl text-blue-1050 lg:text-2xl 2xl:text-3xl">
-          پیشنهاد ساویس
+          پیشنهاد نیسا
         </span>
         {/* category */}
 

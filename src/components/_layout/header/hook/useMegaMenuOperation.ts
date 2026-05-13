@@ -1,5 +1,5 @@
 import { megaMenuProps } from "@/libs/interface/megaMenu";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function useMegaMenuOperation() {
   const [bgColor, setBgColor] = useState(false);

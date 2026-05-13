@@ -13,7 +13,7 @@ export default function RenderSigninStep() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<Step>("GetNumber");
   const [userPhone, setUserPhone] = useState(getLocalPhone());
-  
+
   switch (currentStep) {
     case "GetNumber":
       return (

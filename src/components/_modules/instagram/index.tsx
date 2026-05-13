@@ -23,8 +23,11 @@ export default function InstagramPosts({ className }: { className?: string }) {
     <>
       <section className={className}>
         <div className="flex justify-start lg:justify-end">
-          <Link href="https://www.instagram.com/SAVIS.JEWELRY/" className="font-peyda-600 text-2xl text-blue-1050">
-            @SAVIS.JEWELRY
+          <Link
+            href="https://www.instagram.com/SAVIS.JEWELRY/"
+            className="font-peyda-600 text-2xl text-blue-1050"
+          >
+            Nissa_jewellery@
           </Link>
         </div>
 
