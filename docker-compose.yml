@@ -1,0 +1,20 @@
+services:
+  nextjs_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL}
+        IMAGE_ALLOWED_DOMAIN: ${IMAGE_ALLOWED_DOMAIN}
+    container_name: nextjs_app
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "3050:3000"
+    networks:
+      - nextjs-network
+
+networks:
+  nextjs-network:
+    driver: bridge
