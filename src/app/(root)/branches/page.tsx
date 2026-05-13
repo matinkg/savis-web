@@ -9,32 +9,28 @@ import Phone from "@/public/icons/phone";
 import Clock from "@/public/icons/clock";
 import Mobile from "@/public/icons/mobile";
 import { useFetchData } from "@/helper";
-import { settingKeysObject } from "@/configs/constants";
 import PageBannerWithGradient from "@/components/_templates/banner/banner-gradient";
 import BannerPagesSkeleton from "@/components/_templates/tailwind-css-skeleton/banner-pages";
 
 export default function Branches() {
-  const { data: settingData, loading: settingLoading } = useFetchData<any>(
-    "/api/v1/sitesetting"
-  );
+  const { data: branchesPageData, loading: branchesPageLoading } =
+    useFetchData<any>("/api/v1/branches-page");
   const { data, loading: branchesLOading } =
     useFetchData<any>("/api/v1/branches");
 
-  const home_BannerData = data?.banner || [];
-
-  console.log(home_BannerData, data?.banner);
+  const bannerData = branchesPageData?.banenr || {};
 
   return (
     <>
       {/* banner  */}
 
-      {settingLoading ? (
+      {branchesPageLoading ? (
         <BannerPagesSkeleton />
       ) : (
         <PageBannerWithGradient
-          imgUrl={home_BannerData?.image_1 ?? ""}
-          subTitle={home_BannerData?.title_2 ?? ""}
-          title={home_BannerData?.title_1 ?? ""}
+          imgUrl={bannerData?.image_1 ?? ""}
+          subTitle={bannerData?.summary ?? ""}
+          title={bannerData?.title_1 ?? ""}
           isBlackText={false}
         />
       )}
