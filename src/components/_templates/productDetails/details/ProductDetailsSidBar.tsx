@@ -31,6 +31,25 @@ export default function ProductDetailsSidBar({
   const pathName = usePathname();
   const [isAdded, setIsAdded] = useState(false);
 
+  const formatSizeValue = (value: unknown) => {
+    if (value === null || value === undefined) {
+      return "";
+    }
+
+    if (typeof value === "number") {
+      return value.toLocaleString("fa");
+    }
+
+    const raw = String(value).trim();
+    const numericPattern = /^-?\d+(?:\.\d+)?$/;
+
+    if (numericPattern.test(raw)) {
+      return Number(raw).toLocaleString("fa");
+    }
+
+    return raw;
+  };
+
   const { dispatch } = useCart();
 
   useEffect(() => {
@@ -155,11 +174,16 @@ export default function ProductDetailsSidBar({
 
           <div className="mb-2 flex items-center gap-x-2">
             <span className="font-peyda-500 text-lg text-blue-1050 lg:text-xl">
-              {selectedSize?.value
-                ? sizeText +
-                  ": " +
-                  Number(selectedSize?.value).toLocaleString("fa")
-                : ""}
+              {selectedSize?.value ? (
+                <>
+                  {sizeText + ": "}
+                  <span dir="ltr" className="inline-block">
+                    {formatSizeValue(selectedSize?.value)}
+                  </span>
+                </>
+              ) : (
+                ""
+              )}
             </span>
 
             <SizeGuideModal />
@@ -179,7 +203,9 @@ export default function ProductDetailsSidBar({
                   key={`${size?.id}-${index}`}
                   onClick={() => handleSizeClick(size?.value?.id)}
                 >
-                  {Number(size?.value?.value).toLocaleString("fa")}
+                  <span dir="ltr" className="inline-block">
+                    {formatSizeValue(size?.value?.value)}
+                  </span>
                 </button>
               );
             })}

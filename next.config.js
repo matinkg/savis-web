@@ -4,18 +4,30 @@ const nextConfig = {
   reactStrictMode: false,
   output: "standalone",
   images: {
-    domains: [
-      "127.0.0.1",
-      "localhost",
-      "194.5.192.110",
-      "backend.nisa-jewellery.com",
-    ],
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "194.5.192.110",
-        port: "8000",
-        pathname: "/storage/**",
+        hostname: "localhost",
+      },
+      {
+        protocol: "https",
+        hostname: "localhost",
+      },
+      {
+        protocol: "http",
+        hostname: '127.0.0.1'
+      },
+      {
+        protocol: "https",
+        hostname: '127.0.0.1'
+      },
+      {
+        protocol: "https",
+        hostname: process.env.IMAGE_ALLOWED_DOMAIN || "**",
+      },
+      {
+        protocol: "http",
+        hostname: process.env.IMAGE_ALLOWED_DOMAIN || "**",
       },
     ],
   },

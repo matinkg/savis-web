@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+
+# Environment variables — NEVER bake secrets into the image
+.env
+.env.local
+.env.production
+.env*.local
+
+# Dependencies — will be installed inside the container
+node_modules
+
+# Next.js build output — rebuilt inside the container
+.next
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Misc
+npm-debug.log
+yarn-error.log
+README.md
