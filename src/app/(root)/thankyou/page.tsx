@@ -1,11 +1,12 @@
 "use client";
 
 import Head from 'next/head'
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ThankYouPage() {
   const router = useRouter();
-  const { ref_id } = router.
+  const searchParams = useSearchParams();
+  const ref_id = searchParams.get('ref_id');
 
   return (
     <>
