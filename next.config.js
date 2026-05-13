@@ -6,12 +6,28 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: "http",
+        hostname: "localhost",
+      },
+      {
         protocol: "https",
-        hostname: process.env.IMAGE_ALLOWED_DOMAIN || "**", 
+        hostname: "localhost",
       },
       {
         protocol: "http",
-        hostname: process.env.IMAGE_ALLOWED_DOMAIN || "**", 
+        hostname: '127.0.0.1'
+      },
+      {
+        protocol: "https",
+        hostname: '127.0.0.1'
+      },
+      {
+        protocol: "https",
+        hostname: process.env.IMAGE_ALLOWED_DOMAIN || "**",
+      },
+      {
+        protocol: "http",
+        hostname: process.env.IMAGE_ALLOWED_DOMAIN || "**",
       },
     ],
   },
