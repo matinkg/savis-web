@@ -8,7 +8,7 @@ export default function Loading() {
       <div className="flex flex-col items-center gap-y-4">
         <Image
           priority
-          className="w-72"
+          className="w-52"
           src={nisaLoadingLogo}
           alt="nisa-loading-logo"
         />
