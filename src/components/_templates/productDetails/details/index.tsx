@@ -44,6 +44,25 @@ export default function ProductDataDetails({
     selectedVariations?.weight
   );
 
+  const formatSizeValue = (value: unknown) => {
+    if (value === null || value === undefined) {
+      return "";
+    }
+
+    if (typeof value === "number") {
+      return value.toLocaleString("fa");
+    }
+
+    const raw = String(value).trim();
+    const numericPattern = /^-?\d+(?:\.\d+)?$/;
+
+    if (numericPattern.test(raw)) {
+      return Number(raw).toLocaleString("fa");
+    }
+
+    return raw;
+  };
+
   useEffect(() => {
     if (showModal) {
       document.body.style.overflow = "hidden";
@@ -254,9 +273,16 @@ export default function ProductDataDetails({
 
             <div className="mb-2 flex items-center gap-x-2">
               <span className="font-peyda-500 text-lg text-blue-1050 lg:text-xl">
-                {selectedSize?.value
-                  ? sizeText + ": " + Number(selectedSize?.value).toLocaleString("fa")
-                  : ""}
+                {selectedSize?.value ? (
+                  <>
+                    {sizeText + ": "}
+                    <span dir="ltr" className="inline-block">
+                      {formatSizeValue(selectedSize?.value)}
+                    </span>
+                  </>
+                ) : (
+                  ""
+                )}
               </span>
 
               <SizeGuideModal />
@@ -272,7 +298,9 @@ export default function ProductDataDetails({
                     key={size?.id}
                     onClick={() => handleSizeClick(size?.value?.id)}
                   >
-                    {Number(size?.value?.value).toLocaleString("fa")}
+                    <span dir="ltr" className="inline-block">
+                      {formatSizeValue(size?.value?.value)}
+                    </span>
                   </button>
                 );
               })}
