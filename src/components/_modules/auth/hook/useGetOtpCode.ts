@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import swal from "sweetalert";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 export default function useGetOtpCode(
   setCurrentStep: any,
@@ -53,52 +54,27 @@ export default function useGetOtpCode(
           return showSwal("کد وارد شده منقضی شده", "error", "تلاش مجدد");
         } else if (res?.status === 201) {
           setLoading({ ...loading, continuation: false });
+          toast.success("شماره تلفن شما با موفقیت احراز شد");
 
-          action === "register"
-            ? swal({
-                title: "  شماره تلفن شما با موفقیت احراز شد",
-                icon: "success",
-                buttons: {
-                  confirm: {
-                    text: "  تکمیل ثبت نام",
-                    value: true,
-                    visible: true,
-                    className: "",
-                    closeModal: true,
-                  },
-                },
-              }).then(() => {
-                setCurrentStep("GetPassword");
-              })
-            : swal({
-                title: "  شماره تلفن شما با موفقیت احراز شد",
-                icon: "success",
-                buttons: {
-                  confirm: {
-                    text: "ورود",
-                    value: true,
-                    visible: true,
-                    className: "",
-                    closeModal: true,
-                  },
-                },
-              }).then(async () => {
-                const token = res?.data?.token;
-                const user = res?.data?.user;
+          if (action === "register") {
+            setCurrentStep("GetPassword");
+          } else {
+            const token = res?.data?.token;
+            const user = res?.data?.user;
 
-                if (token) {
-                  Cookies.set("authToken", token, { expires: 7 });
-                  Cookies.set("user", JSON.stringify(user), { expires: 7 });
-                  let cart = localStorage.getItem("cart");
-                  cart = cart
-                    ? JSON.parse(cart)
-                    : { items: [], totalAmount: 0 };
-                  await request("/api/v1/users/updateCart", "PATCH", cart);
-                  localStorage.removeItem("cart");
-                }
+            if (token) {
+              Cookies.set("authToken", token, { expires: 7 });
+              Cookies.set("user", JSON.stringify(user), { expires: 7 });
+              let cart = localStorage.getItem("cart");
+              cart = cart
+                ? JSON.parse(cart)
+                : { items: [], totalAmount: 0 };
+              await request("/api/v1/users/updateCart", "PATCH", cart);
+              localStorage.removeItem("cart");
+            }
 
-                router.push("/user-panel");
-              });
+            router.push("/user-panel");
+          }
           clearLocalStorageKey();
         } else {
           setLoading({ ...loading, continuation: false });
@@ -126,21 +102,8 @@ export default function useGetOtpCode(
           if (!res?.error) {
             const safeData = data || {};
             setUserPhone(safeData.phone ?? "");
-            swal({
-              title: `  کد ورود با موفقیت  به شماره تلفن ${data.phone}ارسال شد`,
-              icon: "success",
-              buttons: {
-                confirm: {
-                  text: "وارد کردن کد",
-                  value: true,
-                  visible: true,
-                  className: "",
-                  closeModal: true,
-                },
-              },
-            }).then(() => {
-              setCurrentStep("GetOtpCode");
-            });
+            toast.success(`کد ورود با موفقیت به شماره تلفن ${data.phone} ارسال شد`);
+            setCurrentStep("GetOtpCode");
           }
         })
         .finally(() => {

@@ -1,7 +1,7 @@
 import { request } from "@/configs/HTTPService";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import swal from "sweetalert";
+import { toast } from "react-toastify";
 
 type Inputs = {
   phone: string;
@@ -34,21 +34,8 @@ export default function useGetNumber(
         if (!res?.error) {
           const safeData = data || {};
           setUserPhone(safeData.phone ?? "");
-          swal({
-            title: `  کد ورود با موفقیت  به شماره تلفن ${data.phone}ارسال شد`,
-            icon: "success",
-            buttons: {
-              confirm: {
-                text: "وارد کردن کد",
-                value: true,
-                visible: true,
-                className: "",
-                closeModal: true,
-              },
-            },
-          }).then(() => {
-            setCurrentStep("GetOtpCode");
-          });
+          toast.success(`کد ورود با موفقیت به شماره تلفن ${data.phone} ارسال شد`);
+          setCurrentStep("GetOtpCode");
         }
       })
       .finally(() => {

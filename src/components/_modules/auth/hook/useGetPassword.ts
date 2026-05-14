@@ -36,31 +36,32 @@ export default function useGetPassword(userPhone: string) {
       });
       
       if (res?.status === 201) {
+        const token = res?.data?.token;
+        const user = res?.data?.user;
+
+        if (token) {
+          Cookies.set("authToken", token, { expires: 7 });
+        }
+        if (user) {
+          Cookies.set("user", JSON.stringify(user), { expires: 7 });
+        }
+        
+        // Also update cart for new user just in case
+        let cart = localStorage.getItem("cart");
+        if (cart) {
+          await request("/api/v1/users/updateCart", "PATCH", JSON.parse(cart));
+          localStorage.removeItem("cart");
+        }
+        
         setLoading(false);
         clearLocalStorageKey();
 
         toast.success("موفقیت آمیز");
         router.push("/user-panel");
-
-        clearLocalStorageKey();
       } else if (res?.status) {
         setLoading(false);
-
-        swal({
-          title: res?.error,
-          icon: "error",
-          buttons: {
-            confirm: {
-              text: "تلاش مجدد",
-              value: true,
-              visible: true,
-              className: "",
-              closeModal: true,
-            },
-          },
-        }).then(() => {
-          clearLocalStorageKey();
-        });
+        toast.error(res?.error || "خطایی رخ داد");
+        clearLocalStorageKey();
       } else if (res?.status === 500) {
         setLoading(false);
         return showSwal("خطای غیرمنتظره‌ای رخ داد.", "error", "تلاش مجدد");
