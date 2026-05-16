@@ -5,12 +5,12 @@ import BannerPagesSkeleton from "@/components/_templates/tailwind-css-skeleton/b
 import { request } from "@/configs/HTTPService";
 import React, { useEffect, useState } from "react";
 
-export default function CustomJewelry() {
+export default function ReturnGuarantee() {
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    request("/api/v1/custom-jewelry")
+    request("/api/v1/return-guarantee")
       .then((res) => {
         setData(res?.data);
       })
