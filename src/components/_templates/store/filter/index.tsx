@@ -23,7 +23,7 @@ export default function Filter() {
             فیلتر براساس قیمت
           </span>
           <Button
-            className="font-peyda-600 text-sm text-white bg-primary  border border-primary px-2 py-1"
+            className="font-peyda-600 text-sm text-white bg-primary border border-primary px-2 py-1"
             onClick={handleFilterChange}
           >
             اعمال فیلتر

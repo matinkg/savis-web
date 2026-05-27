@@ -44,13 +44,13 @@
 }
 
 .slider__range {
-  background-color: #0796b2;
+  background-color: #780000;
   z-index: 2;
 }
 
 .slider__left-value,
 .slider__right-value {
-  color: #0796b2;
+  color: #780000;
   font-size: 12px;
   margin-top: 20px;
 }
@@ -107,7 +107,7 @@
 
 /* For Chrome browsers */
 .thumb::-webkit-slider-thumb {
-  background-color: #0796b2;
+  background-color: #780000;
   border: none;
   border-radius: 0;
   transform: rotate(90deg) !important;
