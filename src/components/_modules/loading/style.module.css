@@ -4,8 +4,8 @@
 
 /* Spinner Animation */
 .spinner {
-  border: 5px solid rgba(0, 0, 0, 0.1);
-  border-top: 5px solid #2d5b75;
+  border: 5px solid #FFFFFF40;
+  border-top: 5px solid white;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
