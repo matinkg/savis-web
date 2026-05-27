@@ -77,7 +77,12 @@ export default function Header({ noFixed, data }: propsType) {
         >
           <div className="mx-auto flex w-[91.67%] items-center justify-between py-4">
             <Link href={"/"}>
-              <Image priority className="w-20" src={nisaLogoImg} alt="nisa-logo" />
+              <Image
+                priority
+                className="w-20"
+                src={nisaLogoImg}
+                alt="nisa-logo"
+              />
             </Link>
             {/* /=======================Header menu ====================== */}
             <div className="flex gap-x-8">
@@ -131,17 +136,14 @@ export default function Header({ noFixed, data }: propsType) {
                 }}
                 className="h-6 w-6 text-blue-1050 cursor-pointer"
               />
-
-              {showNavMenu && (
-                <NavMenu
-                  data={data}
-                  showNavMenu={showNavMenu}
-                  setShowNavMenu={setShowNavMenu}
-                />
-              )}
             </div>
             <Link href={"/"}>
-              <Image priority className="w-[80px]" src={nisaLogoImg} alt="nisa-logo" />
+              <Image
+                priority
+                className="w-[80px]"
+                src={nisaLogoImg}
+                alt="nisa-logo"
+              />
             </Link>
             <HeaderProfile />
           </div>
@@ -152,6 +154,11 @@ export default function Header({ noFixed, data }: propsType) {
 
         {showSearchModal && <SearchComponents inMobile={false} />}
       </div>
+      <NavMenu
+        data={data}
+        showNavMenu={showNavMenu}
+        setShowNavMenu={setShowNavMenu}
+      />
     </>
   );
 }

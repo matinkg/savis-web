@@ -82,7 +82,7 @@ export default function Page() {
           {!showFilterMenu && (
             <div
               onClick={() => setShowFilterMenu(true)}
-              className="fixed bottom-0 left-0 right-0 flex w-full items-center justify-center bg-secendry p-4 text-white lg:hidden z-50"
+              className="fixed bottom-0 left-0 right-0 flex w-full items-center justify-center bg-secendry p-4 text-white lg:hidden z-30"
             >
               <div className="flex items-center gap-x-1.5">
                 <FilterIcon className="h-5 w-5" />
