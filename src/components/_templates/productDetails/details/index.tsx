@@ -197,13 +197,13 @@ export default function ProductDataDetails({
               <div className="group relative inline-block cursor-pointer ml-4">
                 <div className="absolute bottom-1 hidden w-full whitespace-nowrap pr-0.5 group-hover:block calc-price">
                   <div className="flex translate-y-full flex-col-reverse items-center justify-start">
-                    <div className="cursor-default rounded-lg bg-blue-1000 px-3 py-2 font-peyda-400 text-[10px] text-white shadow-md ml-1">
+                    <div className="cursor-default rounded-lg bg-secendry px-3 py-2 font-peyda-400 text-[10px] text-white shadow-md ml-1">
                       <span className="leading-4">
                         وزن طلا × (قیمت روز طلا + اجرت) + ۷ % سود + <br />
                         متعلقات + ۹ % مالیات از سود و اجرت
                       </span>
                     </div>
-                    <div className="-mb-[1px] h-0 w-0 border-b-[8px] border-l-[12px] border-r-[12px] border-b-blue-1000 border-l-transparent border-r-transparent"></div>
+                    <div className="-mb-[1px] h-0 w-0 border-b-[8px] border-l-[12px] border-r-[12px] border-b-secendry border-l-transparent border-r-transparent"></div>
                   </div>
                 </div>
                 <span className="font-peyda-500 text-sm text-blue-1050 lg:text-base">
