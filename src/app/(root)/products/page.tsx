@@ -25,7 +25,7 @@ export default function Page() {
         <>
           {/* banner  */}
           <div
-            className=" backStyle mb-10 flex items-center lg:mb-[60px]"
+            className=" backStyle mb-10 mt-24 md:mt-14 flex items-center lg:mb-[60px] h-[300px] md:h-[550px] lg:h-[750px] 3xl:h-[950px]"
             style={{
               // backgroundImage: categories?.banner?.image
               //   ? `url(' ${categories?.banner?.image}')`
