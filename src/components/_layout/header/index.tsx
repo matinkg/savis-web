@@ -77,7 +77,7 @@ export default function Header({ noFixed, data }: propsType) {
         >
           <div className="mx-auto flex w-[91.67%] items-center justify-between py-4">
             <Link href={"/"}>
-              <Image className="w-20" src={nisaLogoImg} alt="nisa-logo" />
+              <Image priority className="w-20" src={nisaLogoImg} alt="nisa-logo" />
             </Link>
             {/* /=======================Header menu ====================== */}
             <div className="flex gap-x-8">
@@ -141,7 +141,7 @@ export default function Header({ noFixed, data }: propsType) {
               )}
             </div>
             <Link href={"/"}>
-              <Image className="w-[80px]" src={nisaLogoImg} alt="nisa-logo" />
+              <Image priority className="w-[80px]" src={nisaLogoImg} alt="nisa-logo" />
             </Link>
             <HeaderProfile />
           </div>

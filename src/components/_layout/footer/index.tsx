@@ -194,7 +194,7 @@ export default function Footer() {
               className="h-[46px] w-[104px] object-contain"
             />
           ) : (
-            <Image className="w-[104px]" src={nisaLogo} alt="nisa-logo" />
+            <Image priority className="w-[104px]" src={nisaLogo} alt="nisa-logo" />
           )}
 
           <p className="mb-8 mt-6 font-peyda-400 text-base text-blue-1050 lg:text-xl">
