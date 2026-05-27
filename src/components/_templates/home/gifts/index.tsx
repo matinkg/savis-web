@@ -14,10 +14,10 @@ export default function HomeGifts({ gifts }: any) {
   const [active, setActive] = useState(gifts?.children[0]?.id);
   const [products, setProducts] = useState(gifts?.children[0]?.products);
 
-  useEffect(()=>{
-    const prods = gifts?.children.find((g: any)=> g.id === active);
-    setProducts(prods?.products)
-  }, [active])
+  useEffect(() => {
+    const prods = gifts?.children.find((g: any) => g.id === active);
+    setProducts(prods?.products);
+  }, [active]);
 
   return (
     <section className="relative mx-auto my-10 w-[91.12%] lg:my-[60px] lg:w-[91.67%] 4xl:w-[85%]">
@@ -87,23 +87,23 @@ export default function HomeGifts({ gifts }: any) {
 
         {/* content */}
 
-          <Swiper
-            slidesPerView={4}
-            loop={true}
-            rewind={true}
-            navigation={{
-              nextEl: ".swiper-button-next_gift",
-              prevEl: ".swiper-button-prev_gift",
-            }}
-            modules={[Navigation]}
-            className="mt-10 "
-          >
-            {products?.map((item: any, index: number) => (
-              <SwiperSlide key={index}>
-                <ProductCard product={item} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        <Swiper
+          slidesPerView={4}
+          loop={true}
+          rewind={true}
+          navigation={{
+            nextEl: ".swiper-button-next_gift",
+            prevEl: ".swiper-button-prev_gift",
+          }}
+          modules={[Navigation]}
+          className="mt-10 "
+        >
+          {products?.map((item: any, index: number) => (
+            <SwiperSlide key={index}>
+              <ProductCard product={item} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
 
       <div className="block lg:hidden">
@@ -135,33 +135,31 @@ export default function HomeGifts({ gifts }: any) {
 
         {/* content */}
 
-          <Swiper
-            slidesPerView={1}
-            loop={true}
-            rewind={true}
-            navigation={{
-              nextEl: ".swiper-button-next_giftMobile",
-              prevEl: ".swiper-button-prev_giftMobile",
-            }}
-            modules={[Navigation]}
-            className="mt-10"
-          >
-            {Array.from({ length: Math.ceil(products?.length / 4) })?.map(
-              (item, index) => (
-                <SwiperSlide key={index}>
-                  <div className="grid grid-cols-2 gap-4">
-                    {products
-                      ?.slice(index * 4, (index + 1) * 4)
-                      .map((item: any) => (
-                        <>
-                          <ProductCard product={item} />
-                        </>
-                      ))}
-                  </div>
-                </SwiperSlide>
-              )
-            )}
-          </Swiper>
+        <Swiper
+          slidesPerView={1}
+          loop={true}
+          rewind={true}
+          navigation={{
+            nextEl: ".swiper-button-next_giftMobile",
+            prevEl: ".swiper-button-prev_giftMobile",
+          }}
+          modules={[Navigation]}
+          className="mt-10"
+        >
+          {Array.from({ length: Math.ceil(products?.length / 4) })?.map(
+            (item, index) => (
+              <SwiperSlide key={index}>
+                <div className="grid grid-cols-2 gap-4">
+                  {products
+                    ?.slice(index * 4, (index + 1) * 4)
+                    .map((item: any, i: number) => (
+                      <ProductCard key={i} product={item} />
+                    ))}
+                </div>
+              </SwiperSlide>
+            ),
+          )}
+        </Swiper>
 
         <div className="flex-center mt-6 gap-x-3">
           <button className="swiper-button-next_giftMobile">
