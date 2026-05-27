@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import Button from "@/components/_modules/button/index";
 import ArrowLeft from "@/public/icons/arrowLeft";
-import axios from "axios";
 
 export default function Banner({ HomeBannerData }: any) {
   return (
@@ -19,7 +18,7 @@ export default function Banner({ HomeBannerData }: any) {
       url("${HomeBannerData?.["image_1"]}")`,
         }}
       >
-        <div className="mx-auto w-[91.12%] lg:w-[91.67%] 4xl:w-[85%]">
+        <div className="mx-auto w-[91.12%] lg:w-[91.67%] 4xl:w-[85%] mt-28 md:mt-0">
           <div className="w-full md:w-[450px] lg:w-[542px] 2xl:w-[700px]">
             <p className="block font-peyda-900 text-[44px] text-blue-1050 md:text-[80px] xl:text-[95px] xl:leading-[120px] 2xl:text-[130px] 2xl:leading-[160px]">
               {HomeBannerData?.["title_1"]}
