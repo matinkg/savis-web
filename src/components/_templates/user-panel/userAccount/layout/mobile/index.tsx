@@ -11,8 +11,6 @@ export default function MobileLayout({ children }: { children: any }) {
     children: pathname === "/user-panel" ? true : false,
   });
 
-  //   console.log(pathname);
-
   useEffect(() => {
     setToggle({
       sidebar: pathname === "/user-panel" ? true : false,

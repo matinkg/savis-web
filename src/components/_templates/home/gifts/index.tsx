@@ -144,7 +144,6 @@ export default function HomeGifts({ gifts }: any) {
               prevEl: ".swiper-button-prev_giftMobile",
             }}
             modules={[Navigation]}
-            // onSlideChange={(item) => console.log(item.activeIndex)}
             className="mt-10"
           >
             {Array.from({ length: Math.ceil(products?.length / 4) })?.map(

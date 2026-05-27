@@ -81,8 +81,6 @@ export default function ProductCard({ product }: propsType) {
     setTimeout(() => setIsAdded(false), 3000);
   };
 
-  console.log(product );
-
   return (
     <Link
       href={product?.slug}

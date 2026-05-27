@@ -35,7 +35,6 @@ export default function SignIn() {
     request(authApi?.ADMIN, "POST", ORIGIN_DATA)
       .then((res) => {
         if (!res?.error) {
-          // console.log(res);
           router.push("/admin-panel");
         } else {
           console.log(res.error);

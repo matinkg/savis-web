@@ -20,7 +20,6 @@ export default function GiftCardDetails() {
   useEffect(() => {
     if (id) {
       request(`/api/v1/user/gift-cards/${id}`).then((res) => {
-        console.log(res);
         setData(res?.data);
         setLoading(false);
       });

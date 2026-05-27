@@ -29,7 +29,6 @@ export default function ProductDetails() {
     selectedVariations,
     sizeText,
   } = useFetchData();
-  // console.log("🚀 ~ ProductDetails ~ selectedColorData:", selectedColorData);
 
   // -------------------------------------------------------------------------------
   const [packagingData, setPackingData] = useState<any>({});
@@ -59,8 +58,6 @@ export default function ProductDetails() {
   const { handleAddToWishList } = useOperation(fetchDataFromServer);
 
   // ----------------------------------------------------------------
-
-  console.log(data);
 
   return (
     <>

@@ -5,7 +5,6 @@ import Basket from "../process/basket";
 
 export default function CartTemplate() {
   const { state, dispatch, refreshCart } = useCart();
-  // console.log("🚀 ~ CartTemplate ~ state:", state);
   return (
     <div className="space-y-10">
       {state?.items?.length > 0 ? (

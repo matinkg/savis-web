@@ -29,21 +29,6 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
     refreshCart();
   };
 
-  // const thumbnails = [];
-
-  // if (selectedVariations?.gallery) {
-  //   thumbnails.push(...(selectedVariations.gallery as []));
-  // }
-
-  // if (productDetails?.product?.image) {
-  //   thumbnails.push(productDetails?.product?.image);
-  // }
-
-  // if (productDetails?.product?.gallery) {
-  //   thumbnails.push(...productDetails.product.gallery);
-  // }
-  // setImages(thumbnails as any);
-console.log(item)
   return (
     <div
       key={

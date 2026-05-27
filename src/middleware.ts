@@ -8,7 +8,6 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get("authToken");
   const pathname = req.nextUrl.pathname;
 
-  // اگر توکن وجود نداشته باشد
   if (!token) {
     if (protectedAdminRoutes.some((route) => pathname.startsWith(route))) {
       const adminLoginUrl = new URL("/auth/admin/signin", req.url);
@@ -22,7 +21,6 @@ export function middleware(req: NextRequest) {
   }
 
   const payload: any = ExtractPayloadEdgeFunctions(token.value);
-  console.log("🚀 ~ middleware ~ payload:", payload);
   const roles = Array.isArray(payload?.role) ? payload?.role : [payload?.role];
   return NextResponse.next();
 }

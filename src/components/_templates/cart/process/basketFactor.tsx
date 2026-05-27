@@ -71,7 +71,6 @@ export default function BasketFactor({
       setIsSubmitting(false);
     }
   };
-  console.log(state);
   return (
     <div className="lg:col-span-4 flex flex-col gap-y-6">
       <div className="flex flex-col items-center bg-gray-250 p-4 lg:p-6">

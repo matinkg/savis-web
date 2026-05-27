@@ -8,7 +8,6 @@ import { useCart } from "@/libs/context/cart-shopping/CartContext";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { state } = useCart();
 
-  console.log(state?.items)
   return (
     <>
       {/* banner  */}

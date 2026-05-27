@@ -16,8 +16,6 @@ export default function HeaderProfile() {
   const { userInfo } = useDataContext();
   const { state } = useCart();
 
-  // // console.log(userInfo);
-
   return (
     <>
       <div className="hidden lg:flex items-center gap-x-3">

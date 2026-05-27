@@ -3,16 +3,13 @@
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
-// import required modules
 import { Navigation } from "swiper/modules";
 import { useRouter } from "next/navigation";
 
 export default function CategorySwiper({ data }: any) {
-  // console.log(" ====================>", data);
   const [showCategory, setShowCategory] = useState();
   const router = useRouter(); // دسترسی به router
 
-  //   console.log(showCategory);
   const [active, setActive] = useState();
   const handleCategoryClick = (category: string) => {
     router.push(category);

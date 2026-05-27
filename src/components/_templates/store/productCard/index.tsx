@@ -32,7 +32,6 @@ export default function ProductCard({ product }: propsType) {
 
   useEffect(() => {
     setSelectedVariations(product?.variations ? product?.variations[0] : null);
-    console.log(product?.variations[0]);
   }, [product]);
 
   const handleWishListToggle = async (e: React.MouseEvent) => {
