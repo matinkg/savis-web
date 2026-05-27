@@ -53,6 +53,8 @@ module.exports = {
         "peyda-300": "PeydaWeb-Light",
       },
       screens: {
+        "xs": "450px",
+        "3xl": "1800px",
         "4xl": "2060px",
       },
       borderRadius: {

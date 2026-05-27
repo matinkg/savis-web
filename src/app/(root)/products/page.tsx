@@ -60,18 +60,20 @@ export default function Page() {
               <div className=" hidden lg:block">
                 <Filter />
               </div>
-              <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8 w-full max-w-screen-xl px-4 sm:px-6 lg:px-8">
-                {data?.products?.data?.map((item: any) => (
-                  <ProductCard key={item?.id} product={item} />
-                ))}
+              <div className="flex flex-col gap-5 w-full">
+                <div className="mx-auto grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 gap-x-3 sm:gap-x-6 gap-y-8 w-full">
+                  {data?.products?.data?.map((item: any) => (
+                    <ProductCard key={item?.id} product={item} />
+                  ))}
+                </div>
+                {data?.products?.last_page > 1 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={data?.products?.last_page}
+                    onPageChange={handlePageChange}
+                  />
+                )}
               </div>
-              {data?.products?.last_page > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={data?.products?.last_page}
-                  onPageChange={handlePageChange}
-                />
-              )}
             </div>
           </section>
 

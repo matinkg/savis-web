@@ -170,7 +170,7 @@ export default function ProductCard({ product }: propsType) {
           className="cursor-pointer"
           onClick={() => router.push(product.slug ?? "")}
         >
-          <div className="relative w-full aspect-[4/5] overflow-hidden rounded-md bg-white border border-gray-200">
+          <div className="relative w-full aspect-[4/5] flex items-center justify-center overflow-hidden rounded-md bg-white border border-gray-200">
             {product?.image ||
             product?.gallery?.length ||
             selectedVariations?.gallery?.length ? (
@@ -186,7 +186,7 @@ export default function ProductCard({ product }: propsType) {
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
-              <ImageIcon className="w-16 h-16 text-primary m-auto" />
+              <ImageIcon className="w-16 h-16 xs:w-24 xs:h-24 sm:w-32 sm:h-32 text-primary mb-4" />
             )}
           </div>
         </div>
