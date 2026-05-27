@@ -53,9 +53,9 @@ export default function GetPassword({ userPhone }: StepsProps) {
           className="eyePosition"
         >
           {showPassword ? (
-            <Eye className="h-6 w-6 text-white" />
+            <Eye className="h-6 w-6 text-[#0A141A]" />
           ) : (
-            <EyeSlash className="h-6 w-6 text-white" />
+            <EyeSlash className="h-6 w-6 text-[#0A141A]" />
           )}
         </div>
       </Input>
@@ -64,7 +64,7 @@ export default function GetPassword({ userPhone }: StepsProps) {
           {errors.password.message}
         </small>
       )} */}
-      <small className="mt-2 font-peyda-400 text-xs text-white/50">
+      <small className="mt-2 font-peyda-400 text-xs text-[#0A141A]">
         رمز عبور شما حتما باید شامل حروف کوچک و بزرگ ( A-z) ، اعداد (9-0) و
         متغیر ها (!،@،#،$،&،_،-) باشد.
       </small>
