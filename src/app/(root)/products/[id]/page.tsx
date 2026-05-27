@@ -141,7 +141,7 @@ export default function ProductDetails() {
 
             {/* =========================================================================== */}
 
-            <InstagramPosts className="my-10" />
+            <InstagramPosts className="hidden md:grid my-10" />
           </section>
         </>
       )}

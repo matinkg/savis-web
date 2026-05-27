@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <UserPanelLayout>{children}</UserPanelLayout>
 
       <section className="mx-auto mt-10 w-[91.12%] space-y-10 lg:mt-[60px] lg:w-[91.67%] lg:space-y-20 4xl:w-[85%]">
-        <InstagramPosts className="w-full" />
+        <InstagramPosts className="hidden md:grid w-full" />
       </section>
     </>
   );

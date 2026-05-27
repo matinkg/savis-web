@@ -165,7 +165,7 @@ export default function Branches() {
             ))}
           </div>
         </div>
-        <InstagramPosts className="my-10 w-full lg:my-[60px]" />
+        <InstagramPosts className="hidden md:grid my-10 w-full lg:my-[60px]" />
       </section>
     </>
   );

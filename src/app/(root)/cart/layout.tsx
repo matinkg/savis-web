@@ -32,7 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </>
           )}
         </>
-        <InstagramPosts className="w-full" />
+        <InstagramPosts className="hidden md:grid w-full" />
       </section>
     </>
   );
