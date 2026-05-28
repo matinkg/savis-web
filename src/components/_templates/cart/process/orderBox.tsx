@@ -59,6 +59,24 @@ export default function OrderBox({ isCompleted, state }: propsType) {
     }
   };
 
+  const getItemPrice = (item: any) => {
+    return item?.price ?? item?.product?.price ?? item?.oldPrice ?? 0;
+  };
+
+  const calcSubtotal = (items: any[] = []) => {
+    return items.reduce((sum, item) => {
+      return sum + getItemPrice(item) * (item?.quantity || 1);
+    }, 0);
+  };
+
+  const subtotal = calcSubtotal(state?.items || []);
+
+  const discountAmount = Number(
+    state?.discount?.amount ?? state?.discount ?? 0,
+  );
+
+  const finalTotal = subtotal + (state?.totalBoxPrice || 0) - discountAmount;
+
   const handleSelectGateway = (gatewayId: number) => {
     setSelectedGateway(gatewayId);
   };
@@ -105,7 +123,7 @@ export default function OrderBox({ isCompleted, state }: propsType) {
             جمع جزء
           </span>
           <span className="font-peyda-600 text-sm text-slate-1000/50 lg:text-lg">
-            {formatPrice(state?.original_price || 0)} تومان
+            {formatPrice(subtotal)} تومان
           </span>
         </div>
         <div className="flex items-center justify-between">
@@ -122,7 +140,7 @@ export default function OrderBox({ isCompleted, state }: propsType) {
             تخفیف
           </span>
           <span className="font-peyda-600 text-sm text-slate-1000/50 lg:text-lg">
-            {formatPrice(state?.discount || 0)} تومان
+            {formatPrice(discountAmount)} تومان
           </span>
         </div>
         <div className="flex items-center justify-between">
@@ -130,7 +148,7 @@ export default function OrderBox({ isCompleted, state }: propsType) {
             مجموع
           </span>
           <span className="text-slate-1050 font-peyda-600 text-lg lg:text-2xl">
-            {formatPrice(state?.totalAmount || 0)} تومان
+            {formatPrice(finalTotal)} تومان
           </span>
         </div>
       </div>
