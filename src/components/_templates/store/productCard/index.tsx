@@ -24,13 +24,10 @@ type PropsType = {
 export default function ProductCard({ product }: PropsType) {
   const router = useRouter();
   const { dispatch } = useCart();
-
   const { handleAddToWishList } = useWishOperation();
 
   const [isAdded, setIsAdded] = useState(false);
-
   const [isLoadingWish, setIsLoadingWish] = useState(false);
-
   const [selectedVariations, setSelectedVariations] = useState<any>(null);
 
   const [like, setLike] = useState({
@@ -42,57 +39,29 @@ export default function ProductCard({ product }: PropsType) {
     setSelectedVariations(product?.variations?.[0] || null);
   }, [product]);
 
-  const currentData = selectedVariations || product;
+  const price = Number(product?.price || 0);
 
-  const price = Number(currentData?.price || 0);
-
-  const discountValue = Number(
-    currentData?.discount ??
-      currentData?.discount_value ??
-      product?.discount ??
-      product?.discount_value ??
-      0,
+  const finalPriceBeforeDiscount = Number(
+    product?.final_price_before_discount || 0,
   );
 
-  const discountType = currentData?.discount_type || product?.discount_type;
+  const discountText = product?.discount_text ?? "";
 
-  const hasDiscount = discountValue > 0;
+  const hasDiscount =
+    discountText &&
+    discountText !== "0%" &&
+    discountText !== "0" &&
+    finalPriceBeforeDiscount > price;
 
-  let originalPrice = price;
+  const stock = product?.stock ?? 0;
 
-  if (hasDiscount) {
-    if (discountType === "fixed") {
-      originalPrice = price + discountValue;
-    }
-
-    if (discountType === "percentage") {
-      originalPrice = Math.round(price / (1 - discountValue / 100));
-    }
-  }
-
-  let discountPercent = 0;
-
-  if (hasDiscount) {
-    if (discountType === "fixed") {
-      discountPercent = Math.round((discountValue / originalPrice) * 100);
-    }
-
-    if (discountType === "percentage") {
-      discountPercent = discountValue;
-    }
-  }
-
-  const stock = currentData?.stock ?? product?.stock ?? 0;
-
-  const isPreorder =
-    Number(currentData?.can_preorder ?? product?.can_preorder) === 1;
+  const isPreorder = Number(product?.can_preorder ?? 0) === 1;
 
   const isOutOfStock = stock <= 0 && !isPreorder;
 
   const showPreorder = stock <= 0 && isPreorder;
 
-  const productImage =
-    selectedVariations?.gallery?.[0] || product?.image || product?.gallery?.[0];
+  const productImage = product?.image || product?.gallery?.[0];
 
   const handleWishListToggle = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -116,19 +85,7 @@ export default function ProductCard({ product }: PropsType) {
   };
 
   const handleAddToCart = () => {
-    const variationStock = selectedVariations?.stock ?? 0;
-    const productStock = product?.stock ?? 0;
-
-    const variationCanPreorder = Number(selectedVariations?.can_preorder) === 1;
-
-    const productCanPreorder = Number(product?.can_preorder) === 1;
-
-    const baseStock = selectedVariations ? variationStock : productStock;
-    const baseCanPreorder = selectedVariations
-      ? variationCanPreorder
-      : productCanPreorder;
-
-    const isOutOfStockCompletely = baseStock <= 0 && !baseCanPreorder;
+    const isOutOfStockCompletely = stock <= 0 && !isPreorder;
 
     if (isOutOfStockCompletely) {
       return swal({
@@ -146,40 +103,25 @@ export default function ProductCard({ product }: PropsType) {
       });
     }
 
-    const is_preorder = baseStock <= 0 && baseCanPreorder;
+    const is_preorder = stock <= 0 && isPreorder;
 
-    let finalPrice = selectedVariations?.price || product?.price;
-
-    if (is_preorder) {
-      const value = selectedVariations
-        ? selectedVariations.preorder_price
-        : product.preorder_price;
-
-      const type = selectedVariations
-        ? selectedVariations.preorder_price_type
-        : product.preorder_price_type;
-
-      finalPrice =
-        type === "fixed"
-          ? finalPrice - Number(value || 0)
-          : finalPrice - (finalPrice * Number(value || 0)) / 100;
-    }
+    const finalPrice = product?.price;
 
     const itemToAdd = {
       product,
       slug: product?.slug,
       product_id: product?.id,
-      name: selectedVariations?.name || product?.name,
-      image: selectedVariations?.gallery?.[0] || product?.image,
+      name: product?.name,
+      image: product?.image,
       price: finalPrice,
       quantity: 1,
       sku: product?.sku,
-      variation_sku: selectedVariations?.sku || "",
-      variation: selectedVariations,
-      color: selectedVariations?.color_name,
-      stockQuantity: selectedVariations?.stock || 0,
+      variation_sku: "",
+      variation: null,
+      color: "",
+      stockQuantity: product?.stock || 0,
       wage: product?.wage,
-      weight: selectedVariations?.weight || product?.weight,
+      weight: product?.weight,
       type: "product",
       is_preorder,
     };
@@ -213,7 +155,7 @@ export default function ProductCard({ product }: PropsType) {
 
         {hasDiscount ? (
           <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-red-250 px-3 py-1.5 font-peyda-400 text-xs text-white">
-            ٪{discountPercent.toLocaleString("fa-IR")} تخفیف
+            {discountText} تخفیف
           </div>
         ) : isOutOfStock ? (
           <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-slate-1000/50 px-3 py-1.5 font-peyda-400 text-xs text-white">
@@ -251,7 +193,6 @@ export default function ProductCard({ product }: PropsType) {
           {isAdded ? (
             <>
               <Check className="h-5 w-5 text-blue-1050" />
-
               <span className="font-peyda-400 text-xs text-blue-1050 sm:text-sm lg:text-base">
                 به سبد خرید اضافه شد!
               </span>
@@ -261,7 +202,6 @@ export default function ProductCard({ product }: PropsType) {
               <span className="font-peyda-400 text-xs text-blue-1050 sm:text-sm lg:text-base">
                 {showPreorder ? "افزودن (پیش‌فروش)" : "افزودن به سبد خرید"}
               </span>
-
               <Bag className="h-4 w-4 text-blue-1050 sm:h-5 sm:w-5" />
             </>
           )}
@@ -285,14 +225,13 @@ export default function ProductCard({ product }: PropsType) {
             <>
               {hasDiscount && (
                 <span className="text-sm text-gray-400 line-through sm:text-base">
-                  {Number(originalPrice).toLocaleString("fa-IR")} تومان
+                  {Number(finalPriceBeforeDiscount).toLocaleString("fa-IR")}{" "}
+                  تومان
                 </span>
               )}
 
               <span className="font-peyda-500 text-xs text-blue-1050 sm:text-sm lg:text-base">
-                {Number(price) !== 0
-                  ? `${Number(price).toLocaleString("fa-IR")} تومان`
-                  : "تماس بگیرید"}
+                {Number(price).toLocaleString("fa-IR")} تومان
               </span>
             </>
           )}
