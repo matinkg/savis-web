@@ -19,6 +19,7 @@ import { usePathname } from "next/navigation";
 import GetCodeInputComponent from "@/components/_modules/get codeInputComponent";
 import { useCart } from "@/libs/context/cart-shopping/CartContext";
 import Info from "@/public/icons/info";
+import ImageIcon from "@/public/icons/image";
 
 export default function ProductDataDetails({
   productDetails,
@@ -160,9 +161,17 @@ export default function ProductDataDetails({
   return (
     <>
       <div className="mb-10 grid grid-cols-1 gap-y-6 lg:grid-cols-5 lg:gap-x-10">
-        <div className="lg:col-span-2 product-gallery-container">
-          <Thumbnails images={images} />
-        </div>
+        {images?.length > 0 ? (
+          <div className="lg:col-span-2 product-gallery-container">
+            <Thumbnails images={images} />
+          </div>
+        ) : (
+          <div className="lg:col-span-2">
+            <ImageIcon className="text-secendry w-[80%]" />
+          </div>
+        )}
+
+        {}
         <div className="lg:col-span-3">
           <div className="border-b border-solid border-b-slate-1000/20 pb-4">
             <div className="flex items-center justify-between">
