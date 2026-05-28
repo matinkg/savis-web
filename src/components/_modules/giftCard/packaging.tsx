@@ -20,7 +20,9 @@ export default function Packaging({
   packagingData,
 }: PackagingProps) {
   const [showModal, setShowModal] = useState(false);
-  const [selectedButtonIndex, setSelectedButtonIndex] = useState<number | null>(null);
+  const [selectedButtonIndex, setSelectedButtonIndex] = useState<number | null>(
+    null,
+  );
   const [url, setUrl] = useState<string | null>(null);
 
   const { data, isLoading } = useSWR(url, fetcher, {
@@ -44,20 +46,14 @@ export default function Packaging({
   };
 
   const count = data?.length || 0;
-  const visibleCards = Math.min(count, 3);
-  const cardWidth = 288;
-  const gap = 16;
-  const widthPx = visibleCards * cardWidth + (visibleCards - 1) * gap;
 
   const isScrollable = count >= 3;
-
-  // Dynamic grid-cols class based on count
   const gridColsClass =
     count === 1
-      ? "grid-cols-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-1"
+      ? "grid-cols-1"
       : count === 2
-      ? "grid-cols-2"
-      : "grid-cols-3";
+        ? "grid-cols-1 sm:grid-cols-2"
+        : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
 
   return (
     <>
@@ -75,7 +71,7 @@ export default function Packaging({
         modalTitle="انتخاب بسته بندی کارت هدیه"
         modalTitleStyle="w-full flex"
         headingDivStyle="py-2"
-        modalStylel="px-6 py-4"
+        modalStylel="px-6 py-4 min-w-[300px] sm:w-[450px] lg:w-[650px]"
       >
         {isLoading ? (
           <Spinner className="w-6 h-6 text-primary" type="spinner" />
@@ -83,10 +79,10 @@ export default function Packaging({
           <div
             className={`mx-auto mb-2 grid gap-4 ${gridColsClass} ${
               isScrollable
-                ? "max-h-[450px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-slate-100"
+                ? "max-h-[450px] overflow-y-auto hide-scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100"
                 : ""
             }`}
-            style={{ width: `${widthPx}px` }}
+            // style={{ width: `${widthPx}px` }}
           >
             {data?.map((item: any) => (
               <GiftCard
