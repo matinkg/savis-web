@@ -5,7 +5,7 @@ progress[value] {
   /* the background color */
   /* --background: lightgrey;  */
   --background: linear-gradient(rgba(13, 13, 13, 0.533), rgba(51, 51, 51, 0)),
-    repeating-linear-gradient(135deg, #0796b2 0 7px, #006abcaa 0 12px), #2d5b75;
+    repeating-linear-gradient(135deg, #b51818 0 7px, #780000 0 12px), #2d5b75;
 
   -webkit-appearance: none !important;
   -moz-appearance: none;
