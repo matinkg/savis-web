@@ -85,7 +85,7 @@ export default function ProductCard({ product }: PropsType) {
   const stock = currentData?.stock ?? product?.stock ?? 0;
 
   const isPreorder =
-    Number(currentData?.is_preorder ?? product?.is_preorder) === 1;
+    Number(currentData?.can_preorder ?? product?.can_preorder) === 1;
 
   const isOutOfStock = stock <= 0 && !isPreorder;
 
@@ -93,7 +93,6 @@ export default function ProductCard({ product }: PropsType) {
 
   const productImage =
     selectedVariations?.gallery?.[0] || product?.image || product?.gallery?.[0];
-
 
   const handleWishListToggle = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -117,12 +116,21 @@ export default function ProductCard({ product }: PropsType) {
   };
 
   const handleAddToCart = () => {
-    if (
-      (selectedVariations?.sku &&
-        selectedVariations?.stock <= 0 &&
-        !selectedVariations?.can_preorder) ||
-      (product?.stock <= 0 && !selectedVariations?.can_preorder)
-    ) {
+    const variationStock = selectedVariations?.stock ?? 0;
+    const productStock = product?.stock ?? 0;
+
+    const variationCanPreorder = Number(selectedVariations?.can_preorder) === 1;
+
+    const productCanPreorder = Number(product?.can_preorder) === 1;
+
+    const baseStock = selectedVariations ? variationStock : productStock;
+    const baseCanPreorder = selectedVariations
+      ? variationCanPreorder
+      : productCanPreorder;
+
+    const isOutOfStockCompletely = baseStock <= 0 && !baseCanPreorder;
+
+    if (isOutOfStockCompletely) {
       return swal({
         title: "موجودی ناکافی!",
         text: "متأسفیم، این کالا در حال حاضر ناموجود است.",
@@ -132,62 +140,48 @@ export default function ProductCard({ product }: PropsType) {
             text: "بستن",
             value: true,
             visible: true,
-            className: "",
             closeModal: true,
           },
         },
       });
     }
 
-    let is_preorder =
-      selectedVariations?.stock <= 0 && selectedVariations?.can_preorder;
+    const is_preorder = baseStock <= 0 && baseCanPreorder;
 
     let finalPrice = selectedVariations?.price || product?.price;
 
     if (is_preorder) {
-      if (selectedVariations) {
-        finalPrice =
-          selectedVariations.preorder_price_type === "fixed"
-            ? finalPrice - selectedVariations.preorder_price
-            : finalPrice * (selectedVariations.preorder_price / 100);
-      } else {
-        finalPrice =
-          product.preorder_price_type === "fixed"
-            ? finalPrice - product.preorder_price
-            : finalPrice * (product.preorder_price / 100);
-      }
+      const value = selectedVariations
+        ? selectedVariations.preorder_price
+        : product.preorder_price;
+
+      const type = selectedVariations
+        ? selectedVariations.preorder_price_type
+        : product.preorder_price_type;
+
+      finalPrice =
+        type === "fixed"
+          ? finalPrice - Number(value || 0)
+          : finalPrice - (finalPrice * Number(value || 0)) / 100;
     }
 
     const itemToAdd = {
       product,
-
       slug: product?.slug,
-
       product_id: product?.id,
-
       name: selectedVariations?.name || product?.name,
-
       image: selectedVariations?.gallery?.[0] || product?.image,
-
       price: finalPrice,
-
       quantity: 1,
-
       sku: product?.sku,
-
       variation_sku: selectedVariations?.sku || "",
-
       variation: selectedVariations,
-
       color: selectedVariations?.color_name,
-
       stockQuantity: selectedVariations?.stock || 0,
-
       wage: product?.wage,
-
       weight: selectedVariations?.weight || product?.weight,
-
       type: "product",
+      is_preorder,
     };
 
     dispatch({
@@ -197,10 +191,7 @@ export default function ProductCard({ product }: PropsType) {
     });
 
     setIsAdded(true);
-
-    setTimeout(() => {
-      setIsAdded(false);
-    }, 3000);
+    setTimeout(() => setIsAdded(false), 3000);
   };
 
   return (
@@ -286,17 +277,25 @@ export default function ProductCard({ product }: PropsType) {
         </Link>
 
         <div className="flex items-center gap-x-2">
-          {hasDiscount && (
-            <span className="text-sm text-gray-400 line-through sm:text-base">
-              {Number(originalPrice).toLocaleString("fa-IR")} تومان
+          {isOutOfStock ? (
+            <span className="font-peyda-500 text-xs text-red-500 sm:text-sm lg:text-base">
+              ناموجود
             </span>
-          )}
+          ) : (
+            <>
+              {hasDiscount && (
+                <span className="text-sm text-gray-400 line-through sm:text-base">
+                  {Number(originalPrice).toLocaleString("fa-IR")} تومان
+                </span>
+              )}
 
-          <span className="font-peyda-500 text-xs text-blue-1050 sm:text-sm lg:text-base">
-            {Number(price) !== 0
-              ? `${Number(price).toLocaleString("fa-IR")} تومان`
-              : "تماس بگیرید"}
-          </span>
+              <span className="font-peyda-500 text-xs text-blue-1050 sm:text-sm lg:text-base">
+                {Number(price) !== 0
+                  ? `${Number(price).toLocaleString("fa-IR")} تومان`
+                  : "تماس بگیرید"}
+              </span>
+            </>
+          )}
         </div>
       </div>
     </div>
