@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { request } from "@/configs/HTTPService";
 import Image from "next/image";
+import ImageIcon from "@/public/icons/image";
 
 type propsType = {
   item: CartItem;
@@ -11,11 +12,7 @@ type propsType = {
   refreshCart: any;
 };
 
-export default function BasketCart({
-  item,
-  dispatch,
-  refreshCart,
-}: propsType) {
+export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
   const handelRemoveItem = (id: number) => {
     dispatch({ type: "REMOVE_ITEM", id, dispatch });
   };
@@ -62,6 +59,15 @@ export default function BasketCart({
     }
   }
 
+  const hasImage =
+    item?.variation?.gallery?.length > 0 ||
+    item?.product?.image ||
+    item?.gift_card?.image;
+
+  const isPreorder =
+    Number(item?.product?.can_preorder ?? item?.variation?.can_preorder) ===
+      1 && Number(item?.product?.stock ?? item?.variation?.stock ?? 0) === 0;
+
   return (
     <div
       key={
@@ -73,30 +79,39 @@ export default function BasketCart({
       className="w-full flex bg-gray-250 p-4 rounded-lg shadow-sm"
     >
       <div className="w-[90%] sm:w-[60%] xl:w-[50%] grid grid-cols-12 gap-x-4">
-        <Image
-          width={250}
-          height={200}
-          src={
-            item?.variation?.gallery?.length > 0
-              ? item?.variation?.gallery[0]
-              : (item?.product?.image ?? item?.gift_card?.image ?? "")
-          }
-          alt={
-            item?.variation?.name ??
-            item?.product?.name ??
-            item?.gift_card?.name ??
-            ""
-          }
-          className="rounded-md object-cover col-span-5 lg:col-span-6 3xl:col-span-5"
-        />
+        <div className="relative col-span-5 lg:col-span-6 3xl:col-span-5 aspect-[5/5]">
+          {hasImage ? (
+            <Image
+              src={
+                item?.variation?.gallery?.length > 0
+                  ? item?.variation?.gallery[0]
+                  : (item?.product?.image ?? item?.gift_card?.image ?? "")
+              }
+              alt={
+                item?.variation?.name ??
+                item?.product?.name ??
+                item?.gift_card?.name ??
+                ""
+              }
+              fill
+              className="rounded-md object-cover"
+            />
+          ) : (
+            <div className="flex items-center justify-center w-full h-full bg-gray-100 rounded-md">
+              <ImageIcon
+                className={`h-16 w-16 3xl:w-24 3xl:h-24 ${isPreorder ? "text-yellow-600" : "text-primary"}`}
+              />
+            </div>
+          )}
 
-        <div className="col-span-7 lg:col-span-6 3xl:col-span-7 my-auto flex flex-col gap-y-2 font-peyda-600 text-sm sm:gap-y-3 sm:text-lg">
-          {item?.is_preorder && (
-            <span className="ml-2 px-2 py-1 w-20 text-xs sm:text-sm bg-yellow-400 text-white rounded-md">
+          {isPreorder && (
+            <span className="absolute top-2 right-2 bg-yellow-600 text-white text-xs px-2 py-1 rounded-md">
               پیش‌فروش
             </span>
           )}
+        </div>
 
+        <div className="col-span-7 lg:col-span-6 3xl:col-span-7 my-auto flex flex-col gap-y-2 font-peyda-600 text-sm sm:gap-y-3 sm:text-lg">
           <div className="flex items-center gap-x-2">
             {/* quantity actions */}
           </div>
@@ -110,15 +125,13 @@ export default function BasketCart({
                 item?.product?.name ??
                 item?.gift_card?.name}
             </Link>
-             × {item?.quantity}
-
+            × {item?.quantity}
             {item?.box?.id && (
               <span className="text-gray-600 text-xs sm:text-sm ml-2">
                 | بسته‌بندی: {item?.box?.name} (
                 {Number(item?.box?.price).toLocaleString("fa-IR")} تومان)
               </span>
             )}
-
             {item?.box?.id && (
               <button
                 onClick={() => handleRemoveBox(item?.id as any)}
