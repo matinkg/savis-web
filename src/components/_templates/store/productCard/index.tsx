@@ -136,6 +136,14 @@ export default function ProductCard({ product }: PropsType) {
     setTimeout(() => setIsAdded(false), 3000);
   };
 
+  const rawDiscountText = product?.discount_text ?? "";
+
+  const parsedDiscountNumber = Number(rawDiscountText.replace("%", "").trim());
+
+  const discountDisplay = isNaN(parsedDiscountNumber)
+    ? rawDiscountText
+    : `${Math.round(parsedDiscountNumber).toLocaleString("fa-IR")}%`;
+
   return (
     <div className="group mx-auto flex w-full flex-col gap-y-4">
       <div className="relative w-full">
@@ -155,14 +163,16 @@ export default function ProductCard({ product }: PropsType) {
 
         {hasDiscount ? (
           <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-red-250 px-3 py-1.5 font-peyda-400 text-xs text-white">
-            {discountText} تخفیف
+            {discountDisplay} تخفیف
           </div>
         ) : isOutOfStock ? (
           <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-slate-1000/50 px-3 py-1.5 font-peyda-400 text-xs text-white">
             ناموجود
           </div>
         ) : showPreorder ? (
-          <div className={`flex-center absolute right-[14px] top-[14px] z-10 w-fit px-3 py-1.5 font-peyda-400 text-xs text-white ${isPreorder ? "bg-yellow-600" : "bg-secendry"}`}>
+          <div
+            className={`flex-center absolute right-[14px] top-[14px] z-10 w-fit px-3 py-1.5 font-peyda-400 text-xs text-white ${isPreorder ? "bg-yellow-600" : "bg-secendry"}`}
+          >
             پیش سفارش
           </div>
         ) : null}
@@ -181,7 +191,9 @@ export default function ProductCard({ product }: PropsType) {
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
-              <ImageIcon className={`mb-4 h-16 w-16 xs:h-24 xs:w-24 sm:h-32 sm:w-32 ${isPreorder ? "text-yellow-600" : "text-primary"}`} />
+              <ImageIcon
+                className={`mb-4 h-16 w-16 xs:h-24 xs:w-24 sm:h-32 sm:w-32 ${isPreorder ? "text-yellow-600" : "text-primary"}`}
+              />
             )}
           </div>
         </div>
