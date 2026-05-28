@@ -39,7 +39,7 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
       }
       className="w-full flex bg-gray-250 p-4 rounded-lg shadow-sm"
     >
-      <div className="w-[90%] xl:w-[70%] grid grid-cols-2 gap-x-2 lg:gap-x-4">
+      <div className="w-[90%] lg:w-[60%] xl:w-[50%] grid grid-cols-2 gap-x-2 lg:gap-x-4">
         <Image
           width={250}
           height={200}
@@ -54,7 +54,7 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
             item?.gift_card?.name ??
             ""
           }
-          className="w-full h-[200px] rounded-md"
+          className="w-wull rounded-md object-cover"
         />
 
         <div className="my-auto flex flex-col gap-y-2 font-peyda-600 text-sm lg:gap-y-3 lg:text-lg">
@@ -142,7 +142,7 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
         </div>
       </div>
 
-      <div className="w-[10%] xl:w-[30%] relative flex items-center justify-end pl-4">
+      <div className="w-[10%] lg:w-[40%] xl:w-[50%] relative flex items-center justify-end pl-4">
         <Trash
           onClick={() =>
             handelRemoveItem(
