@@ -116,6 +116,14 @@ export default function BasketFactor({
 
   const discountAmount = Number(state?.discount ?? 0);
 
+  const getItemPrice = (item: any) =>
+    item?.price ?? item?.product?.price ?? item?.oldPrice ?? 0;
+
+  const subtotal = (state?.items || []).reduce(
+    (acc, item) => acc + getItemPrice(item) * (item?.quantity || 1),
+    0,
+  );
+
   return (
     <div className="lg:col-span-4 flex flex-col gap-y-6">
       <div className="flex flex-col items-center bg-gray-250 p-4 lg:p-6">
@@ -130,8 +138,7 @@ export default function BasketFactor({
             </span>
 
             <span className="font-peyda-600 text-base text-slate-1000/50 lg:text-lg">
-              {formatPrice(state?.original_price ?? state?.totalAmount ?? 0)}{" "}
-              تومان
+              {formatPrice(subtotal)} تومان
             </span>
           </div>
 
