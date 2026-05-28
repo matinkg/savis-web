@@ -162,7 +162,7 @@ export default function ProductCard({ product }: PropsType) {
             ناموجود
           </div>
         ) : showPreorder ? (
-          <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-secendry px-3 py-1.5 font-peyda-400 text-xs text-white">
+          <div className={`flex-center absolute right-[14px] top-[14px] z-10 w-fit px-3 py-1.5 font-peyda-400 text-xs text-white ${isPreorder ? "bg-yellow-600" : "bg-secendry"}`}>
             پیش سفارش
           </div>
         ) : null}
@@ -181,7 +181,7 @@ export default function ProductCard({ product }: PropsType) {
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
-              <ImageIcon className="mb-4 h-16 w-16 text-primary xs:h-24 xs:w-24 sm:h-32 sm:w-32" />
+              <ImageIcon className={`mb-4 h-16 w-16 xs:h-24 xs:w-24 sm:h-32 sm:w-32 ${isPreorder ? "text-yellow-600" : "text-primary"}`} />
             )}
           </div>
         </div>
