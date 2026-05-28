@@ -14,7 +14,6 @@ import Pagination from "@/components/_modules/pagination";
 
 export default function Page() {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
-
   const { data, loading, currentPage, handlePageChange } = useOperation();
 
   return (

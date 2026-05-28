@@ -1,43 +1,105 @@
 "use client";
+
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import swal from "sweetalert";
+
 import Button from "@/components/_modules/button";
+import useWishOperation from "@/components/_modules/productCard/hook/useWishOperation";
+import { useCart } from "@/libs/context/cart-shopping/CartContext";
+
 import Bag from "@/public/icons/Bag";
 import HeartBold from "@/public/icons/heartBold";
 import Like from "@/public/icons/Like";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
 import ImageIcon from "@/public/icons/image";
-import useWishOperation from "@/components/_modules/productCard/hook/useWishOperation";
-import { useCart } from "@/libs/context/cart-shopping/CartContext";
 import Check from "@/public/icons/check";
-import swal from "sweetalert";
-import Image from "next/image";
 
-type propsType = {
+type PropsType = {
   product: any;
   getDataFromServer?: any;
 };
 
-export default function ProductCard({ product }: propsType) {
+export default function ProductCard({ product }: PropsType) {
+  const router = useRouter();
+  const { dispatch } = useCart();
+
+  const { handleAddToWishList } = useWishOperation();
+
+  const [isAdded, setIsAdded] = useState(false);
+
+  const [isLoadingWish, setIsLoadingWish] = useState(false);
+
+  const [selectedVariations, setSelectedVariations] = useState<any>(null);
+
   const [like, setLike] = useState({
     status: product?.isFavorite ?? false,
     productId: product?.id,
   });
-  const [isAdded, setIsAdded] = useState(false);
-  const [selectedVariations, setSelectedVariations] = useState<any>(null);
-
-  const [isLoadingWish, setIsLoadingWish] = useState(false);
-
-  const { handleAddToWishList } = useWishOperation();
 
   useEffect(() => {
-    setSelectedVariations(product?.variations ? product?.variations[0] : null);
+    setSelectedVariations(product?.variations?.[0] || null);
   }, [product]);
+
+  const currentData = selectedVariations || product;
+
+  const price = Number(currentData?.price || 0);
+
+  const discountValue = Number(
+    currentData?.discount ??
+      currentData?.discount_value ??
+      product?.discount ??
+      product?.discount_value ??
+      0,
+  );
+
+  const discountType = currentData?.discount_type || product?.discount_type;
+
+  const hasDiscount = discountValue > 0;
+
+  let originalPrice = price;
+
+  if (hasDiscount) {
+    if (discountType === "fixed") {
+      originalPrice = price + discountValue;
+    }
+
+    if (discountType === "percentage") {
+      originalPrice = Math.round(price / (1 - discountValue / 100));
+    }
+  }
+
+  let discountPercent = 0;
+
+  if (hasDiscount) {
+    if (discountType === "fixed") {
+      discountPercent = Math.round((discountValue / originalPrice) * 100);
+    }
+
+    if (discountType === "percentage") {
+      discountPercent = discountValue;
+    }
+  }
+
+  const stock = currentData?.stock ?? product?.stock ?? 0;
+
+  const isPreorder =
+    Number(currentData?.is_preorder ?? product?.is_preorder) === 1;
+
+  const isOutOfStock = stock <= 0 && !isPreorder;
+
+  const showPreorder = stock <= 0 && isPreorder;
+
+  const productImage =
+    selectedVariations?.gallery?.[0] || product?.image || product?.gallery?.[0];
+
 
   const handleWishListToggle = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
     if (isLoadingWish) return;
+
     setIsLoadingWish(true);
 
     try {
@@ -53,9 +115,6 @@ export default function ProductCard({ product }: propsType) {
       setIsLoadingWish(false);
     }
   };
-
-  const router = useRouter();
-  const { dispatch } = useCart();
 
   const handleAddToCart = () => {
     if (
@@ -83,68 +142,77 @@ export default function ProductCard({ product }: propsType) {
     let is_preorder =
       selectedVariations?.stock <= 0 && selectedVariations?.can_preorder;
 
-    let price = selectedVariations?.price || product?.price;
+    let finalPrice = selectedVariations?.price || product?.price;
 
     if (is_preorder) {
       if (selectedVariations) {
-        price =
+        finalPrice =
           selectedVariations.preorder_price_type === "fixed"
-            ? price - selectedVariations.preorder_price
-            : price * (selectedVariations.preorder_price / 100);
+            ? finalPrice - selectedVariations.preorder_price
+            : finalPrice * (selectedVariations.preorder_price / 100);
       } else {
-        price =
+        finalPrice =
           product.preorder_price_type === "fixed"
-            ? price - product.preorder_price
-            : price * (product.preorder_price / 100);
+            ? finalPrice - product.preorder_price
+            : finalPrice * (product.preorder_price / 100);
       }
     }
 
     const itemToAdd = {
-      product: product,
+      product,
+
       slug: product?.slug,
+
       product_id: product?.id,
+
       name: selectedVariations?.name || product?.name,
-      image: selectedVariations?.gallery[0] || product?.image,
-      price: selectedVariations?.price || product?.price,
+
+      image: selectedVariations?.gallery?.[0] || product?.image,
+
+      price: finalPrice,
+
       quantity: 1,
+
       sku: product?.sku,
+
       variation_sku: selectedVariations?.sku || "",
+
       variation: selectedVariations,
+
       color: selectedVariations?.color_name,
+
       stockQuantity: selectedVariations?.stock || 0,
+
       wage: product?.wage,
+
       weight: selectedVariations?.weight || product?.weight,
+
       type: "product",
     };
 
-    dispatch({ type: "ADD_ITEM", item: itemToAdd, dispatch });
+    dispatch({
+      type: "ADD_ITEM",
+      item: itemToAdd,
+      dispatch,
+    });
+
     setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 3000);
+
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 3000);
   };
 
-  const price = Number(selectedVariations?.price || product?.price);
-  const originalPrice = Number(
-    selectedVariations?.original_price || product?.original_price
-  );
-  const discount =
-    selectedVariations?.discount_type === "percentage"
-      ? selectedVariations?.discount_value
-      : 0;
-  const preOrder = selectedVariations?.can_preorder;
-  const count = selectedVariations?.stock || product?.stock || 0;
-
   return (
-    <div className="group flex flex-col gap-y-4 w-full mx-auto">
-      {/* Card Container */}
+    <div className="group mx-auto flex w-full flex-col gap-y-4">
       <div className="relative w-full">
-        {/* Wishlist Button */}
         <Button
           onClick={handleWishListToggle}
           disabled={isLoadingWish}
           className="absolute left-2 top-2 z-10 rounded-md bg-gray-250 p-2 transition-all hover:scale-105"
         >
           {isLoadingWish ? (
-            <div className="animate-spin h-5 w-5 border-t-2 border-blue-1050 rounded-full" />
+            <div className="h-5 w-5 animate-spin rounded-full border-t-2 border-blue-1050" />
           ) : like.status ? (
             <HeartBold className="h-5 w-5 text-rose-600 sm:h-6 sm:w-6" />
           ) : (
@@ -152,88 +220,81 @@ export default function ProductCard({ product }: propsType) {
           )}
         </Button>
 
-        {/* Image Section */}
-        {discount !== 0 ? (
-          <div className="flex-center z-10 absolute right-[14px] top-[14px] w-fit bg-red-250 px-3 py-1.5 font-peyda-400 text-xs text-white">
-            % {discount}
+        {hasDiscount ? (
+          <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-red-250 px-3 py-1.5 font-peyda-400 text-xs text-white">
+            ٪{discountPercent.toLocaleString("fa-IR")} تخفیف
           </div>
-        ) : count === 0 && !preOrder ? (
-          <div className="flex-center z-10 absolute right-[14px] top-[14px] w-fit bg-slate-1000/50 px-3 py-1.5 font-peyda-400 text-xs text-white">
-            نا موجود
+        ) : isOutOfStock ? (
+          <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-slate-1000/50 px-3 py-1.5 font-peyda-400 text-xs text-white">
+            ناموجود
           </div>
-        ) : preOrder ? (
-          <div className="flex-center z-10 absolute right-[14px] top-[14px] w-fit bg-secendry px-3 py-1.5 font-peyda-400 text-xs text-white">
+        ) : showPreorder ? (
+          <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-secendry px-3 py-1.5 font-peyda-400 text-xs text-white">
             پیش سفارش
           </div>
         ) : null}
+
         <div
           className="cursor-pointer"
-          onClick={() => router.push(product.slug ?? "")}
+          onClick={() => router.push(product?.slug ?? "")}
         >
-          <div className="relative w-full aspect-[4/5] flex items-center justify-center overflow-hidden rounded-md bg-white border border-gray-200">
-            {product?.image ||
-            product?.gallery?.length ||
-            selectedVariations?.gallery?.length ? (
+          <div className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-md border border-gray-200 bg-white">
+            {productImage ? (
               <Image
-                src={
-                  selectedVariations?.gallery?.[0] ||
-                  product?.image ||
-                  product?.gallery?.[0]
-                }
+                src={productImage}
                 alt={product?.name}
                 fill
                 sizes="(min-width: 768px) 20vw, 45vw"
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
-              <ImageIcon className="w-16 h-16 xs:w-24 xs:h-24 sm:w-32 sm:h-32 text-primary mb-4" />
+              <ImageIcon className="mb-4 h-16 w-16 text-primary xs:h-24 xs:w-24 sm:h-32 sm:w-32" />
             )}
           </div>
         </div>
 
-        {/* Add to cart button */}
         <Button
           onClick={handleAddToCart}
-          className="absolute bottom-3 left-1/2 -translate-x-1/2 w-[90%] flex items-center justify-center gap-x-2 bg-gray-250 py-2 sm:py-2.5 lg:py-3 rounded-md shadow transition-all"
+          className="absolute bottom-3 left-1/2 flex w-[90%] -translate-x-1/2 items-center justify-center gap-x-2 rounded-md bg-gray-250 py-2 shadow transition-all sm:py-2.5 lg:py-3"
         >
           {isAdded ? (
             <>
               <Check className="h-5 w-5 text-blue-1050" />
-              <span className="font-peyda-400 text-xs sm:text-sm lg:text-base text-blue-1050">
+
+              <span className="font-peyda-400 text-xs text-blue-1050 sm:text-sm lg:text-base">
                 به سبد خرید اضافه شد!
               </span>
             </>
           ) : (
             <>
-              <span className="font-peyda-400 text-xs sm:text-sm lg:text-base text-blue-1050">
-                {product?.quantity === 0 && selectedVariations?.can_preorder
-                  ? "افزودن (پیش‌فروش)"
-                  : "افزودن به سبد خرید"}
+              <span className="font-peyda-400 text-xs text-blue-1050 sm:text-sm lg:text-base">
+                {showPreorder ? "افزودن (پیش‌فروش)" : "افزودن به سبد خرید"}
               </span>
-              <Bag className="h-4 w-4 sm:h-5 sm:w-5 text-blue-1050" />
+
+              <Bag className="h-4 w-4 text-blue-1050 sm:h-5 sm:w-5" />
             </>
           )}
         </Button>
       </div>
 
-      {/* Name + Price */}
       <div className="flex flex-col items-center gap-y-2 text-center">
         <Link
           href={product?.slug ?? ""}
-          className="font-peyda-500 text-sm sm:text-base lg:text-lg text-slate-1000"
+          className="font-peyda-500 text-sm text-slate-1000 sm:text-base lg:text-lg"
         >
           {product?.name}
         </Link>
 
         <div className="flex items-center gap-x-2">
-          {price != originalPrice && (
-            <span className="text-sm sm:text-base text-gray-400 line-through">
+          {hasDiscount && (
+            <span className="text-sm text-gray-400 line-through sm:text-base">
               {Number(originalPrice).toLocaleString("fa-IR")} تومان
             </span>
           )}
-          <span className="font-peyda-500 text-xs sm:text-sm lg:text-base text-blue-1050">
+
+          <span className="font-peyda-500 text-xs text-blue-1050 sm:text-sm lg:text-base">
             {Number(price) !== 0
-              ? Number(price).toLocaleString("fa-IR") + " تومان"
+              ? `${Number(price).toLocaleString("fa-IR")} تومان`
               : "تماس بگیرید"}
           </span>
         </div>
