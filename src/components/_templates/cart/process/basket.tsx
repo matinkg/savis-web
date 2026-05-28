@@ -22,7 +22,7 @@ export default function Basket({ state, dispatch, refreshCart }: propsType) {
       <div className="lg:col-span-6">
         <IsFree price={Number(state?.totalAmount) || Number(state?.original_price) || 0} />
 
-        <div className="mt-10 hidden w-full grid-cols-2 bg-gray-250 p-[18px] lg:grid">
+        <div className="mt-[26px] hidden w-full grid-cols-2 bg-gray-250 p-[18px] lg:grid">
           <div className="text-center font-peyda-600 text-lg text-blue-1050">
             <span>محصول</span>
           </div>
@@ -32,7 +32,7 @@ export default function Basket({ state, dispatch, refreshCart }: propsType) {
         </div>
 
         {/* BasketCart */}
-        <div className="mt-6 flex flex-col gap-y-4">
+        <div className="mt-5 flex flex-col gap-y-4">
           {state?.items?.map((item: CartItem) => (
             <BasketCart refreshCart={refreshCart} dispatch={dispatch} item={item} key={item?.sku} />
           ))}
