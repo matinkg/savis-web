@@ -1,5 +1,8 @@
+"use client";
+
 import Button from "@/components/_modules/button";
 import { request } from "@/configs/HTTPService";
+import formatPrice from "@/lib/utils/format-price";
 import { CartState } from "@/libs/context/cart-shopping/interface";
 import ArrowLeft from "@/public/icons/arrowLeft";
 import CloseCircle from "@/public/icons/close-circle";
@@ -22,55 +25,97 @@ export default function BasketFactor({
   refreshCart,
 }: propsType) {
   const router = useRouter();
+
   const [discountCode, setDiscountCode] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [discountMessage, setDiscountMessage] = useState("");
+  const [isDiscountApplied, setIsDiscountApplied] = useState(false);
+
+  const [discountMessage, setDiscountMessage] = useState<{
+    text: string;
+    type: "success" | "error";
+  } | null>(null);
 
   useEffect(() => {
     if (state?.discount?.code) {
       setDiscountCode(state.discount.code);
+      setIsDiscountApplied(true);
+    } else {
+      setIsDiscountApplied(false);
     }
   }, [state]);
 
   const handleApplyDiscount = async () => {
     if (!discountCode) {
-      setDiscountMessage("لطفاً کد تخفیف را وارد کنید");
+      setDiscountMessage({
+        text: "لطفاً کد تخفیف را وارد کنید",
+        type: "error",
+      });
       return;
     }
 
+    if (isSubmitting || isDiscountApplied) return;
+
     setIsSubmitting(true);
-    setDiscountMessage("");
-
-    const data = await request("/api/v1/user-cart/apply-discount", "POST", {
-      code: discountCode,
-    });
-
-    if (data?.success) {
-      refreshCart();
-      setDiscountMessage("کد تخفیف با موفقیت اعمال شد!");
-    }else if (data?.status === 401) {
-      setDiscountMessage("لطفاً برای استفاده از کدهای تخفیف وارد شوید.");
-    } else {
-      setDiscountMessage("خطا در ارتباط با سرور!");
-    }
-    setIsSubmitting(false);
-  };
-
-  const handleRemoveDiscount = async () => {
-    setIsSubmitting(true);
-    setDiscountMessage("");
 
     try {
-      await request("/api/v1/user-cart/remove-discount", "DELETE");
-      refreshCart();
-      setDiscountCode("");
-      setDiscountMessage("کد تخفیف حذف شد.");
-    } catch (error) {
-      setDiscountMessage("خطا در حذف تخفیف!");
+      const data = await request("/api/v1/user-cart/apply-discount", "POST", {
+        code: discountCode,
+      });
+
+      if (data?.success) {
+        await refreshCart();
+
+        setDiscountMessage({
+          text: "کد تخفیف با موفقیت اعمال شد!",
+          type: "success",
+        });
+
+        setIsDiscountApplied(true);
+      } else if (data?.status === 401) {
+        setDiscountMessage({
+          text: "لطفاً برای استفاده از کدهای تخفیف وارد شوید.",
+          type: "error",
+        });
+      } else {
+        setDiscountMessage({
+          text: "خطا در ارتباط با سرور!",
+          type: "error",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const handleRemoveDiscount = async () => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setDiscountMessage(null);
+
+    try {
+      await request("/api/v1/user-cart/remove-discount", "DELETE");
+      await refreshCart();
+
+      setDiscountCode("");
+      setIsDiscountApplied(false);
+
+      setDiscountMessage({
+        text: "کد تخفیف حذف شد.",
+        type: "success",
+      });
+    } catch (error) {
+      setDiscountMessage({
+        text: "خطا در حذف تخفیف!",
+        type: "error",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const discountAmount = Number(state?.discount ?? 0);
+
   return (
     <div className="lg:col-span-4 flex flex-col gap-y-6">
       <div className="flex flex-col items-center bg-gray-250 p-4 lg:p-6">
@@ -83,10 +128,9 @@ export default function BasketFactor({
             <span className="font-peyda-600 text-base text-blue-1050 lg:text-lg">
               جمع جزء
             </span>
+
             <span className="font-peyda-600 text-base text-slate-1000/50 lg:text-lg">
-              {String(
-                (Number(state?.original_price) || 0)?.toLocaleString("fa-ir")
-              )}{" "}
+              {formatPrice(state?.original_price ?? state?.totalAmount ?? 0)}{" "}
               تومان
             </span>
           </div>
@@ -97,18 +141,17 @@ export default function BasketFactor({
                 هزینه بسته‌بندی
               </span>
               <span className="font-peyda-600 text-base text-slate-1000/50 lg:text-lg">
-                {packagingCost?.toLocaleString("fa-ir")} تومان
+                {formatPrice(packagingCost ?? 0)} تومان
               </span>
             </div>
           ) : null}
 
           {state?.discount && (
             <div className="flex items-center justify-between text-green-600">
+              <span className="font-peyda-600 text-base lg:text-lg">تخفیف</span>
+
               <span className="font-peyda-600 text-base lg:text-lg">
-                تخفیف ({state.discount.code})
-              </span>
-              <span className="font-peyda-600 text-base lg:text-lg">
-                -{String(state.discount.amount?.toLocaleString("fa-ir"))} تومان
+                {formatPrice(discountAmount)} تومان
               </span>
             </div>
           )}
@@ -117,8 +160,9 @@ export default function BasketFactor({
             <span className="font-peyda-600 text-lg text-blue-1050 lg:text-2xl">
               مجموع
             </span>
+
             <span className="font-peyda-600 text-lg text-slate-1000/50 lg:text-2xl">
-              {String(totalAmountPrice?.toLocaleString("fa-ir"))} تومان
+              {formatPrice(totalAmountPrice || 0)} تومان
             </span>
           </div>
         </div>
@@ -151,13 +195,18 @@ export default function BasketFactor({
         {state?.discount ? (
           <>
             <div className="flex items-center justify-between w-full bg-green-100 text-green-700 p-2 rounded-md shadow-sm">
-              <span className="font-peyda-600">{state.discount.code}</span>
+              <span className="font-peyda-600">{discountCode}</span>
+
               <button onClick={handleRemoveDiscount} disabled={isSubmitting}>
                 <CloseCircle className="h-6 w-6" />
               </button>
             </div>
-            <Button className="flex w-full items-center justify-center gap-x-1 bg-secendry p-2 font-peyda-400 text-base text-white lg:p-3 lg:text-lg">
-              <span>با موفقیت اعمال شد</span>
+
+            <Button
+              disabled
+              className="flex w-full items-center justify-center gap-x-1 bg-secendry opacity-70 p-2 font-peyda-400 text-base text-white lg:p-3 lg:text-lg"
+            >
+              <span>کد تخفیف اعمال شده است</span>
             </Button>
           </>
         ) : (
@@ -167,6 +216,7 @@ export default function BasketFactor({
               placeholder="کد تخفیف"
               value={discountCode}
               onChange={(e) => setDiscountCode(e.target.value)}
+              disabled={isSubmitting}
               className="h-10 w-full px-3 text-center font-peyda-400 text-sm text-blue-1050 lg:text-base border rounded-md shadow-sm"
             />
 
@@ -181,8 +231,14 @@ export default function BasketFactor({
         )}
 
         {discountMessage && (
-          <span className="text-sm font-peyda-400 text-red-600">
-            {discountMessage}
+          <span
+            className={`text-sm font-peyda-400 ${
+              discountMessage.type === "success"
+                ? "text-green-600"
+                : "text-red-600"
+            }`}
+          >
+            {discountMessage.text}
           </span>
         )}
       </div>
