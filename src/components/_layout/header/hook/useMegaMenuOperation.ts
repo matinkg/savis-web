@@ -10,16 +10,12 @@ export default function useMegaMenuOperation() {
     ads: null,
   });
 
-  // console.log(noFixed);
-
   const [showSearchModal, setShowSearchModal] = useState(false);
   // ----------------------------for close , when click out side of mega menu-----------------------------------
   const windowRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      // console.log("Window Ref:", windowRef.current);
-      // console.log("Clicked Target:", target);
       if (windowRef.current && !windowRef.current.contains(target)) {
         // Click outside the window
         // Close the window
@@ -79,8 +75,6 @@ export default function useMegaMenuOperation() {
       document.body.style.overflow = "auto";
     }
   }, [showNavMenu]);
-
-  // console.log(noFixed);
 
   return {
     bgColor,

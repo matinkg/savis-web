@@ -389,7 +389,7 @@ export default function CheckOutForm() {
           <textarea
             {...register("note")}
             placeholder="یادداشت‌ها درباره سفارش شما، برای مثال نکات مهم درباره نحوه تحویل سفارش"
-            className={`w-full mt-1 p-3 bg-white/50 border-solid border ${
+            className={`w-full mt-1 p-3 max-h-44 lg:max-h-52 bg-white/50 border-solid border ${
               false ? "border-red-600" : "border-[#D3D8DA] "
             }`}
             rows={10}

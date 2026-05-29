@@ -33,7 +33,7 @@ export default function Checkout() {
               </div>
               {/* form */}
             </div>
-            <div className="stickyStyle flex flex-col gap-y-6 lg:col-span-4">
+            <div className="stickyStyle flex flex-col gap-y-6 lg:col-span-4 -mt-8 lg:-mt-0">
               <OrderBox isCompleted={false} state={state} />
             </div>
           </form>

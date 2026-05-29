@@ -13,7 +13,6 @@ export default function Modal({
   children,
 }: ModalProps) {
   useEffect(() => {
-    // console.log("🚀 ~ openModal inside useEffect:", openModal);
     if (openModal) {
       document.body.style.overflow = "hidden";
     } else {

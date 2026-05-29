@@ -35,7 +35,6 @@ export default function ImageUploader({
       : "";
   const rootClass = `${isBaseStyle ? "" : error ? "dropzoneError" : "dropzone"} ${additionalClass}`;
 
-  // console.log("loading ===========================>", loading);
   return (
     <div className="main-container">
       <div

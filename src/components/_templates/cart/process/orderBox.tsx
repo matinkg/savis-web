@@ -1,6 +1,7 @@
 import Button from "@/components/_modules/button";
 import { request } from "@/configs/HTTPService";
 import { showSwal } from "@/helper/swal";
+import formatPrice from "@/lib/utils/format-price";
 import { CartState } from "@/libs/context/cart-shopping/interface";
 import BagTick from "@/public/icons/bagTick";
 import Cookies from "js-cookie";
@@ -58,6 +59,24 @@ export default function OrderBox({ isCompleted, state }: propsType) {
     }
   };
 
+  const getItemPrice = (item: any) => {
+    return item?.price ?? item?.product?.price ?? item?.oldPrice ?? 0;
+  };
+
+  const calcSubtotal = (items: any[] = []) => {
+    return items.reduce((sum, item) => {
+      return sum + getItemPrice(item) * (item?.quantity || 1);
+    }, 0);
+  };
+
+  const subtotal = calcSubtotal(state?.items || []);
+
+  const discountAmount = Number(
+    state?.discount?.amount ?? state?.discount ?? 0,
+  );
+
+  const finalTotal = subtotal + (state?.totalBoxPrice || 0) - discountAmount;
+
   const handleSelectGateway = (gatewayId: number) => {
     setSelectedGateway(gatewayId);
   };
@@ -91,7 +110,7 @@ export default function OrderBox({ isCompleted, state }: propsType) {
 
             <span className="font-peyda-600 text-sm text-slate-1000/50 lg:text-lg">
               {item?.oldPrice?.toLocaleString("fa-ir") ??
-                item?.price?.toLocaleString("fa-ir") ??
+                formatPrice(item?.product.price) ??
                 item?.price}{" "}
               تومان
             </span>
@@ -104,7 +123,7 @@ export default function OrderBox({ isCompleted, state }: propsType) {
             جمع جزء
           </span>
           <span className="font-peyda-600 text-sm text-slate-1000/50 lg:text-lg">
-            {String(state?.original_price?.toLocaleString("fa-ir"))} تومان
+            {formatPrice(subtotal)} تومان
           </span>
         </div>
         <div className="flex items-center justify-between">
@@ -121,7 +140,7 @@ export default function OrderBox({ isCompleted, state }: propsType) {
             تخفیف
           </span>
           <span className="font-peyda-600 text-sm text-slate-1000/50 lg:text-lg">
-            {(state?.discount?.amount || 0)?.toLocaleString("fa-ir")} تومان
+            {formatPrice(discountAmount)} تومان
           </span>
         </div>
         <div className="flex items-center justify-between">
@@ -129,7 +148,7 @@ export default function OrderBox({ isCompleted, state }: propsType) {
             مجموع
           </span>
           <span className="text-slate-1050 font-peyda-600 text-lg lg:text-2xl">
-            {state?.totalAmount?.toLocaleString("fa-ir")} تومان
+            {formatPrice(finalTotal)} تومان
           </span>
         </div>
       </div>

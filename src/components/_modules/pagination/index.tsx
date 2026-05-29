@@ -18,18 +18,16 @@ export default function Pagination({
     <div className="my-20 grid grid-cols-3">
       <div className="flex items-center justify-start">
         <Button
-          disabled={currentPage === 1}
-          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === totalPages}
+          onClick={() => onPageChange(currentPage + 1)}
           className={`flex items-center gap-x-1 border border-solid border-secendry bg-transparent p-2 font-peyda-400 text-sm ${
-            currentPage === 1
+            currentPage === totalPages
               ? "text-gray-400 border-gray-300 cursor-not-allowed"
               : "text-secendry hover:bg-secendry hover:text-white"
           } lg:px-[18px] lg:py-3 lg:text-lg`}
         >
-          <ArrowLeft
-            className="h-[18px] w-[18px] rotate-180 lg:h-6 lg:w-6"
-          />
-          <span>قبلی</span>
+          <span>بعدی</span>
+          <ArrowLeft className="h-[18px] w-[18px] rotate-180 lg:h-6 lg:w-6" />
         </Button>
       </div>
 
@@ -54,16 +52,16 @@ export default function Pagination({
 
       <div className="flex items-center justify-end">
         <Button
-          disabled={currentPage === totalPages}
-          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === 1}
+          onClick={() => onPageChange(currentPage - 1)}
           className={`flex items-center gap-x-1 border border-solid border-secendry bg-transparent p-2 font-peyda-400 text-sm ${
-            currentPage === totalPages
+            currentPage === 1
               ? "text-gray-400 border-gray-300 cursor-not-allowed"
               : "text-secendry hover:bg-secendry hover:text-white"
           } lg:px-[18px] lg:py-3 lg:text-lg`}
         >
-          <span>بعدی</span>
           <ArrowLeft className="h-[18px] w-[18px] lg:h-6 lg:w-6" />
+          <span>قبلی</span>
         </Button>
       </div>
     </div>

@@ -24,7 +24,6 @@ export default function ContactusForm() {
   });
 
   const handleContactUs = async (data: any) => {
-    console.log(data)
     await request("/api/v1/contact-us", "POST", data);
   };
 

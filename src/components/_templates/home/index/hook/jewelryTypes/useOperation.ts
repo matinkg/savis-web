@@ -22,20 +22,7 @@ export default function useJewelryTypesOperation() {
   const [data, setData] = useState<DataArray>([]);
 
   const getDataFromServer = () => {
-    // console.log("Fetching data from server...");
-    // setLoading(true);
-
-    // request(jewelryTypesApi?.GET)
-    //   .then((res) => {
-    //     if (!res?.error) {
-    //       // console.log("Data received:", res?.data);
-    //       setData(res?.data);
-    //     }
-    //   })
-    //   .finally(() => {
-    //     // console.log("Finished fetching data");
-    //     setLoading(false);
-    //   });
+    
   };
 
   const homeJewelryCategoriesDataLevelOne = useMemo(() => {
@@ -44,10 +31,9 @@ export default function useJewelryTypesOperation() {
 
   // --------------------------------------------------------
   useEffect(() => {
-    // console.log("Component mounted, calling getDataFromServer");
     getDataFromServer();
     return () => {
-      // console.log("Component unmounted or updated");
+      
     };
   }, []);
 

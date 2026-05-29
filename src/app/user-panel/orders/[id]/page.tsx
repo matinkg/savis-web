@@ -74,8 +74,6 @@ export default function OrderDetails() {
     );
   }
 
-  console.log(order);
-
   return (
     <div className="flex flex-col">
       {/* نوتیفیکیشن وضعیت سفارش */}

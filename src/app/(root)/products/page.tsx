@@ -14,7 +14,6 @@ import Pagination from "@/components/_modules/pagination";
 
 export default function Page() {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
-
   const { data, loading, currentPage, handlePageChange } = useOperation();
 
   return (
@@ -25,7 +24,7 @@ export default function Page() {
         <>
           {/* banner  */}
           <div
-            className=" backStyle mb-10 flex items-center lg:mb-[60px]"
+            className=" backStyle mb-10 mt-24 md:mt-14 flex items-center lg:mb-[60px] h-[300px] md:h-[550px] lg:h-[750px] 3xl:h-[950px]"
             style={{
               // backgroundImage: categories?.banner?.image
               //   ? `url(' ${categories?.banner?.image}')`
@@ -60,27 +59,29 @@ export default function Page() {
               <div className=" hidden lg:block">
                 <Filter />
               </div>
-              <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8 w-full max-w-screen-xl px-4 sm:px-6 lg:px-8">
-                {data?.products?.data?.map((item: any) => (
-                  <ProductCard key={item?.id} product={item} />
-                ))}
+              <div className="flex flex-col gap-5 w-full">
+                <div className="mx-auto grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 gap-x-3 sm:gap-x-6 gap-y-8 w-full">
+                  {data?.products?.data?.map((item: any) => (
+                    <ProductCard key={item?.id} product={item} />
+                  ))}
+                </div>
+                {data?.products?.last_page > 1 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={data?.products?.last_page}
+                    onPageChange={handlePageChange}
+                  />
+                )}
               </div>
-              {data?.products?.last_page > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={data?.products?.last_page}
-                  onPageChange={handlePageChange}
-                />
-              )}
             </div>
           </section>
 
-          <InstagramPosts className="mx-auto my-10 w-[91.12%] lg:my-[60px] lg:w-[91.67%] 4xl:w-[85%]" />
+          <InstagramPosts className="hidden md:grid mx-auto my-10 w-[91.12%] lg:my-[60px] lg:w-[91.67%] 4xl:w-[85%]" />
 
           {!showFilterMenu && (
             <div
               onClick={() => setShowFilterMenu(true)}
-              className="fixed bottom-0 left-0 right-0 flex w-full items-center justify-center bg-secendry p-4 text-white lg:hidden z-50"
+              className="fixed bottom-0 left-0 right-0 flex w-full items-center justify-center bg-secendry p-4 text-white lg:hidden z-30"
             >
               <div className="flex items-center gap-x-1.5">
                 <FilterIcon className="h-5 w-5" />

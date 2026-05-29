@@ -49,14 +49,6 @@ export default function useCkeckOut() {
       city: data?.city?.title,
       phone: userInfo?.phone,
     };
-    // setLoading(true);
-    // PostHttpService(usersApi?.UPDATE, ORIGIN_DATA)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   };
   return {
     methods,

@@ -1,16 +1,15 @@
 "use client";
-
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Button from "../button";
 import Like from "@/public/icons/Like";
-import Bag from "@/public/icons/Bag";
 import HeartBold from "@/public/icons/heartBold";
 import ImageIcon from "@/public/icons/image";
 import useWishOperation from "./hook/useWishOperation";
 import { useCart } from "@/libs/context/cart-shopping/CartContext";
 import Image from "next/image";
 import { showSwal } from "@/helper/swal";
+import BagIcon from "@/lib/assets/icons/bag";
 
 type propsType = {
   product: any;
@@ -81,8 +80,6 @@ export default function ProductCard({ product }: propsType) {
     setTimeout(() => setIsAdded(false), 3000);
   };
 
-  console.log(product );
-
   return (
     <Link
       href={product?.slug}
@@ -125,9 +122,7 @@ export default function ProductCard({ product }: propsType) {
         </div>
 
         {/* Product name */}
-        <div
-          className="text-center font-peyda-500 text-sm sm:text-base md:text-lg text-blue-1050"
-        >
+        <div className="text-center font-peyda-500 text-sm sm:text-base md:text-lg text-blue-1050">
           {product?.name}
         </div>
 
@@ -136,7 +131,7 @@ export default function ProductCard({ product }: propsType) {
           <p className="pt-1 text-center font-peyda-500 text-xs sm:text-sm lg:text-base text-blue-1050">
             {selectedVariations?.price || product?.price
               ? Number(
-                  selectedVariations?.price || product?.price
+                  selectedVariations?.price || product?.price,
                 ).toLocaleString("fa-IR") + " تومان"
               : "ناموجود"}
           </p>
@@ -148,7 +143,7 @@ export default function ProductCard({ product }: propsType) {
                 <span className="font-peyda-500 text-xs sm:text-sm lg:text-base text-blue-1050">
                   افزودن به سبد خرید
                 </span>
-                <Bag className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-1050" />
+                <BagIcon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-1050" />
               </div>
             </Button>
 

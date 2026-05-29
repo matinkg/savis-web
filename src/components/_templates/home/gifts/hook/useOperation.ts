@@ -22,7 +22,6 @@ export default function useOperation() {
 
     request(productsApi?.SEARCH + `category=${params}`)
       .then((res) => {
-        //console.log(res);
         if (!res?.error) {
           setData(res?.data);
         }

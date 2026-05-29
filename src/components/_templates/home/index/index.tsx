@@ -42,7 +42,7 @@ export default function Index() {
           <CustomerClub customerClubHomeData={customerClubHomeData} />
           <GiftCardBanner giftCardBannerData={giftCardBannerData} />
           <HomeGifts gifts={gifts} />
-          <InstagramPosts className="mx-auto my-10 w-[91.12%] lg:my-[60px] lg:w-[91.67%] 4xl:w-[85%]" />
+          <InstagramPosts className="hidden md:grid mx-auto my-10 w-[91.12%] lg:my-[60px] lg:w-[91.67%] 4xl:w-[85%]" />
         </>
       )}
     </>

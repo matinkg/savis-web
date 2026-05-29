@@ -13,7 +13,6 @@ export default function SetProducts({
   RelatedProductsData,
   className,
 }: SetProductsDataProps) {
-  // console.log("RelatedProductsData", RelatedProductsData);
   return (
     <div className="mt-10 pb-16 lg:mt-[60px]">
       <div className={`${className} `}>

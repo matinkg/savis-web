@@ -16,8 +16,6 @@ export default function BlogDetails() {
 
   const { data, isLoading } = useFetch<any>(`/api/v1/blog/${id}`);
 
-  console.log(data)
-
   return (
     <>
       {!isLoading ? (

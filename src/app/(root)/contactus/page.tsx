@@ -45,7 +45,7 @@ export default function Contactus() {
 
         <FrequentlyAskedQuestions faq={settingData?.faq} />
 
-        <InstagramPosts className="my-8 w-full lg:my-[40px]" />
+        <InstagramPosts className="hidden md:grid my-8 w-full lg:my-[40px]" />
       </section>
     </>
   );

@@ -28,7 +28,6 @@ export default function SelectFullSearch({
   loading,
   customStyles,
 }: SelectBoxProps) {
-  // console.log("=======================> selectedOption", selectedOption);
   return (
     <div className={`w-full flex flex-col gap-y-1  `}>
       <div className="flex">

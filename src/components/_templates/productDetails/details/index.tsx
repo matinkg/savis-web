@@ -19,6 +19,7 @@ import { usePathname } from "next/navigation";
 import GetCodeInputComponent from "@/components/_modules/get codeInputComponent";
 import { useCart } from "@/libs/context/cart-shopping/CartContext";
 import Info from "@/public/icons/info";
+import ImageIcon from "@/public/icons/image";
 
 export default function ProductDataDetails({
   productDetails,
@@ -41,7 +42,7 @@ export default function ProductDataDetails({
   const pathName = usePathname();
   const { dispatch } = useCart();
   const [selectedWeight, setSelectedWeight] = useState(
-    selectedVariations?.weight
+    selectedVariations?.weight,
   );
 
   const formatSizeValue = (value: unknown) => {
@@ -160,9 +161,17 @@ export default function ProductDataDetails({
   return (
     <>
       <div className="mb-10 grid grid-cols-1 gap-y-6 lg:grid-cols-5 lg:gap-x-10">
-        <div className="lg:col-span-2 product-gallery-container">
-          <Thumbnails images={images} />
-        </div>
+        {images?.length > 0 ? (
+          <div className="lg:col-span-2 product-gallery-container">
+            <Thumbnails images={images} />
+          </div>
+        ) : (
+          <div className="lg:col-span-2">
+            <ImageIcon className="text-secendry w-[80%]" />
+          </div>
+        )}
+
+        {}
         <div className="lg:col-span-3">
           <div className="border-b border-solid border-b-slate-1000/20 pb-4">
             <div className="flex items-center justify-between">
@@ -197,13 +206,13 @@ export default function ProductDataDetails({
               <div className="group relative inline-block cursor-pointer ml-4">
                 <div className="absolute bottom-1 hidden w-full whitespace-nowrap pr-0.5 group-hover:block calc-price">
                   <div className="flex translate-y-full flex-col-reverse items-center justify-start">
-                    <div className="cursor-default rounded-lg bg-blue-1000 px-3 py-2 font-peyda-400 text-[10px] text-white shadow-md ml-1">
+                    <div className="cursor-default rounded-lg bg-secendry px-3 py-2 font-peyda-400 text-[10px] text-white shadow-md ml-1">
                       <span className="leading-4">
                         وزن طلا × (قیمت روز طلا + اجرت) + ۷ % سود + <br />
                         متعلقات + ۹ % مالیات از سود و اجرت
                       </span>
                     </div>
-                    <div className="-mb-[1px] h-0 w-0 border-b-[8px] border-l-[12px] border-r-[12px] border-b-blue-1000 border-l-transparent border-r-transparent"></div>
+                    <div className="-mb-[1px] h-0 w-0 border-b-[8px] border-l-[12px] border-r-[12px] border-b-secendry border-l-transparent border-r-transparent"></div>
                   </div>
                 </div>
                 <span className="font-peyda-500 text-sm text-blue-1050 lg:text-base">
@@ -267,7 +276,9 @@ export default function ProductDataDetails({
 
             <div className="mb-4">
               <span className="font-peyda-500 text-lg text-blue-1050 lg:text-xl">
-                {selectedWeight ? `وزن: ${Number(selectedWeight).toLocaleString("fa")} گرم` : ""}
+                {selectedWeight
+                  ? `وزن: ${Number(selectedWeight).toLocaleString("fa")} گرم`
+                  : ""}
               </span>
             </div>
 
@@ -290,7 +301,7 @@ export default function ProductDataDetails({
             <div className="flex items-center gap-x-2">
               {availableSizes?.map((as: any) => {
                 const size = as.attributes?.find(
-                  (attr: any) => attr.name === "سایز" || attr.name === "طول"
+                  (attr: any) => attr.name === "سایز" || attr.name === "طول",
                 );
                 return (
                   <button
@@ -318,47 +329,65 @@ export default function ProductDataDetails({
               <div className="flex flex-col">
                 {/* Main Price Display */}
                 <div className="flex items-center gap-2">
-                  {selectedVariations?.discount_type === "percentage" && selectedVariations?.discount_value > 0 ? (
-                    <span className="font-peyda-400 text-xl text-blue-1050 lg:text-3xl block">قیمت:
-                    <br />
+                  {selectedVariations?.discount_type === "percentage" &&
+                  selectedVariations?.discount_value > 0 ? (
+                    <span className="font-peyda-400 text-xl text-blue-1050 lg:text-3xl block">
+                      قیمت:
+                      <br />
                       {/* قیمت اصلی با خط خورده */}
                       <span className="text-gray-500 line-through text-lg lg:text-2xl">
-                        {Number(selectedVariations?.original_price).toLocaleString("fa-IR")} <span>تومان</span>
+                        {Number(
+                          selectedVariations?.original_price,
+                        ).toLocaleString("fa-IR")}{" "}
+                        <span>تومان</span>
                       </span>
                       {/* قیمت با تخفیف */}
                       <span className="block font-bold text-xl lg:text-3xl">
                         {Number(
-                          selectedVariations?.original_price * (1 - selectedVariations?.discount_value / 100)
-                        ).toLocaleString("fa-IR")} <span>تومان</span>
+                          selectedVariations?.original_price *
+                            (1 - selectedVariations?.discount_value / 100),
+                        ).toLocaleString("fa-IR")}{" "}
+                        <span>تومان</span>
                       </span>
                     </span>
                   ) : (
                     // در صورت نبود تخفیف
                     <span className="font-peyda-400 text-xl text-blue-1050 lg:text-3xl">
-                      {Number(selectedVariations?.price || productDetails?.product?.price).toLocaleString("fa-IR")} <span>تومان</span>
+                      {Number(
+                        selectedVariations?.price ||
+                          productDetails?.product?.price,
+                      ).toLocaleString("fa-IR")}{" "}
+                      <span>تومان</span>
                     </span>
                   )}
-
                 </div>
 
                 {/* Pre-order Notice */}
-                {(selectedVariations?.sku && selectedVariations?.can_preorder) ||
-                  (!selectedVariations?.sku && productDetails?.product?.can_preorder) ? (
+                {(selectedVariations?.sku &&
+                  selectedVariations?.can_preorder) ||
+                (!selectedVariations?.sku &&
+                  productDetails?.product?.can_preorder) ? (
                   <div className="flex flex-col mt-3">
                     <div className="flex items-center p-3 bg-[#c3dce3] text-gray-800 rounded">
                       <Info className="text-black w-5 h-5 mx-1" />
                       <div className="flex flex-col text-sm">
                         <span className="font-semibold">
-                          قیمت اصلی: {Number(
+                          قیمت اصلی:{" "}
+                          {Number(
                             selectedVariations?.original_price ||
-                            productDetails?.product?.original_price
-                          ).toLocaleString("fa-IR")} تومان
+                              productDetails?.product?.price,
+                          ).toLocaleString("fa-IR")}{" "}
+                          تومان
                         </span>
                         <span className="font-semibold">
                           پیش‌پرداخت:
-                          {`${Number(selectedVariations?.prePrice).toLocaleString("fa")} تومان`}
+                          {`${Number(
+                            productDetails?.product?.preorder_final_price,
+                          ).toLocaleString("fa")} تومان`}
                         </span>
-                        <span>محصول طی 72 ساعت پس از ثبت سفارش آماده خواهد شد.</span>
+                        <span>
+                          محصول طی 72 ساعت پس از ثبت سفارش آماده خواهد شد.
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -381,8 +410,8 @@ export default function ProductDataDetails({
                   <>
                     <span className="font-peyda-400 text-xs text-white lg:text-lg">
                       {productDetails?.product?.quantity === 0 &&
-                        (selectedVariations?.can_preorder ||
-                          productDetails?.product?.can_preorder)
+                      (selectedVariations?.can_preorder ||
+                        productDetails?.product?.can_preorder)
                         ? "افزودن به سبد خرید (پیش‌فروش)"
                         : "افزودن به سبد خرید"}
                     </span>

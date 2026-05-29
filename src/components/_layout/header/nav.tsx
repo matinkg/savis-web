@@ -81,10 +81,10 @@ export default function Nav() {
       {/* // in mobile : */}
 
       <nav className="flex lg:hidden bg-secendry text-white w-full flex-col items-center py-2">
-        <div>
+        <div className="flex items-center px-2 py-1">
           <a
             href={resolveHref(siteSetting?.top_text_link)}
-            className="font-peyda-600 text-xs md:text-base"
+            className="font-peyda-600 text-xs md:text-base text-center"
           >
             {siteSetting?.top_text}
           </a>

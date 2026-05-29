@@ -63,7 +63,7 @@ export default function NavMenu({
       <div
         className={`fixed bg-[#D0E6ED4D] backdrop-blur-md ${
           showNavMenu ? "right-0" : "-right-64"
-        } top-0 !z-50 flex min-h-screen w-64 flex-col overflow-auto px-4 transition-all`}
+        } top-0 !z-50 flex w-64 flex-col overflow-y-scroll h-screen px-4 transition-all duration-500`}
       >
         <div className="flex items-center py-6">
           <div className="flex-none">
@@ -252,7 +252,7 @@ export default function NavMenu({
               ))}
             </div>
 
-            <div className="flex flex-col gap-y-6">
+            <div className="flex flex-col gap-y-6 mb-10">
               {navMenu.map((item, index) => (
                 <Link
                   key={index + "@#"}
@@ -274,7 +274,7 @@ export default function NavMenu({
       {/* <!-- overlay --> */}
       <div
         onClick={() => setShowNavMenu(false)}
-        className="fixed inset-0 !z-10 h-screen w-full bg-black/70 backdrop-blur-lg transition-all"
+        className={`${showNavMenu ? "opacity-100" : "opacity-0 pointer-events-none"} fixed inset-0 !z-40 h-screen w-full bg-black/70 backdrop-blur-lg transition-all`}
       ></div>
     </>
   );

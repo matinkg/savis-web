@@ -16,7 +16,6 @@ export function useImageUploader(url: string, setValue: any, keyName: string) {
     request(url, "POST", formData)
       .then((res) => {
         if (!res?.error) {
-          // //console.log(res);
           setLoading(false);
           setValue(keyName, res?.data[0].fileUrl);
           onChange(res?.data[0].fileUrl); // Update form value with the uploaded file URL

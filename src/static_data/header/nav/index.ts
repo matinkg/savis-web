@@ -2,19 +2,19 @@
 const navMenu = [
   {
     name: "وبلاگ",
-    link: "",
+    link: "/blog",
   },
   {
     name: "درباره ما",
-    link: "",
+    link: "/aboutus",
   },
   {
     name: "تماس با ما",
-    link: "",
+    link: "/contactus",
   },
   {
     name: "گیفت کارت",
-    link: "",
+    link: "/giftCard",
   },
 ];
 
