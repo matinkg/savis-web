@@ -12,7 +12,7 @@ export default function HorizontalCard({ item }: { item: any }) {
           <img
             src={item?.image_1}
             alt=""
-            className="aspect-[1/0.7] h-full w-full"
+            className="h-80 object-cover w-full"
           />
         ) : (
           <img
