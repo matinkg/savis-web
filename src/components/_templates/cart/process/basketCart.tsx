@@ -70,6 +70,10 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
     Number(item?.product?.can_preorder ?? item?.variation?.can_preorder) ===
       1 && Number(item?.product?.stock ?? item?.variation?.stock ?? 0) === 0;
 
+  const preorderFinalPrice =
+    item?.variation?.preorder_final_price ??
+    item?.product?.preorder_final_price;
+
   return (
     <div
       key={
@@ -160,9 +164,18 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
               </span>
             )}
 
-            <span className="font-peyda-500 text-sm sm:text-base text-blue-1050">
-              {price.toLocaleString("fa-IR")} تومان
-            </span>
+            <div className="flex flex-col">
+              <span className="font-peyda-500 text-sm sm:text-base text-blue-1050">
+                {price.toLocaleString("fa-IR")} تومان
+              </span>
+
+              {isPreorder && preorderFinalPrice && (
+                <span className="text-xs text-gray-500 mt-1">
+                  پیش‌پرداخت:{" "}
+                  {Number(preorderFinalPrice).toLocaleString("fa-IR")} تومان
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -187,6 +200,13 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
           <span className="font-peyda-600 text-xs sm:text-base md:text-lg text-blue-1050">
             {price.toLocaleString("fa-IR")} تومان
           </span>
+
+          {isPreorder && preorderFinalPrice && (
+            <span className="text-sm text-gray-500 mt-1">
+              پیش‌پرداخت: {Number(preorderFinalPrice).toLocaleString("fa-IR")}{" "}
+              تومان
+            </span>
+          )}
         </div>
       </div>
     </div>

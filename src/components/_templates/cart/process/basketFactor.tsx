@@ -119,6 +119,13 @@ export default function BasketFactor({
   const getItemPrice = (item: any) => {
     const currentData = item?.variation || item?.product || item?.gift_card;
 
+    const isPreorder =
+      Number(item?.product?.can_preorder ?? item?.variation?.can_preorder) ===
+        1 && Number(item?.product?.stock ?? item?.variation?.stock ?? 0) === 0;
+
+    if (isPreorder) {
+      return Number(currentData?.preorder_final_price ?? 0);
+    }
     return Number(currentData?.price ?? item?.price ?? 0);
   };
 
