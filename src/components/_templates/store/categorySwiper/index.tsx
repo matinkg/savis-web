@@ -41,7 +41,7 @@ export default function CategorySwiper({ data }: any) {
             <SwiperSlide key={index}>
               <div
                 onClick={() => handleCategoryClick(item.slug)} 
-                className=" bg-gray-250 text-blue-1050 py-2 px-2 2xl:px-3 flex-center cursor-pointer  hover:bg-blue-1000  hover:text-white"
+                className=" bg-gray-250 text-blue-1050 py-2 px-2 2xl:px-3 flex-center cursor-pointer transition-all duration-300 hover:bg-secendry  hover:text-white"
               >
                 <span className="font-peyda-600 text-sm ">{item?.name}</span>
               </div>
