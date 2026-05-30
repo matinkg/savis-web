@@ -24,7 +24,7 @@ export default function Page() {
         <>
           {/* banner  */}
           <div
-            className=" backStyle mb-10 mt-24 md:mt-14 flex items-center lg:mb-[60px] h-[300px] md:h-[550px] 2xl:h-[650px] 3xl:h-[950px]"
+            className=" backStyle mb-10 mt-20 md:mt-14 flex items-center lg:mb-[60px] h-[300px] md:h-[550px] 2xl:h-[650px] 3xl:h-[950px]"
             style={{
               // backgroundImage: categories?.banner?.image
               //   ? `url(' ${categories?.banner?.image}')`
@@ -34,7 +34,7 @@ export default function Page() {
             }}
           >
             <div className="mx-auto flex w-[91.12%] flex-col gap-y-10 lg:w-[91.67%] 4xl:w-[85%]">
-              <h1 className="font-peyda-900 text-[44px] text-blue-1050 lg:font-peyda-600 lg:text-[85px] 2xl:text-[128px]">
+              <h1 className="font-peyda-900 text-[44px] text-blue-1050 lg:font-peyda-600 lg:text-[85px] 2xl:text-[128px] mt-16 md:mt-0">
                 {data?.category?.name}
               </h1>
 
