@@ -1,11 +1,8 @@
 "use client";
-
 import React from "react";
 import RelatedProducts from "@/components/_modules/relatedProducts";
-
 import BlogContent from "@/components/_templates/blog/content";
 import RelatedPost from "@/components/_templates/blog/relatedPost";
-import { useFetchDataDetails } from "@/helper";
 import PrimaryLoading from "@/components/_templates/loading/primaryLoading";
 import { useParams } from "next/navigation";
 import { useFetch } from "@/configs/HTTPService";
@@ -13,7 +10,6 @@ import { useFetch } from "@/configs/HTTPService";
 export default function BlogDetails() {
   const params = useParams();
   const { id } = params;
-
   const { data, isLoading } = useFetch<any>(`/api/v1/blog/${id}`);
 
   return (
