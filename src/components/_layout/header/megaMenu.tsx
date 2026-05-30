@@ -57,7 +57,7 @@ export default function MegaMenu({ megaMenu }: any) {
         {/* ads in mega menu */}
 
         {ads && (
-          <div className="flex flex-row gap-6 xl:flex-col">
+          <div className="flex flex-row gap-6">
             {ads?.length > 0 &&
               ads?.map((item: any, index: any) => (
                 <div
