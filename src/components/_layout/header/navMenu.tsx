@@ -78,7 +78,7 @@ export default function NavMenu({
         </div>
 
         <SearchInput
-          className="h-10 w-full border border-solid border-[#DDE4E6B2] bg-transparent font-peyda-400 text-xs text-white lg:mb-10"
+          className="h-10 w-full mb-3 border border-solid border-[#DDE4E6B2] bg-transparent font-peyda-400 text-xs text-white lg:mb-10"
           placeholder="جتسجو"
           inputStyle={{
             color: "#fff",
@@ -122,6 +122,7 @@ export default function NavMenu({
                   <div key={index} className="flex-center py-3">
                     <Link
                       href={resolveHref(item?.href)}
+                      onClick={() => setShowNavMenu(false)}
                       className="font-peyda-400 text-lg text-white"
                     >
                       {item?.title}
@@ -200,6 +201,7 @@ export default function NavMenu({
                     ) : (
                       <Link
                         href={resolveHref(item?.href)}
+                        onClick={() => setShowNavMenu(false)}
                         className="font-peyda-400 text-lg text-white"
                       >
                         {item?.title}
@@ -243,6 +245,7 @@ export default function NavMenu({
                   ) : (
                     <Link
                       href={resolveHref(item?.href)}
+                      onClick={() => setShowNavMenu(false)}
                       className="font-peyda-400 text-lg text-white"
                     >
                       {item?.title}
@@ -257,6 +260,7 @@ export default function NavMenu({
                 <Link
                   key={index + "@#"}
                   href={item?.link}
+                  onClick={() => setShowNavMenu(false)}
                   className="font-peyda-400 text-lg text-white"
                 >
                   {item?.name}
