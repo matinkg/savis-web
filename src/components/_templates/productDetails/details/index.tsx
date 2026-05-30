@@ -91,11 +91,17 @@ export default function ProductDataDetails({
   }, [selectedVariations]);
 
   const handleAddToCart = () => {
-    if (
-      selectedVariations?.sku
-        ? selectedVariations?.stock <= 0 && !selectedVariations?.can_preorder
-        : productDetails?.product?.stock <= 0
-    ) {
+    const stock = selectedVariations?.sku
+      ? Number(selectedVariations?.stock ?? 0)
+      : Number(productDetails?.product?.stock ?? 0);
+
+    const canPreorder = selectedVariations?.sku
+      ? Number(selectedVariations?.can_preorder ?? 0) === 1
+      : Number(productDetails?.product?.can_preorder ?? 0) === 1;
+
+    const isOutOfStockCompletely = stock <= 0 && !canPreorder;
+
+    if (isOutOfStockCompletely) {
       return swal({
         title: "موجودی ناکافی!",
         text: "متأسفیم، این کالا در حال حاضر ناموجود است.",
@@ -112,22 +118,21 @@ export default function ProductDataDetails({
       });
     }
 
-    let is_preorder =
-      selectedVariations?.stock <= 0 && selectedVariations?.can_preorder;
+    const is_preorder = stock <= 0 && canPreorder;
 
     let price = selectedVariations?.price || productDetails?.product?.price;
 
     if (is_preorder) {
-      if (selectedVariations) {
+      if (selectedVariations?.sku) {
         price =
-          selectedVariations.preorder_price_type === "fixed"
-            ? price - selectedVariations.preorder_price
-            : price * (selectedVariations.preorder_price / 100);
+          selectedVariations?.preorder_price_type === "fixed"
+            ? price - selectedVariations?.preorder_price
+            : price * (selectedVariations?.preorder_price / 100);
       } else {
         price =
-          productDetails?.product.preorder_price_type === "fixed"
-            ? price - productDetails?.product.preorder_price
-            : price * (productDetails?.product.preorder_price / 100);
+          productDetails?.product?.preorder_price_type === "fixed"
+            ? price - productDetails?.product?.preorder_price
+            : price * (productDetails?.product?.preorder_price / 100);
       }
     }
 
@@ -136,7 +141,7 @@ export default function ProductDataDetails({
       slug: productDetails?.product?.slug,
       product_id: productDetails?.product?.id,
       name: selectedVariations?.name || productDetails?.product?.name,
-      image: selectedVariations?.gallery[0] || productDetails?.product?.image,
+      image: selectedVariations?.gallery?.[0] || productDetails?.product?.image,
       price,
       quantity: 1,
       sku: productDetails?.product?.sku,
@@ -144,7 +149,7 @@ export default function ProductDataDetails({
       color: selectedColorData?.color_name,
       size: selectedSize?.value,
       packing: packagingData,
-      stockQuantity: selectedVariations?.stock || 0,
+      stockQuantity: stock,
       wage: productDetails?.product?.wage,
       weight: selectedVariations?.weight || productDetails?.product?.weight,
       type: "product",
@@ -153,10 +158,25 @@ export default function ProductDataDetails({
       is_preorder,
     };
 
-    dispatch({ type: "ADD_ITEM", item: itemToAdd, dispatch });
+    dispatch({
+      type: "ADD_ITEM",
+      item: itemToAdd,
+      dispatch,
+    });
+
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 3000);
   };
+
+  const stock = selectedVariations?.sku
+    ? Number(selectedVariations?.stock ?? 0)
+    : Number(productDetails?.product?.stock ?? 0);
+
+  const canPreorder = selectedVariations?.sku
+    ? Number(selectedVariations?.can_preorder ?? 0) === 1
+    : Number(productDetails?.product?.can_preorder ?? 0) === 1;
+
+  const isUnavailable = stock <= 0 && !canPreorder;
 
   return (
     <>
@@ -329,19 +349,22 @@ export default function ProductDataDetails({
               <div className="flex flex-col">
                 {/* Main Price Display */}
                 <div className="flex items-center gap-2">
-                  {selectedVariations?.discount_type === "percentage" &&
-                  selectedVariations?.discount_value > 0 ? (
+                  {isUnavailable ? (
+                    // تغییر: نمایش ناموجود به جای قیمت منفی یا صفر
+                    <span className="font-peyda-500 text-xl text-red-600 lg:text-3xl">
+                      ناموجود
+                    </span>
+                  ) : selectedVariations?.discount_type === "percentage" &&
+                    selectedVariations?.discount_value > 0 ? (
                     <span className="font-peyda-400 text-xl text-blue-1050 lg:text-3xl block">
                       قیمت:
                       <br />
-                      {/* قیمت اصلی با خط خورده */}
                       <span className="text-gray-500 line-through text-lg lg:text-2xl">
                         {Number(
                           selectedVariations?.original_price,
                         ).toLocaleString("fa-IR")}{" "}
                         <span>تومان</span>
                       </span>
-                      {/* قیمت با تخفیف */}
                       <span className="block font-bold text-xl lg:text-3xl">
                         {Number(
                           selectedVariations?.original_price *
@@ -351,7 +374,6 @@ export default function ProductDataDetails({
                       </span>
                     </span>
                   ) : (
-                    // در صورت نبود تخفیف
                     <span className="font-peyda-400 text-xl text-blue-1050 lg:text-3xl">
                       {Number(
                         selectedVariations?.price ||
@@ -382,7 +404,8 @@ export default function ProductDataDetails({
                         <span className="font-semibold">
                           پیش‌پرداخت:
                           {`${Number(
-                            productDetails?.product?.preorder_final_price,
+                            selectedVariations?.preorder_final_price ??
+                              productDetails?.product?.preorder_final_price,
                           ).toLocaleString("fa")} تومان`}
                         </span>
                         <span>
@@ -397,7 +420,10 @@ export default function ProductDataDetails({
             <div className="flex gap-x-3">
               <Button
                 onClick={handleAddToCart}
-                className="flex-center grow gap-x-1 bg-secendry py-2 lg:py-3"
+                disabled={isUnavailable} // تغییر
+                className={`flex-center grow gap-x-1 py-2 lg:py-3 ${
+                  isUnavailable ? "bg-gray-400 cursor-default" : "bg-secendry"
+                }`}
               >
                 {isAdded ? (
                   <>
@@ -409,11 +435,11 @@ export default function ProductDataDetails({
                 ) : (
                   <>
                     <span className="font-peyda-400 text-xs text-white lg:text-lg">
-                      {productDetails?.product?.quantity === 0 &&
-                      (selectedVariations?.can_preorder ||
-                        productDetails?.product?.can_preorder)
-                        ? "افزودن به سبد خرید (پیش‌فروش)"
-                        : "افزودن به سبد خرید"}
+                      {isUnavailable
+                        ? "ناموجود"
+                        : stock <= 0 && canPreorder
+                          ? "افزودن به سبد خرید (پیش‌فروش)"
+                          : "افزودن به سبد خرید"}
                     </span>
                     <Bag className="h-[18px] w-[18px] text-white lg:h-6 lg:w-6" />
                   </>
