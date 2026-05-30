@@ -51,7 +51,9 @@ export default function ProductCard({ product }: PropsType) {
       : (product?.final_price_before_discount ?? 0),
   );
 
-  const discountText = product?.discount_text ?? "";
+  const discountText = selectedVariations?.sku
+    ? (selectedVariations?.discount_text ?? "")
+    : (product?.discount_text ?? "");
 
   const hasDiscount =
     discountText &&
@@ -144,7 +146,9 @@ export default function ProductCard({ product }: PropsType) {
     setTimeout(() => setIsAdded(false), 3000);
   };
 
-  const rawDiscountText = product?.discount_text ?? "";
+  const rawDiscountText = selectedVariations?.sku
+    ? (selectedVariations?.discount_text ?? "")
+    : (product?.discount_text ?? "");
 
   const parsedDiscountNumber = Number(rawDiscountText.replace("%", "").trim());
 
