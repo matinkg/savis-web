@@ -36,6 +36,11 @@ interface CartState {
   discount?: any;
   totalBoxPrice?: number;
   original_price?: number;
+  free_shipping?: {
+    threshold: number;
+    qualifies: boolean;
+    amount_until_free: number;
+  };
 }
 
 // تعریف نوع برای اقدامات (actions) سبد خرید
@@ -66,6 +71,11 @@ type CartAction =
       discount?: null;
       original_price?: number;
       totalBoxPrice?: number;
+      free_shipping?: {
+        threshold: number;
+        qualifies: boolean;
+        amount_until_free: number;
+      };
     }; // اضافه کردن action جدید برای بارگذاری داده‌ها
 
 // تعریف نوع برای `CartContext`

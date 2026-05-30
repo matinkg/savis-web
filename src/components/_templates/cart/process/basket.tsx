@@ -16,11 +16,15 @@ type propsType = {
   refreshCart: any;
 };
 export default function Basket({ state, dispatch, refreshCart }: propsType) {
-  const { userInfo } = useDataContext();
+  const { userInfo } = useDataContext();  
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-10 gap-10 lg:gap-6">
       <div className="lg:col-span-6">
-        <IsFree price={Number(state?.totalAmount) || Number(state?.original_price) || 0} />
+        <IsFree
+          price={Number(state?.totalAmount || 0)}
+          threshold={Number(state?.free_shipping?.threshold || 0)}
+        />
 
         <div className="mt-[26px] hidden w-full grid-cols-2 bg-gray-250 p-[18px] lg:grid">
           <div className="text-center font-peyda-600 text-lg text-blue-1050">
@@ -34,7 +38,12 @@ export default function Basket({ state, dispatch, refreshCart }: propsType) {
         {/* BasketCart */}
         <div className="mt-5 flex flex-col gap-y-4">
           {state?.items?.map((item: CartItem) => (
-            <BasketCart refreshCart={refreshCart} dispatch={dispatch} item={item} key={item?.sku} />
+            <BasketCart
+              refreshCart={refreshCart}
+              dispatch={dispatch}
+              item={item}
+              key={item?.sku}
+            />
           ))}
         </div>
         {/* BasketCart */}
