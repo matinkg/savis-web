@@ -176,6 +176,8 @@ export default function ProductDataDetails({
     ? Number(selectedVariations?.can_preorder ?? 0) === 1
     : Number(productDetails?.product?.can_preorder ?? 0) === 1;
 
+  const isPreorder = stock <= 0 && canPreorder;
+
   const isUnavailable = stock <= 0 && !canPreorder;
 
   return (
@@ -385,10 +387,7 @@ export default function ProductDataDetails({
                 </div>
 
                 {/* Pre-order Notice */}
-                {(selectedVariations?.sku &&
-                  selectedVariations?.can_preorder) ||
-                (!selectedVariations?.sku &&
-                  productDetails?.product?.can_preorder) ? (
+                {isPreorder ? (
                   <div className="flex flex-col mt-3">
                     <div className="flex items-center p-3 bg-[#c3dce3] text-gray-800 rounded">
                       <Info className="text-black w-5 h-5 mx-1" />
