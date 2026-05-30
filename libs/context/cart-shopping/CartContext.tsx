@@ -13,7 +13,14 @@ import Cookies from "js-cookie";
 const initialCartState: CartState = {
   items: [],
   totalAmount: 0,
-  discount: null
+  discount: null,
+  original_price: 0,
+  totalBoxPrice: 0,
+  free_shipping: {
+    threshold: 0,
+    qualifies: false,
+    amount_until_free: 0,
+  },
 };
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -25,7 +32,20 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const getLocalCart = (): CartState => {
     const cart = localStorage.getItem("cart");
-    return cart ? JSON.parse(cart) : { items: [], totalAmount: 0 };
+    return cart
+      ? JSON.parse(cart)
+      : {
+          items: [],
+          totalAmount: 0,
+          discount: null,
+          original_price: 0,
+          totalBoxPrice: 0,
+          free_shipping: {
+            threshold: 0,
+            qualifies: false,
+            amount_until_free: 0,
+          },
+        };
   };
 
   const refreshCart = async () => {
@@ -37,7 +57,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         totalAmount: localCart.totalAmount,
         discount: localCart?.discount,
         original_price: localCart?.original_price,
-        totalBoxPrice: localCart?.totalBoxPrice
+        totalBoxPrice: localCart?.totalBoxPrice,
+        free_shipping: localCart?.free_shipping ?? {
+          threshold: 0,
+          qualifies: false,
+          amount_until_free: 0,
+        },
       });
     } else {
       try {
@@ -48,7 +73,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           totalAmount: data?.data?.totalAmount || 0,
           discount: data?.data?.discount || null,
           totalBoxPrice: data?.data?.totalBoxPrice || 0,
-          original_price: data?.data?.original_price || 0
+          original_price: data?.data?.original_price || 0,
+          free_shipping: {
+            threshold: data?.data?.free_shipping?.threshold ?? 0,
+            qualifies: data?.data?.free_shipping?.qualifies ?? false,
+            amount_until_free:
+              data?.data?.free_shipping?.amount_until_free ?? 0,
+          },
         });
       } catch (error) {
         console.error("Error refreshing cart:", error);
@@ -57,7 +88,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    refreshCart()
+    refreshCart();
   }, []);
 
   return (

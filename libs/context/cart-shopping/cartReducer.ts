@@ -37,7 +37,7 @@ const fetchUpdatedCart = async (dispatch: React.Dispatch<CartAction>) => {
 const updateLocalCart = (
   dispatch: React.Dispatch<CartAction>,
   method: Method,
-  item: any
+  item: any,
 ) => {
   let cart = getLocalCart();
 
@@ -84,17 +84,17 @@ const updateLocalCart = (
 
   cart.totalAmount = cart.items.reduce(
     (sum, i) => sum + i.price * i.quantity,
-    0
+    0,
   );
 
   cart.original_price = cart.items.reduce(
     (sum, i) => sum + (i.oldPrice || i.price) * i.quantity,
-    0
+    0,
   );
 
   cart.totalBoxPrice = cart.items.reduce(
     (sum, item) => sum + (Number(item?.box?.price) || 0),
-    0
+    0,
   );
 
   cart.totalAmount += cart.totalBoxPrice;
@@ -107,7 +107,7 @@ const updateCart = async (
   dispatch: React.Dispatch<CartAction>,
   method: Method,
   endpoint: string,
-  item?: any
+  item?: any,
 ) => {
   if (!isUserLoggedIn()) {
     updateLocalCart(dispatch, method, item);
@@ -124,7 +124,7 @@ const updateCart = async (
 
 export const cartReducer = (
   state: CartState,
-  action: CartAction & { dispatch?: React.Dispatch<CartAction> }
+  action: CartAction & { dispatch?: React.Dispatch<CartAction> },
 ): CartState => {
   switch (action.type) {
     case "SET_CART":
@@ -134,6 +134,7 @@ export const cartReducer = (
         discount: action.discount,
         totalBoxPrice: action.totalBoxPrice,
         original_price: action.original_price,
+        free_shipping: action.free_shipping,
       };
 
     case "ADD_ITEM":
