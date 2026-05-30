@@ -4,9 +4,7 @@ import InstagramPosts from "@/components/_modules/instagram";
 import PageBannerWithGradient from "@/components/_templates/banner/banner-gradient";
 import ContactusForm from "@/components/_templates/contactus";
 import BannerPagesSkeleton from "@/components/_templates/tailwind-css-skeleton/banner-pages";
-import { settingKeysObject } from "@/configs/constants";
 import { useFetch } from "@/configs/HTTPService";
-import { useFetchData } from "@/helper";
 
 import React from "react";
 

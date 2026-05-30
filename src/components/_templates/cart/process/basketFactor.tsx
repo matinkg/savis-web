@@ -116,8 +116,11 @@ export default function BasketFactor({
 
   const discountAmount = Number(state?.discount ?? 0);
 
-  const getItemPrice = (item: any) =>
-    item?.price ?? item?.product?.price ?? item?.oldPrice ?? 0;
+  const getItemPrice = (item: any) => {
+    const currentData = item?.variation || item?.product || item?.gift_card;
+
+    return Number(currentData?.price ?? item?.price ?? 0);
+  };
 
   const subtotal = (state?.items || []).reduce(
     (acc, item) => acc + getItemPrice(item) * (item?.quantity || 1),

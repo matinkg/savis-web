@@ -22,7 +22,7 @@ export default function PageBanner({
         backgroundSize: "cover",
        
       }}
-      className=" mb-10 flex items-center lg:mb-[60px] mt-24 md:mt-14 h-[360px] md:h-[550px] lg:h-[750px] 3xl:h-[950px]"
+      className=" mb-10 flex items-center lg:mb-[60px] mt-20 md:mt-14 h-[360px] md:h-[550px] 2xl:h-[650px] 3xl:h-[950px]"
     >
       <div className="mx-auto flex w-[91.12%] flex-col lg:w-[91.67%] 4xl:w-[85%] mt-10 md:mt-0">
         <h1

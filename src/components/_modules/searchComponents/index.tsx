@@ -11,7 +11,13 @@ import { request } from "@/configs/HTTPService";
 
 const hotKeywords = ["گردنبند", "زنجیر", "حلقه ست", "گوشواره طلا", "پیرسینگ"];
 
-export default function SearchComponents({ inMobile }: { inMobile: boolean }) {
+export default function SearchComponents({
+  inMobile,
+  setShowSearchModal,
+}: {
+  inMobile: boolean;
+  setShowSearchModal: (show: boolean) => void;
+}) {
   const [value, setValue] = useState("");
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -35,7 +41,7 @@ export default function SearchComponents({ inMobile }: { inMobile: boolean }) {
   const handleRecentClick = (term: string) => {
     setValue(term);
     saveToRecentSearches(term);
-  };  
+  };
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -92,11 +98,13 @@ export default function SearchComponents({ inMobile }: { inMobile: boolean }) {
                   <p className="text-center text-gray-500">در حال جستجو...</p>
                 ) : searchResults.length > 0 ? (
                   searchResults.map((item) => (
-                    <SearchResult
-                      key={item.id}
-                      name={item.name}
-                      link={item.slug}
-                    />
+                    <div onClick={() => setShowSearchModal(false)}>
+                      <SearchResult
+                        key={item.id}
+                        name={item.name}
+                        link={item.slug}
+                      />
+                    </div>
                   ))
                 ) : (
                   <p className="text-center text-sm text-gray-500">
@@ -114,7 +122,7 @@ export default function SearchComponents({ inMobile }: { inMobile: boolean }) {
               <div
                 className="bg-white/20 lg:bg-gray-250 h-10 flex items-center justify-between p-2.5 "
                 key={idx}
-                onClick={()=> handleRecentClick(term)}
+                onClick={() => handleRecentClick(term)}
               >
                 <span className="font-peyda-400 text-base text-white lg:text-slate-1000">
                   {term}

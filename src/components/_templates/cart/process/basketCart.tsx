@@ -30,9 +30,11 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
     refreshCart();
   };
 
-  const currentData = item?.variation || item?.product;
+  const currentData = item?.variation || item?.product || item?.gift_card;
 
-  const price = Number(currentData?.price || item?.price || 0);
+  const price = Number(
+    currentData?.price ?? item?.price ?? item?.gift_card?.price ?? 0,
+  );
 
   const discountValue = Number(
     currentData?.discount ??

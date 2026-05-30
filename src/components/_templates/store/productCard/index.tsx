@@ -39,13 +39,21 @@ export default function ProductCard({ product }: PropsType) {
     setSelectedVariations(product?.variations?.[0] || null);
   }, [product]);
 
-  const price = Number(product?.price || 0);
-
-  const finalPriceBeforeDiscount = Number(
-    product?.final_price_before_discount || 0,
+  const price = Number(
+    selectedVariations?.sku
+      ? (selectedVariations?.price ?? 0)
+      : (product?.price ?? 0),
   );
 
-  const discountText = product?.discount_text ?? "";
+  const finalPriceBeforeDiscount = Number(
+    selectedVariations?.sku
+      ? (selectedVariations?.final_price_before_discount ?? 0)
+      : (product?.final_price_before_discount ?? 0),
+  );
+
+  const discountText = selectedVariations?.sku
+    ? (selectedVariations?.discount_text ?? "")
+    : (product?.discount_text ?? "");
 
   const hasDiscount =
     discountText &&
@@ -53,9 +61,13 @@ export default function ProductCard({ product }: PropsType) {
     discountText !== "0" &&
     finalPriceBeforeDiscount > price;
 
-  const stock = product?.stock ?? 0;
+  const stock = selectedVariations?.sku
+    ? Number(selectedVariations?.stock ?? 0)
+    : Number(product?.stock ?? 0);
 
-  const isPreorder = Number(product?.can_preorder ?? 0) === 1;
+  const isPreorder = selectedVariations?.sku
+    ? Number(selectedVariations?.can_preorder ?? 0) === 1
+    : Number(product?.can_preorder ?? 0) === 1;
 
   const isOutOfStock = stock <= 0 && !isPreorder;
 
@@ -105,23 +117,21 @@ export default function ProductCard({ product }: PropsType) {
 
     const is_preorder = stock <= 0 && isPreorder;
 
-    const finalPrice = product?.price;
-
     const itemToAdd = {
       product,
       slug: product?.slug,
       product_id: product?.id,
       name: product?.name,
       image: product?.image,
-      price: finalPrice,
+      price: selectedVariations?.price ?? product?.price,
       quantity: 1,
       sku: product?.sku,
-      variation_sku: "",
+      variation_sku: selectedVariations?.sku || "",
       variation: null,
       color: "",
-      stockQuantity: product?.stock || 0,
+      stockQuantity: selectedVariations?.stock ?? product?.stock ?? 0,
       wage: product?.wage,
-      weight: product?.weight,
+      weight: selectedVariations?.weight ?? product?.weight,
       type: "product",
       is_preorder,
     };
@@ -136,7 +146,9 @@ export default function ProductCard({ product }: PropsType) {
     setTimeout(() => setIsAdded(false), 3000);
   };
 
-  const rawDiscountText = product?.discount_text ?? "";
+  const rawDiscountText = selectedVariations?.sku
+    ? (selectedVariations?.discount_text ?? "")
+    : (product?.discount_text ?? "");
 
   const parsedDiscountNumber = Number(rawDiscountText.replace("%", "").trim());
 

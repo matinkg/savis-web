@@ -7,7 +7,7 @@ export default function Banner({ HomeBannerData }: any) {
   return (
     <>
       <section
-        className="flex flex-col justify-center backStyle mt-24 md:mt-14 lg:mb-[60px] h-[360px] md:h-[550px] lg:h-[750px] 3xl:h-[950px]"
+        className="flex flex-col justify-center backStyle mt-20 md:mt-14 lg:mb-[60px] h-[360px] md:h-[550px] 2xl:h-[650px] 3xl:h-[950px]"
         style={{
           width: "100%",
           background: ` linear-gradient(

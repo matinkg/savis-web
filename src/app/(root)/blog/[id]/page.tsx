@@ -1,11 +1,8 @@
 "use client";
-
 import React from "react";
 import RelatedProducts from "@/components/_modules/relatedProducts";
-
 import BlogContent from "@/components/_templates/blog/content";
 import RelatedPost from "@/components/_templates/blog/relatedPost";
-import { useFetchDataDetails } from "@/helper";
 import PrimaryLoading from "@/components/_templates/loading/primaryLoading";
 import { useParams } from "next/navigation";
 import { useFetch } from "@/configs/HTTPService";
@@ -13,7 +10,6 @@ import { useFetch } from "@/configs/HTTPService";
 export default function BlogDetails() {
   const params = useParams();
   const { id } = params;
-
   const { data, isLoading } = useFetch<any>(`/api/v1/blog/${id}`);
 
   return (
@@ -30,13 +26,12 @@ export default function BlogDetails() {
           /> */}
 
           <div
-            className="BlogDetails_banner_ads_mobile lg:BlogDetails_banner_ads_desk mb-10 flex items-center lg:mb-[60px]"
+            className="BlogDetails_banner_ads_mobile lg:BlogDetails_banner_ads_desk mb-10 flex items-center lg:mb-[60px] mt-20 md:mt-14 h-[360px] md:h-[550px] 2xl:h-[650px] 3xl:h-[950px]"
             style={{
               background: `linear-gradient(-90deg, #000000 0%, rgba(0, 0, 0, 0) 51.5%), url('${data?.post?.image_1}')`,
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
-              height: "85vh",
             }}
           >
             <div className="mx-auto w-[91.12%] lg:w-[91.67%] 4xl:w-[85%]">

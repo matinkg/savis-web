@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       {/* banner  */}
-      <div className="cart_banner_mobile lg:cart_banner_desk mb-10 flex items-center lg:mb-[60px]">
+      <div className="cart_banner_mobile lg:cart_banner_desk mb-10 flex items-center lg:mb-[60px] mt-20 md:mt-14 h-[360px] md:h-[550px] 2xl:h-[650px] 3xl:h-[950px]">
         <div className="mx-auto flex w-[91.12%] flex-col lg:w-[91.67%] 4xl:w-[85%]">
           <h1 className="font-peyda-900 text-[44px] text-white lg:font-peyda-600 lg:text-[85px]">
             حساب کاربری من{" "}
