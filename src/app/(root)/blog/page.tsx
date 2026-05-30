@@ -54,7 +54,7 @@ export default function Blog() {
                       <img
                         src={firstCat?.posts[0]?.image_1}
                         alt=""
-                        className="aspect-[1/0.7] h-[422px] w-full lg:h-full"
+                        className="aspect-[1/0.7] object-cover h-[422px] w-full lg:h-full"
                       />
                     ) : (
                       <ImageIcon className="w-64 h-64 text-primary" />
@@ -160,7 +160,7 @@ export default function Blog() {
                 </Button>
               </div>
             </div>
-            
+
             <div className="mt-10 pb-16 lg:mt-[60px]">
               <Swiper
                 loop

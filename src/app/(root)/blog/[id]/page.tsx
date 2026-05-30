@@ -26,13 +26,12 @@ export default function BlogDetails() {
           /> */}
 
           <div
-            className="BlogDetails_banner_ads_mobile lg:BlogDetails_banner_ads_desk mb-10 flex items-center lg:mb-[60px]"
+            className="BlogDetails_banner_ads_mobile lg:BlogDetails_banner_ads_desk mb-10 flex items-center lg:mb-[60px] mt-20 md:mt-14 h-[360px] md:h-[550px] 2xl:h-[650px] 3xl:h-[950px]"
             style={{
               background: `linear-gradient(-90deg, #000000 0%, rgba(0, 0, 0, 0) 51.5%), url('${data?.post?.image_1}')`,
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
-              height: "85vh",
             }}
           >
             <div className="mx-auto w-[91.12%] lg:w-[91.67%] 4xl:w-[85%]">
