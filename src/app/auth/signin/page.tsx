@@ -1,6 +1,5 @@
 import RenderSigninStep from "@/components/_templates/renderAuthStep/signin";
 import nisaLoginImg from "@/lib/assets/images/nisa-login-img.webp";
-// import nisaLoginMobileImg from "@/lib/assets/images/nisa-login-mobile-img.webp";
 import nisaLogoImg from "@/lib/assets/images/nisa-logo.webp";
 import nisaLightLogoImg from "@/lib/assets/images/nisa-light-logo.webp";
 import Image from "next/image";
