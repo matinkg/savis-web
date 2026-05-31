@@ -19,7 +19,7 @@ export default function WishlistEmpty() {
       </div>
 
       <Button className="w-fit bg-secendry px-[18px] py-3 font-peyda-400 text-sm text-white lg:text-lg">
-        <Link href="/">بازگشت به فروشگاه</Link>
+        <Link href="/products">بازگشت به فروشگاه</Link>
       </Button>
     </div>
   );

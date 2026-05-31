@@ -14,6 +14,7 @@ const initialCartState: CartState = {
   items: [],
   totalAmount: 0,
   discount: null,
+  discountCode: null,
   original_price: 0,
   totalBoxPrice: 0,
   free_shipping: {
@@ -38,6 +39,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           items: [],
           totalAmount: 0,
           discount: null,
+          discountCode: null,
           original_price: 0,
           totalBoxPrice: 0,
           free_shipping: {
@@ -56,6 +58,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         items: localCart.items,
         totalAmount: localCart.totalAmount,
         discount: localCart?.discount,
+        discountCode: localCart?.discountCode,
         original_price: localCart?.original_price,
         totalBoxPrice: localCart?.totalBoxPrice,
         free_shipping: localCart?.free_shipping ?? {
@@ -72,6 +75,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           items: data?.data?.items,
           totalAmount: data?.data?.totalAmount || 0,
           discount: data?.data?.discount || null,
+          discountCode: data?.data?.applied_discount?.code,
           totalBoxPrice: data?.data?.totalBoxPrice || 0,
           original_price: data?.data?.original_price || 0,
           free_shipping: {

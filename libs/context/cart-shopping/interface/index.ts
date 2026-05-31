@@ -34,6 +34,7 @@ interface CartState {
   items: CartItem[];
   totalAmount: number;
   discount?: any;
+  discountCode?: string | null;
   totalBoxPrice?: number;
   original_price?: number;
   free_shipping?: {
@@ -69,6 +70,7 @@ type CartAction =
       totalAmount: number;
       dispatch?: React.Dispatch<CartAction>;
       discount?: null;
+      discountCode?: string | null;
       original_price?: number;
       totalBoxPrice?: number;
       free_shipping?: {

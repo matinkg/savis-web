@@ -2,9 +2,9 @@ import Input from "@/components/_modules/input/inex";
 import SelectFullSearch from "@/components/_modules/select-fullSearch";
 import { Controller, useFormContext } from "react-hook-form";
 import useHandelprovince from "./hook/useHandelprovince";
-import { province } from "@/static_data/json/province";
 import { useDataContext } from "@/libs/context/app-data";
 import { useEffect, useState } from "react";
+import { useGetProvinces } from "@/lib/hooks/services/shipping/index.query";
 
 export default function CheckOutForm() {
   const {
@@ -16,7 +16,8 @@ export default function CheckOutForm() {
   const { userInfo } = useDataContext();
   const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
   // --------------------------------------------
-
+  const { data: provincesData } = useGetProvinces();
+  // --------------------------------------------
   const { filteredCities, cititiesLoading, handleChangeProvincesData } =
     useHandelprovince();
   //   ---------------
@@ -112,7 +113,7 @@ export default function CheckOutForm() {
                     onChange(selectedProvince);
                   }}
                   selectedOption={value}
-                  options={province}
+                  options={provincesData?.data || []}
                   title="استان محل سکونت"
                   isMulti={false}
                   classNamePrefix="w-full"

@@ -180,18 +180,66 @@ export default function ProductDataDetails({
 
   const isUnavailable = stock <= 0 && !canPreorder;
 
+  const currentPrice = Number(
+    selectedVariations?.sku
+      ? (selectedVariations?.price ?? 0)
+      : (productDetails?.product?.price ?? 0),
+  );
+
+  const finalPriceBeforeDiscount = Number(
+    selectedVariations?.sku
+      ? (selectedVariations?.final_price_before_discount ?? 0)
+      : (productDetails?.product?.final_price_before_discount ?? 0),
+  );
+
+  const discountText = selectedVariations?.sku
+    ? (selectedVariations?.discount_text ?? "")
+    : (productDetails?.product?.discount_text ?? "");
+
+  const hasDiscount =
+    discountText &&
+    discountText !== "0%" &&
+    discountText !== "0" &&
+    finalPriceBeforeDiscount > currentPrice;
+
+  const rawDiscountText = selectedVariations?.sku
+    ? (selectedVariations?.discount_text ?? "")
+    : (productDetails?.product?.discount_text ?? "");
+
+  const parsedDiscountNumber = Number(rawDiscountText.replace("%", "").trim());
+
+  const discountDisplay = isNaN(parsedDiscountNumber)
+    ? rawDiscountText
+    : `${Math.round(parsedDiscountNumber).toLocaleString("fa-IR")}%`;
+
   return (
     <>
       <div className="mb-10 grid grid-cols-1 gap-y-6 lg:grid-cols-5 lg:gap-x-10">
-        {images?.length > 0 ? (
-          <div className="lg:col-span-2 product-gallery-container">
-            <Thumbnails images={images} />
-          </div>
-        ) : (
-          <div className="lg:col-span-2">
-            <ImageIcon className="text-secendry w-[80%]" />
-          </div>
-        )}
+        <div className="lg:col-span-2 relative">
+          {hasDiscount ? (
+            <div className="absolute right-4 top-4 z-20 w-fit bg-red-250 px-3 py-1.5 font-peyda-400 text-xs text-white">
+              {discountDisplay} تخفیف
+            </div>
+          ) : isUnavailable ? (
+            <div className="absolute right-4 top-4 z-20 w-fit bg-slate-1000/50 px-3 py-1.5 font-peyda-400 text-xs text-white">
+              ناموجود
+            </div>
+          ) : isPreorder ? (
+            <div className="absolute right-4 top-4 z-20 w-fit bg-yellow-600 px-3 py-1.5 font-peyda-400 text-xs text-white">
+              پیش سفارش
+            </div>
+          ) : null}
+
+          {images?.length > 0 ? (
+            <div className="product-gallery-container">
+              <Thumbnails images={images} />
+            </div>
+          ) : (
+            <div className="flex justify-center items-center">
+              <ImageIcon className="text-secendry w-[80%]" />
+            </div>
+          )}
+        </div>
 
         {}
         <div className="lg:col-span-3">
@@ -356,25 +404,16 @@ export default function ProductDataDetails({
                     <span className="font-peyda-500 text-xl text-red-600 lg:text-3xl">
                       ناموجود
                     </span>
-                  ) : selectedVariations?.discount_type === "percentage" &&
-                    selectedVariations?.discount_value > 0 ? (
-                    <span className="font-peyda-400 text-xl text-blue-1050 lg:text-3xl block">
-                      قیمت:
-                      <br />
+                  ) : hasDiscount ? (
+                    <div className="flex flex-col">
                       <span className="text-gray-500 line-through text-lg lg:text-2xl">
-                        {Number(
-                          selectedVariations?.original_price,
-                        ).toLocaleString("fa-IR")}{" "}
-                        <span>تومان</span>
+                        {finalPriceBeforeDiscount.toLocaleString("fa-IR")} تومان
                       </span>
-                      <span className="block font-bold text-xl lg:text-3xl">
-                        {Number(
-                          selectedVariations?.original_price *
-                            (1 - selectedVariations?.discount_value / 100),
-                        ).toLocaleString("fa-IR")}{" "}
-                        <span>تومان</span>
+
+                      <span className="font-bold text-xl text-blue-1050 lg:text-3xl">
+                        {currentPrice.toLocaleString("fa-IR")} تومان
                       </span>
-                    </span>
+                    </div>
                   ) : (
                     <span className="font-peyda-400 text-xl text-blue-1050 lg:text-3xl">
                       {Number(

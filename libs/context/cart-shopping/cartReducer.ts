@@ -27,7 +27,15 @@ const fetchUpdatedCart = async (dispatch: React.Dispatch<CartAction>) => {
       items: response?.data?.items || [],
       totalAmount: response?.data?.totalAmount || 0,
       discount: response?.data?.discount || null,
+      discountCode: response?.data?.applied_discount?.code || null,
       totalBoxPrice: response?.data?.totalBoxPrice || 0,
+      original_price: response?.data?.original_price || 0,
+      free_shipping: {
+        threshold: response?.data?.free_shipping?.threshold ?? 0,
+        qualifies: response?.data?.free_shipping?.qualifies ?? false,
+        amount_until_free:
+          response?.data?.free_shipping?.amount_until_free ?? 0,
+      },
     });
   } catch (error) {
     console.error("Error fetching updated cart:", error);
@@ -132,6 +140,7 @@ export const cartReducer = (
         items: action.items,
         totalAmount: action.totalAmount,
         discount: action.discount,
+        discountCode: action.discountCode,
         totalBoxPrice: action.totalBoxPrice,
         original_price: action.original_price,
         free_shipping: action.free_shipping,

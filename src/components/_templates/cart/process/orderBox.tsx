@@ -60,7 +60,17 @@ export default function OrderBox({ isCompleted, state }: propsType) {
   };
 
   const getItemPrice = (item: any) => {
-    return item?.price ?? item?.product?.price ?? item?.oldPrice ?? 0;
+    const currentData = item?.variation || item?.product || item?.gift_card;
+
+    const isPreorder =
+      Number(item?.product?.can_preorder ?? item?.variation?.can_preorder) ===
+        1 && Number(item?.product?.stock ?? item?.variation?.stock ?? 0) === 0;
+
+    if (isPreorder) {
+      return Number(currentData?.preorder_final_price ?? 0);
+    }
+
+    return Number(currentData?.price ?? item?.price ?? 0);
   };
 
   const calcSubtotal = (items: any[] = []) => {
@@ -109,10 +119,7 @@ export default function OrderBox({ isCompleted, state }: propsType) {
             </div>
 
             <span className="font-peyda-600 text-sm text-slate-1000/50 lg:text-lg">
-              {item?.oldPrice?.toLocaleString("fa-ir") ??
-                formatPrice(item?.product.price) ??
-                item?.price}{" "}
-              تومان
+              {formatPrice(getItemPrice(item) * (item?.quantity || 1))} تومان
             </span>
           </div>
         ))}
