@@ -44,8 +44,8 @@ export default function OrderBox({ isCompleted, state }: propsType) {
     const formData = getValues();
     const orderData = {
       ...formData,
-      city: formData.city?.title,
-      province: formData.province?.title,
+      city_id: formData.city?.id,
+      province_id: formData.province?.id,
       payment_gateway: selectedGateway,
       referral_code,
     };
