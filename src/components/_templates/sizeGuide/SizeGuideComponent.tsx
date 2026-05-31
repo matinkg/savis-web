@@ -6,7 +6,9 @@ interface SizeGuideProps {
   isModal?: boolean;
 }
 
-export default function SizeGuideComponent({ isModal = false }: SizeGuideProps) {
+export default function SizeGuideComponent({
+  isModal = false,
+}: SizeGuideProps) {
   return (
     <>
       {!isModal && (
@@ -24,15 +26,17 @@ export default function SizeGuideComponent({ isModal = false }: SizeGuideProps) 
         </h1>
 
         <table className="mx-auto my-10 w-[91.12%] lg:my-[60px] lg:w-[91.67%] 4xl:w-[85%] size-guide-table">
-          <tr className="bg-third child:py-4 child:font-peyda-600 child:text-sm child:lg:py-6 child:lg:text-2xl">
-            <th>ردیف</th>
-            <th className="ignore-styling">سایز انگشتر</th>
-            <th>دور انگشتر</th>
-            <th>قطر انگشتر</th>
-          </tr>
+          <thead>
+            <tr className="bg-third child:py-4 child:font-peyda-600 child:text-sm child:lg:py-6 child:lg:text-2xl">
+              <th>ردیف</th>
+              <th className="ignore-styling">سایز انگشتر</th>
+              <th>دور انگشتر</th>
+              <th>قطر انگشتر</th>
+            </tr>
+          </thead>
 
-          {SizeGuideData?.map((item, index) => (
-            <>
+          <tbody>
+            {SizeGuideData?.map((item, index) => (
               <tr
                 key={index}
                 className="bg-[#DDE4E7] child:py-4 child:text-center child:font-peyda-600 child:text-sm child:lg:text-base"
@@ -42,10 +46,8 @@ export default function SizeGuideComponent({ isModal = false }: SizeGuideProps) 
                 <td>{item?.aroundTheRing}</td>
                 <td className="ignore-styling">{item?.diameterOfRing}</td>
               </tr>
-            </>
-          ))}
-
-          <tr></tr>
+            ))}
+          </tbody>
         </table>
 
         <div className="mx-auto w-[91.12%] lg:w-1/2">
