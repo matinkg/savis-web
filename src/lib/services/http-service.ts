@@ -4,8 +4,8 @@ import { toast } from "sonner";
 
 axios.interceptors.request.use(
   function (config) {
-    const token = Cookies.get("auth-token");
-    
+    const token = Cookies.get("authToken");
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

@@ -41,11 +41,11 @@ export default function SelectFullSearch({
       <Select
         value={selectedOption}
         onChange={handleChange}
-        options={loading ? [] : options?.length > 0 && options}
+        options={loading ? [] : Array.isArray(options) ? options : []}
         getOptionLabel={(option) =>
           option?.name ? option?.name : option?.title
         }
-        getOptionValue={(option) => option?.id}
+        getOptionValue={(option) => String(option?.id)}
         isSearchable
         isMulti={isMulti}
         // closeMenuOnSelect={false}
