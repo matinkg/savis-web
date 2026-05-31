@@ -1,6 +1,7 @@
 import {
   ProvinceCitiesResponseProps,
   ProvinceResponseProps,
+  ShippingOptionsResponseProps,
 } from "@/lib/interface/services/shipping/index.interface";
 import httpService from "../http-service";
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -16,7 +17,7 @@ export const getProvinceCities = (
   return httpService.get(`${baseUrl}${baseEndpoint}provinces/${id}/cities`);
 };
 
-export const getShippingOptions = (province_id: number, city_id: number) => {
+export const getShippingOptions = (province_id: number, city_id: number): Promise<ShippingOptionsResponseProps> => {
   return httpService.get(`${baseUrl}${baseEndpoint}shipping/options`, {
     params: {
       province_id,

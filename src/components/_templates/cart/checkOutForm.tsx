@@ -30,7 +30,11 @@ export default function CheckOutForm() {
     Number(provinceId),
     Number(cityId),
   );
-  console.log(shippingOptionsData);
+
+  const shippingOptions = shippingOptionsData?.data || [];
+  const requiresShipping = shippingOptionsData?.requires_shipping;
+  const isShippingLoading = !shippingOptionsData;
+  const isLocationReady = !!provinceId && !!cityId;
   // --------------------------------------------
   const { handleChangeProvincesData } = useHandelprovince();
   //   ---------------
@@ -70,8 +74,29 @@ export default function CheckOutForm() {
   }, [watch, getValues, handleChangeProvincesData]);
 
   useEffect(() => {
-    setValue("city", null);
+    if (!provinceId) return;
+    const currentCity = getValues("city");
+    if (currentCity?.province_id !== provinceId) {
+      setValue("city", null);
+    }
   }, [provinceId]);
+
+  useEffect(() => {
+    if (!shippingOptions.length) return;
+
+    const current = getValues("shipping_method");
+
+    const isCurrentValid = shippingOptions.some(
+      (item: any) => item.code === current,
+    );
+
+    if (!current || !isCurrentValid) {
+      setValue("shipping_method", shippingOptions[0].code, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    }
+  }, [shippingOptionsData, provinceId, cityId]);
 
   return (
     <>
@@ -177,67 +202,54 @@ export default function CheckOutForm() {
         </div>
         {/* ----------------------------------------------------------------------- */}
 
-        <div className="w-full grid grid-cols-1 place-items-center gap-x-2 lg:gap-x-8">
-          <div className="w-full space-y-4">
-            <label>نحوه ارسال بسته</label>
-
-            <div className="flex items-center gap-x-4 lg:gap-x-6">
-              <div className="flex items-center ">
-                <Controller
-                  name="shipping_method"
-                  control={control}
-                  defaultValue="bike"
-                  render={({ field: { onChange, value } }) => {
-                    return (
-                      <div className="w-6 h-6">
-                        <label className="checkbox2">
-                          <input
-                            type="radio"
-                            name="shipping_method"
-                            value="bike"
-                            checked={value === "bike"}
-                            onChange={() => onChange("bike")}
-                          />
-                          <span className="checkmark2"></span>
-                        </label>
-                      </div>
-                    );
-                  }}
-                />
-
-                <span className="block font-peyda-400 text-sm lg:text-lg text-blue-1050">
-                  پیک{" "}
-                </span>
-              </div>
-
-              <div className="flex items-center ">
-                <Controller
-                  name="shipping_method"
-                  control={control}
-                  render={({ field: { onChange, value } }) => {
-                    return (
-                      <div className="w-6 h-6">
-                        <label className="checkbox2">
-                          <input
-                            type="radio"
-                            name="shipping_method"
-                            value="tipax"
-                            checked={value === "tipax"}
-                            onChange={() => onChange("tipax")}
-                          />
-                          <span className="checkmark2"></span>
-                        </label>
-                      </div>
-                    );
-                  }}
-                />
-                <span className="block font-peyda-400 text-sm lg:text-lg text-blue-1050">
-                  تیپاکس(پس کرایه){" "}
-                </span>
-              </div>
+        {/* ------------------------------------------------------- */}
+        <div className="w-full space-y-4">
+          <label>نحوه ارسال بسته</label>
+          {!provinceId || !cityId ? (
+            <div className="text-sm text-gray-400 font-peyda-400">
+              لطفاً استان و شهر را انتخاب کنید تا روش‌های ارسال نمایش داده شود
             </div>
-          </div>
+          ) : isShippingLoading ? (
+            <div className="text-sm text-gray-500 font-peyda-400 animate-pulse">
+              در حال بررسی روش‌های ارسال...
+            </div>
+          ) : requiresShipping === false ? (
+            <div className="text-sm text-gray-500 font-peyda-400">
+              این سفارش نیاز به ارسال ندارد
+            </div>
+          ) : shippingOptions.length === 0 ? (
+            <div className="text-sm text-red-600 font-peyda-400">
+              متأسفانه امکان ارسال به شهر انتخاب شده وجود ندارد
+            </div>
+          ) : (
+            <div className="flex items-center gap-x-4 lg:gap-x-6">
+              {shippingOptions.map((item: any) => (
+                <div key={item.code} className="flex items-center">
+                  <Controller
+                    name="shipping_method"
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <label className="checkbox2">
+                        <input
+                          type="radio"
+                          value={item.code}
+                          checked={value === item.code}
+                          onChange={() => onChange(item.code)}
+                        />
+                        <span className="checkmark2"></span>
+                      </label>
+                    )}
+                  />
+
+                  <span className="mr-6 mb-1 text-sm lg:text-lg text-blue-1050">
+                    {item.title}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+        {/* ------------------------------------------------------- */}
 
         {/* ------------------------------------------------------- */}
         <Input

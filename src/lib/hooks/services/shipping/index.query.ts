@@ -1,6 +1,7 @@
 import {
   ProvinceCitiesResponseProps,
   ProvinceResponseProps,
+  ShippingOptionsResponseProps,
 } from "@/lib/interface/services/shipping/index.interface";
 import {
   getProvinceCities,
@@ -21,13 +22,14 @@ export const useGetProvinceCities = (id: number) => {
     queryKey: ["cities", id],
     queryFn: (): Promise<ProvinceCitiesResponseProps> => getProvinceCities(id),
     enabled: !!id,
+    staleTime: 1000 * 60 * 10,
   });
 };
 
 export const useGetShippingOptions = (province_id: number, city_id: number) => {
   return useQuery({
     queryKey: ["shipping-options", province_id, city_id],
-    queryFn: () => getShippingOptions(province_id, city_id),
+    queryFn: (): Promise<ShippingOptionsResponseProps> => getShippingOptions(province_id, city_id),
     enabled: !!province_id && !!city_id,
   });
 };

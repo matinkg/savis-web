@@ -18,3 +18,16 @@ export interface ProvinceCitiesProps {
   slug: string;
   province_id: number;
 }
+
+export interface ShippingOptionsResponseProps {
+  data: ShippingOptionProps[];
+  requires_shipping: boolean;
+}
+
+export interface ShippingOptionProps {
+  code: string;
+  title: string;
+  price: number;
+  base_price: number;
+  is_free: boolean;
+}
