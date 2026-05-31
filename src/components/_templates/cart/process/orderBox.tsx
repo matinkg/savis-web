@@ -112,9 +112,10 @@ export default function OrderBox({ isCompleted, state }: propsType) {
               <span className="font-peyda-600 text-sm text-blue-1050 lg:text-lg">
                 {item?.variation?.name ??
                   item?.product?.name ??
-                  item?.gift_card?.name}
-                 ×
-                {item?.quantity}
+                  item?.gift_card?.name}{" "}
+                <span className="inline-block" dir="ltr">
+                  {item?.quantity}×
+                </span>
               </span>
             </div>
 
