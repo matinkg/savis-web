@@ -130,8 +130,10 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
               {item?.variation?.name ??
                 item?.product?.name ??
                 item?.gift_card?.name}
-            </Link>
-            × {item?.quantity}
+            </Link>{" "}
+            <span className="inline-block" dir="ltr">
+              {item?.quantity}×
+            </span>
             {item?.box?.id && (
               <span className="text-gray-600 text-xs sm:text-sm ml-2">
                 | بسته‌بندی: {item?.box?.name} (
