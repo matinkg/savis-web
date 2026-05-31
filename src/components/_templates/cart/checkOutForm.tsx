@@ -2,24 +2,30 @@ import Input from "@/components/_modules/input/inex";
 import SelectFullSearch from "@/components/_modules/select-fullSearch";
 import { Controller, useFormContext } from "react-hook-form";
 import useHandelprovince from "./hook/useHandelprovince";
-import { useDataContext } from "@/libs/context/app-data";
-import { useEffect, useState } from "react";
-import { useGetProvinces } from "@/lib/hooks/services/shipping/index.query";
+import { useEffect } from "react";
+import {
+  useGetProvinceCities,
+  useGetProvinces,
+} from "@/lib/hooks/services/shipping/index.query";
 
 export default function CheckOutForm() {
   const {
     control,
     register,
     getValues,
+    watch,
+    setValue,
     formState: { errors },
   } = useFormContext();
-  const { userInfo } = useDataContext();
-  const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
+  const selectedProvince = watch("province");
+  const provinceId = selectedProvince?.id;
+  const { data: provincesData, isLoading: provincesLoading } =
+    useGetProvinces();
+  const { data: citiesData, isLoading: citiesLoading } = useGetProvinceCities(
+    Number(provinceId),
+  );
   // --------------------------------------------
-  const { data: provincesData } = useGetProvinces();
-  // --------------------------------------------
-  const { filteredCities, cititiesLoading, handleChangeProvincesData } =
-    useHandelprovince();
+  const { handleChangeProvincesData } = useHandelprovince();
   //   ---------------
   const customStyles = {
     control: (provided: any, state: any) => ({
@@ -45,14 +51,20 @@ export default function CheckOutForm() {
   // --------------------------------------------
 
   useEffect(() => {
-    if (selectedProvince) return;
+    const province = watch("province");
 
-    const tmp = getValues("province");
-    if (tmp) {
-      setSelectedProvince(tmp);
-      handleChangeProvincesData(tmp);
+    if (!province) {
+      const tmp = getValues("province");
+
+      if (tmp) {
+        handleChangeProvincesData(tmp);
+      }
     }
-  }, [getValues, handleChangeProvincesData, selectedProvince]);
+  }, [watch, getValues, handleChangeProvincesData]);
+
+  useEffect(() => {
+    setValue("city", null);
+  }, [provinceId]);
 
   return (
     <>
@@ -140,10 +152,10 @@ export default function CheckOutForm() {
                 <SelectFullSearch
                   handleChange={(selectedCity: any) => onChange(selectedCity)}
                   selectedOption={value}
-                  options={filteredCities}
+                  options={citiesData?.data || []}
                   title="شهر محل سکونت"
                   isMulti={false}
-                  loading={cititiesLoading}
+                  loading={citiesLoading}
                   isStar={true}
                   classNamePrefix={`w-full`}
                   titleStyle="font-peyda-400"
