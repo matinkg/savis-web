@@ -85,7 +85,11 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
       className="w-full flex bg-gray-250 p-4 rounded-lg shadow-sm"
     >
       <div className="w-[90%] sm:w-[60%] xl:w-[50%] grid grid-cols-12 gap-x-4">
-        <div className="relative col-span-5 lg:col-span-6 3xl:col-span-5 aspect-[5/5]">
+        <div
+          className={`relative col-span-5 lg:col-span-6 3xl:col-span-5 ${
+            item?.type === "gift_card" ? "aspect-[17/10]" : "aspect-[5/5]"
+          }`}
+        >
           {hasImage ? (
             <Image
               src={
