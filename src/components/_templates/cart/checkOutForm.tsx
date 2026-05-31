@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import {
   useGetProvinceCities,
   useGetProvinces,
+  useGetShippingOptions,
 } from "@/lib/hooks/services/shipping/index.query";
 
 export default function CheckOutForm() {
@@ -18,12 +19,18 @@ export default function CheckOutForm() {
     formState: { errors },
   } = useFormContext();
   const selectedProvince = watch("province");
+  const selectedCity = watch("city");
   const provinceId = selectedProvince?.id;
-  const { data: provincesData, isLoading: provincesLoading } =
-    useGetProvinces();
+  const cityId = selectedCity?.id;
+  const { data: provincesData } = useGetProvinces();
   const { data: citiesData, isLoading: citiesLoading } = useGetProvinceCities(
     Number(provinceId),
   );
+  const { data: shippingOptionsData } = useGetShippingOptions(
+    Number(provinceId),
+    Number(cityId),
+  );
+  console.log(shippingOptionsData);
   // --------------------------------------------
   const { handleChangeProvincesData } = useHandelprovince();
   //   ---------------
