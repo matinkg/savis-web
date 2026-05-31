@@ -8,7 +8,6 @@ interface IsFreeProps {
 export default function IsFree({ price, threshold }: IsFreeProps) {
   const isFree = price >= threshold;
   const progress = threshold > 0 ? Math.min((price / threshold) * 100, 100) : 0;
-
   const baseColor = isFree ? "#2ecc71" : "#dd4444";
   const darkColor = isFree ? "#1e9e55" : "#780000";
 
