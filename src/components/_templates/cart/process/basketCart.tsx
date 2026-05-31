@@ -36,30 +36,23 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
     currentData?.price ?? item?.price ?? item?.gift_card?.price ?? 0,
   );
 
-  const discountValue = Number(
-    currentData?.discount ??
-      currentData?.discount_value ??
-      item?.product?.discount ??
-      item?.product?.discount_value ??
-      0,
+  const finalPriceBeforeDiscount = Number(
+    currentData?.final_price_before_discount ??
+      item?.product?.final_price_before_discount ??
+      price,
   );
 
-  const discountType =
-    currentData?.discount_type || item?.product?.discount_type;
+  const rawDiscountText =
+    currentData?.discount_text ?? item?.product?.discount_text ?? "";
 
-  const hasDiscount = discountValue > 0;
+  const parsedDiscountNumber = Number(rawDiscountText.replace("%", "").trim());
 
-  let oldPrice = price;
+  const discountDisplay = isNaN(parsedDiscountNumber)
+    ? rawDiscountText
+    : `${Math.round(parsedDiscountNumber).toLocaleString("fa-IR")}%`;
 
-  if (hasDiscount) {
-    if (discountType === "fixed") {
-      oldPrice = price + discountValue;
-    }
-
-    if (discountType === "percentage") {
-      oldPrice = Math.round(price / (1 - discountValue / 100));
-    }
-  }
+  const hasDiscount =
+    finalPriceBeforeDiscount > price && rawDiscountText !== "";
 
   const hasImage =
     item?.variation?.gallery?.length > 0 ||
@@ -165,8 +158,8 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
           {/* MOBILE PRICE */}
           <div className="sm:hidden flex flex-col">
             {hasDiscount && (
-              <span className="text-sm sm:text-base text-gray-500 line-through">
-                {oldPrice.toLocaleString("fa-IR")} تومان
+              <span className="text-gray-500 line-through">
+                {Number(finalPriceBeforeDiscount).toLocaleString("fa-IR")} تومان
               </span>
             )}
 
@@ -199,7 +192,7 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
         <div className="hidden sm:flex flex-col items-end mt-2.5">
           {hasDiscount && (
             <span className="text-sm sm:text-base md:text-lg text-gray-500 line-through">
-              {oldPrice.toLocaleString("fa-IR")} تومان
+              {Number(finalPriceBeforeDiscount).toLocaleString("fa-IR")} تومان
             </span>
           )}
 
