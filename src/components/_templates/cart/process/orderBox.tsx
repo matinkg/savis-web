@@ -38,7 +38,10 @@ export default function OrderBox({ isCompleted, state }: propsType) {
     (item: any) => item.code === selectedShippingMethod,
   );
 
-  const shippingPrice = Number(selectedShipping?.price ?? 0);
+  const hasSelectedShipping = !!selectedShipping;
+  const shippingCost = hasSelectedShipping
+    ? Number(selectedShipping?.price ?? 0)
+    : 0;
 
   useEffect(() => {
     const fetchPaymentGateways = async () => {
@@ -107,7 +110,11 @@ export default function OrderBox({ isCompleted, state }: propsType) {
     state?.discount?.amount ?? state?.discount ?? 0,
   );
 
-  const finalTotal = subtotal + (state?.totalBoxPrice || 0) - discountAmount;
+  const finalTotal =
+    subtotal +
+    Number(state?.totalBoxPrice || 0) +
+    (selectedShippingMethod ? shippingCost : 0) -
+    discountAmount;
 
   const handleSelectGateway = (gatewayId: number) => {
     setSelectedGateway(gatewayId);
@@ -162,12 +169,12 @@ export default function OrderBox({ isCompleted, state }: propsType) {
               حمل و نقل
             </span>
 
-            {Number(shippingPrice) === 0 ? (
-              <span className="block text-center text-green-600">رایگان</span>
+            {!selectedShippingMethod ? (
+              <span className="text-slate-400">—</span>
+            ) : shippingCost === 0 ? (
+              <span className="text-green-600">رایگان</span>
             ) : (
-              <span className="block text-center">
-                {formatPrice(shippingPrice)} تومان
-              </span>
+              <span>{formatPrice(shippingCost)} تومان</span>
             )}
           </div>
         )}
