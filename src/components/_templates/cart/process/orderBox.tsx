@@ -7,6 +7,7 @@ import BagTick from "@/public/icons/bagTick";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { useGetShippingOptions } from "@/lib/hooks/services/shipping/index.query";
 import { useFormContext } from "react-hook-form";
 
 type propsType = {
@@ -14,9 +15,30 @@ type propsType = {
   isCompleted: boolean;
 };
 export default function OrderBox({ isCompleted, state }: propsType) {
-  const { getValues, trigger } = useFormContext();
+  const { getValues, trigger, watch } = useFormContext();
   const [paymentGateways, setPaymentGateways] = useState<any[]>([]);
   const [selectedGateway, setSelectedGateway] = useState<number | null>(null);
+
+  const selectedProvince = watch("province");
+  const selectedCity = watch("city");
+  const selectedShippingMethod = watch("shipping_method");
+
+  const provinceId = selectedProvince?.id;
+  const cityId = selectedCity?.id;
+
+  const { data: shippingOptionsData } = useGetShippingOptions(
+    Number(provinceId),
+    Number(cityId),
+  );
+
+  const shippingOptions = shippingOptionsData?.data || [];
+  const requiresShipping = shippingOptionsData?.requires_shipping;
+
+  const selectedShipping = shippingOptions.find(
+    (item: any) => item.code === selectedShippingMethod,
+  );
+
+  const shippingPrice = Number(selectedShipping?.price ?? 0);
 
   useEffect(() => {
     const fetchPaymentGateways = async () => {
@@ -134,15 +156,21 @@ export default function OrderBox({ isCompleted, state }: propsType) {
             {formatPrice(subtotal)} تومان
           </span>
         </div>
-        <div className="flex items-center justify-between">
-          <span className="font-peyda-600 text-sm text-blue-1050 lg:text-lg">
-            حمل و نقل
-          </span>
-          <div className="text-slate-1050 flex flex-col font-peyda-600 text-sm lg:text-lg">
-            <span className="block text-center">ارسال با پیک</span>
-            <span className="block text-center">۵۵,۰۰۰ تومان</span>
+        {requiresShipping !== false && (
+          <div className="flex items-center justify-between">
+            <span className="font-peyda-600 text-sm text-blue-1050 lg:text-lg">
+              حمل و نقل
+            </span>
+
+            {Number(shippingPrice) === 0 ? (
+              <span className="block text-center text-green-600">رایگان</span>
+            ) : (
+              <span className="block text-center">
+                {formatPrice(shippingPrice)} تومان
+              </span>
+            )}
           </div>
-        </div>
+        )}
         <div className="flex items-center justify-between">
           <span className="font-peyda-600 text-sm text-blue-1050 lg:text-lg">
             تخفیف
