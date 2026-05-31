@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import ClientLayout from "@/components/_templates/clientLayout";
 import ReferralTracker from "@/components/_layout/ReferralTracker";
 import { Suspense } from "react";
+import RootProviders from "./providers";
 
 // export const metadata = {
 //   title: " فروشگاه اینترنتی  نیسا ",
@@ -38,20 +39,22 @@ export default function RootLayout({
       </head>
       <body className="bg-gray-150">
         <Suspense>
-        <ReferralTracker />
-        <ClientLayout>{children}</ClientLayout>
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={true}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+          <ReferralTracker />
+          <RootProviders>
+            <ClientLayout>{children}</ClientLayout>
+          </RootProviders>
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={true}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </Suspense>
       </body>
     </html>
