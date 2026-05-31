@@ -27,6 +27,7 @@ const fetchUpdatedCart = async (dispatch: React.Dispatch<CartAction>) => {
       items: response?.data?.items || [],
       totalAmount: response?.data?.totalAmount || 0,
       discount: response?.data?.discount || null,
+      discountCode: response?.data?.applied_discount?.code || null,
       totalBoxPrice: response?.data?.totalBoxPrice || 0,
       original_price: response?.data?.original_price || 0,
       free_shipping: {
@@ -139,6 +140,7 @@ export const cartReducer = (
         items: action.items,
         totalAmount: action.totalAmount,
         discount: action.discount,
+        discountCode: action.discountCode,
         totalBoxPrice: action.totalBoxPrice,
         original_price: action.original_price,
         free_shipping: action.free_shipping,

@@ -36,10 +36,11 @@ export default function BasketFactor({
   } | null>(null);
 
   useEffect(() => {
-    if (state?.discount?.code) {
-      setDiscountCode(state.discount.code);
+    if (state?.discountCode) {
+      setDiscountCode(state?.discountCode || "");
       setIsDiscountApplied(true);
     } else {
+      setDiscountCode("");
       setIsDiscountApplied(false);
     }
   }, [state]);
