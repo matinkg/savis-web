@@ -202,18 +202,44 @@ export default function ProductDataDetails({
     discountText !== "0" &&
     finalPriceBeforeDiscount > currentPrice;
 
+  const rawDiscountText = selectedVariations?.sku
+    ? (selectedVariations?.discount_text ?? "")
+    : (productDetails?.product?.discount_text ?? "");
+
+  const parsedDiscountNumber = Number(rawDiscountText.replace("%", "").trim());
+
+  const discountDisplay = isNaN(parsedDiscountNumber)
+    ? rawDiscountText
+    : `${Math.round(parsedDiscountNumber).toLocaleString("fa-IR")}%`;
+
   return (
     <>
       <div className="mb-10 grid grid-cols-1 gap-y-6 lg:grid-cols-5 lg:gap-x-10">
-        {images?.length > 0 ? (
-          <div className="lg:col-span-2 product-gallery-container">
-            <Thumbnails images={images} />
-          </div>
-        ) : (
-          <div className="lg:col-span-2">
-            <ImageIcon className="text-secendry w-[80%]" />
-          </div>
-        )}
+        <div className="lg:col-span-2 relative">
+          {hasDiscount ? (
+            <div className="absolute right-4 top-4 z-20 w-fit bg-red-250 px-3 py-1.5 font-peyda-400 text-xs text-white">
+              {discountDisplay} تخفیف
+            </div>
+          ) : isUnavailable ? (
+            <div className="absolute right-4 top-4 z-20 w-fit bg-slate-1000/50 px-3 py-1.5 font-peyda-400 text-xs text-white">
+              ناموجود
+            </div>
+          ) : isPreorder ? (
+            <div className="absolute right-4 top-4 z-20 w-fit bg-yellow-600 px-3 py-1.5 font-peyda-400 text-xs text-white">
+              پیش سفارش
+            </div>
+          ) : null}
+
+          {images?.length > 0 ? (
+            <div className="product-gallery-container">
+              <Thumbnails images={images} />
+            </div>
+          ) : (
+            <div className="flex justify-center items-center">
+              <ImageIcon className="text-secendry w-[80%]" />
+            </div>
+          )}
+        </div>
 
         {}
         <div className="lg:col-span-3">
