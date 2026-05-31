@@ -50,7 +50,7 @@ export default function Page() {
               route={
                 <span className="font-peyda-400 text-base text-blue-1050">
                   خانه/فروشگاه/
-                  <span className="text-blue-1000">{data?.category?.name}</span>
+                  <span className="text-secendry">{data?.category?.name}</span>
                 </span>
               }
             />

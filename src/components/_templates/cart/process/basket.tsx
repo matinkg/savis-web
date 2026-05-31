@@ -37,12 +37,12 @@ export default function Basket({ state, dispatch, refreshCart }: propsType) {
 
         {/* BasketCart */}
         <div className="mt-5 flex flex-col gap-y-4">
-          {state?.items?.map((item: CartItem) => (
+          {state?.items?.map((item: CartItem, index: number) => (
             <BasketCart
+              key={index}
               refreshCart={refreshCart}
               dispatch={dispatch}
               item={item}
-              key={item?.sku}
             />
           ))}
         </div>

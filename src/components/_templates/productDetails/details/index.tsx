@@ -314,34 +314,36 @@ export default function ProductDataDetails({
               className="font-peyda-500 text-xs text-slate-1000/50 lg:w-[424px] lg:text-sm"
             ></p>
 
-            <div className="my-6 space-y-2 lg:mb-10 lg:mt-6">
+            <div className="my-6 space-y-2 lg:mb-10 lg:mt-4">
               <span className="font-peyda-500 text-lg text-blue-1050 lg:text-xl">
                 {selectedColorData?.color_name
                   ? "رنگ: " + selectedColorData?.color_name
                   : ""}
               </span>
-              <div className="flex items-center gap-x-2">
-                {colors?.map((color: any) => (
-                  <button
-                    key={color.value2}
-                    onClick={() => handleColorClick(color.value2)}
-                    style={{
-                      backgroundColor: color.value2,
-                      width: "30px",
-                      height: "30px",
-                      border:
-                        selectedColor === color.value2
-                          ? "2px solid #ffffff"
-                          : "none",
-                    }}
-                    className="flex items-center justify-center"
-                  >
-                    {selectedColor.value2 === color.value2 ? (
-                      <Check className="text-white w-5 h-5" />
-                    ) : null}
-                  </button>
-                ))}
-              </div>
+              {colors && (
+                <div className="flex items-center gap-x-2">
+                  {colors?.map((color: any) => (
+                    <button
+                      key={color.value2}
+                      onClick={() => handleColorClick(color.value2)}
+                      style={{
+                        backgroundColor: color.value2,
+                        width: "30px",
+                        height: "30px",
+                        border:
+                          selectedColor === color.value2
+                            ? "2px solid #ffffff"
+                            : "none",
+                      }}
+                      className="flex items-center justify-center"
+                    >
+                      {selectedColor.value2 === color.value2 ? (
+                        <Check className="text-white w-5 h-5" />
+                      ) : null}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="mb-4">

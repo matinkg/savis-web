@@ -7,7 +7,6 @@ export default function SearchInput({
   children,
   placeholder,
   inputStyle,
-  value,
   onClick,
   onChange,
   onKeyDown,
@@ -20,7 +19,6 @@ export default function SearchInput({
         className={`h-full w-full border-none px-2 text-white outline-none`}
         onClick={onClick}
         placeholder={placeholder}
-        value={value || ""}
         onChange={onChange}
         onKeyDown={onKeyDown}
       />

@@ -101,8 +101,8 @@ export default function ProductCard({ product }: PropsType) {
 
     if (isOutOfStockCompletely) {
       return swal({
-        title: "موجودی ناکافی!",
-        text: "متأسفیم، این کالا در حال حاضر ناموجود است.",
+        title: "این محصول موجود نمیباشد",
+        text: "متأسفیم، این محصول در حال حاضر موجود نمیباشد.",
         icon: "warning",
         buttons: {
           confirm: {
