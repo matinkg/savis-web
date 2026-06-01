@@ -1,11 +1,13 @@
 "use client";
-
 import React from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import Link from "next/link";
+import BannerPagesSkeleton from "@/components/_templates/tailwind-css-skeleton/banner-pages";
+import PageBannerWithGradient from "@/components/_templates/banner/banner-gradient";
+import { useFetch } from "@/configs/HTTPService";
 
 const customJewelryOrder = [
   {
@@ -62,24 +64,25 @@ const customizedProductsGallery = [
 ];
 
 export default function CustomJewelry() {
-  // const home_BannerData =
-  //   settingData?.filter(
-  //     (item: any) => item.key === settingKeysObject?.banner_pages_customJewelry
-  //   ) || [];
+  const { data: settingData, isLoading: settingLoading } = useFetch<any>(
+    "/api/v1/custom-jewelry",
+  );
+  const banner = settingData?.banner.image_1;
+
   return (
     <>
       {/* banner  */}
 
-      {/* {settingLoading ? (
+      {settingLoading ? (
         <BannerPagesSkeleton />
       ) : (
-        // <PageBannerWithGradient
-        //   imgUrl={home_BannerData[0]?.value?.image ?? ""}
-        //   subTitle={home_BannerData[0]?.value?.sub_title ?? ""}
-        //   title={home_BannerData[0]?.value?.title ?? ""}
-        //   isBlackText={false}
-        // />
-      )} */}
+        <PageBannerWithGradient
+          imgUrl={banner ?? ""}
+          subTitle={banner?.sub_title ?? ""}
+          title={settingData?.title ?? ""}
+          isBlackText={false}
+        />
+      )}
       {/* banner  */}
 
       <section className="mx-auto !mt-40 w-[91.12%] lg:mt-[60px] lg:w-[91.67%] 4xl:w-[85%]">
