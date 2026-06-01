@@ -152,7 +152,12 @@ export default function Header({ noFixed, data }: propsType) {
         {showMegaMenu.status && <MegaMenu megaMenu={showMegaMenu} />}
         {/* search section */}
 
-        {showSearchModal && <SearchComponents setShowSearchModal={setShowSearchModal} inMobile={false} />}
+        {showSearchModal && (
+          <SearchComponents
+            setShowSearchModal={setShowSearchModal}
+            inMobile={false}
+          />
+        )}
       </div>
       <NavMenu
         data={data}
