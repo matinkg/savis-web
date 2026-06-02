@@ -1,9 +1,8 @@
 "use client";
 import Button from "@/components/_modules/button";
-import { extractSVG, fetchAndExtractSVG } from "@/helper/extractSVG";
+import { fetchAndExtractSVG } from "@/helper/extractSVG";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-import useJewelryTypesOperation from "../index/hook/jewelryTypes/useOperation";
 import { useState, useEffect, useMemo } from "react";
 
 export default function JewelryCategories({ savisCats }: any) {
@@ -35,7 +34,7 @@ export default function JewelryCategories({ savisCats }: any) {
               svgMap[item?.id] = svg;
             }
           }
-        })
+        }),
       );
       setSvgContent(svgMap);
     };
@@ -131,7 +130,7 @@ export default function JewelryCategories({ savisCats }: any) {
                     </>
                   )}
                 </div>
-              )
+              ),
             )}
         </div>
       </section>
