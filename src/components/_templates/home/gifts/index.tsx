@@ -22,13 +22,13 @@ export default function HomeGifts({ gifts }: any) {
   return (
     <section className="relative mx-auto my-10 w-[91.12%] lg:my-[60px] lg:w-[91.67%] 4xl:w-[85%]">
       <div className="hidden w-full lg:block">
-        <div className="grid w-full grid-cols-3 border-b border-solid border-b-[#C8CECF] child:pb-5">
-          <div className="flex items-end">
+        <div className="grid w-full grid-cols-12 border-b border-solid border-b-[#C8CECF] child:pb-5">
+          <div className="flex items-end col-span-2">
             <span className="font-peyda-800 text-2xl text-blue-1050 2xl:text-3xl">
               هدایا
             </span>
           </div>
-          <div className="flex items-end justify-center gap-x-28">
+          <div className="flex items-end justify-center gap-10 2xl:gap-x-28 col-span-7">
             {gifts?.children &&
               gifts?.children.map((item: any, index: any) => (
                 <span
@@ -36,7 +36,7 @@ export default function HomeGifts({ gifts }: any) {
                   onClick={() => {
                     setActive(item?.id);
                   }}
-                  className={`cursor-pointer font-peyda-500 text-xl 2xl:text-2xl ${
+                  className={`shrink-0 cursor-pointer font-peyda-500 text-xl 2xl:text-2xl ${
                     item?.id === active
                       ? "activeTab text-primary"
                       : "text-blue-1050"
@@ -46,12 +46,15 @@ export default function HomeGifts({ gifts }: any) {
                 </span>
               ))}
           </div>
-          <div className="flex items-center justify-end gap-x-6">
+          <div className="flex items-center justify-end gap-x-6 col-span-3">
             <Button className="flex items-center gap-x-1 bg-white p-2 font-peyda-400 text-sm text-blue-1050 lg:px-4 lg:py-3 lg:text-xl 2xl:text-lg">
               <Link href={gifts?.slug ?? "#"}>
                 <span>نمایش همه</span>
               </Link>
-              <ArrowLeft href="#" className="h-4 w-4 lg:h-6 lg:w-6" />
+              <ArrowLeft
+                href={gifts?.slug ?? "#"}
+                className="h-4 w-4 lg:h-6 lg:w-6"
+              />
             </Button>
 
             <div>
@@ -176,10 +179,13 @@ export default function HomeGifts({ gifts }: any) {
             </svg>
           </button>
           <Button className="flex items-center gap-x-1 bg-white p-2 font-peyda-400 text-sm text-blue-1050 lg:px-4 lg:py-3 lg:text-lg">
-            <Link href={`#`}>
+            <Link href={gifts?.slug ?? "#"}>
               <span>نمایش همه</span>
             </Link>
-            <ArrowLeft href="#" className="h-4 w-4 lg:h-6 lg:w-6" />
+            <ArrowLeft
+              href={gifts?.slug ?? "#"}
+              className="h-4 w-4 lg:h-6 lg:w-6"
+            />
           </Button>
           <button className="swiper-button-prev_giftMobile">
             <svg

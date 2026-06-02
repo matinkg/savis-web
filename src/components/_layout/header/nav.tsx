@@ -24,7 +24,7 @@ const navMenu = [
 ];
 
 export default function Nav() {
-  const { goldData, goldError, isLoading } = useGoldPrice();
+  const { goldData, isLoading } = useGoldPrice();
   const { siteSetting } = useOperation();
   const resolveHref = (href?: string) => {
     const value = String(href || "").trim();
@@ -44,7 +44,7 @@ export default function Nav() {
   return (
     <>
       <nav className=" hidden lg:block bg-secendry text-white">
-        <div className="w-[91.67%] mx-auto flex items-center justify-between  py-[14px]">
+        <div className="w-[91.67%] lg:w-[96%] 2xl:w-[91.67%] mx-auto flex items-center justify-between py-[14px]">
           <div className="font-peyda-400 text-sm xl:text-lg flex gap-x-6">
             {navMenu.map((item, index) => (
               <Link key={index} href={item.link}>
@@ -55,14 +55,14 @@ export default function Nav() {
           <div>
             <a
               href={resolveHref(siteSetting?.top_text_link)}
-              className="font-peyda-600 text-lg xl:text-xl"
+              className="font-peyda-600 text-lg lg:text-sm xl:text-lg 2xl:text-xl"
             >
               {siteSetting?.top_text}
             </a>
           </div>
           <div>
             <div className="flex items-center gap-x-2 ">
-              <span className="font-peyda-400 text-lg xl:text-lg">
+              <span className="font-peyda-400 text-lg lg:text-sm xl:text-lg">
                 قیمت روز طلا :
               </span>
               {isLoading ? (
