@@ -546,12 +546,107 @@
     @apply bg-white;
   }
 
-  .text-editor p strong {
-    @apply font-peyda-600 text-neutral-1000 text-lg lg:text-2xl;
+  /* ── CKEditor / CMS rich-text styles ─────────────────────────── */
+  .text-editor {
+    @apply leading-8 text-neutral-1000;
   }
+
+  .text-editor h1 {
+    @apply font-peyda-700 text-blue-1050 text-2xl lg:text-[38px] mb-4 lg:mb-6 leading-tight;
+  }
+  .text-editor h2 {
+    @apply font-peyda-700 text-blue-1050 text-xl lg:text-[32px] mb-4 lg:mb-6 leading-tight;
+  }
+  .text-editor h3 {
+    @apply font-peyda-600 text-blue-1050 text-lg lg:text-2xl mb-3 lg:mb-5 leading-snug;
+  }
+  .text-editor h4 {
+    @apply font-peyda-600 text-blue-1050 text-base lg:text-xl mb-3 leading-snug;
+  }
+  .text-editor h5,
+  .text-editor h6 {
+    @apply font-peyda-600 text-blue-1050 text-sm lg:text-lg mb-2 leading-snug;
+  }
+
   .text-editor p {
-    @apply font-peyda-400 text-neutral-1000 text-sm lg:text-lg;
+    @apply font-peyda-400 text-neutral-1000 text-sm lg:text-lg mb-4 !leading-8;
   }
+  .text-editor p strong,
+  .text-editor strong {
+    @apply font-peyda-600 text-neutral-1000;
+  }
+  .text-editor em {
+    @apply italic;
+  }
+  .text-editor u {
+    @apply underline;
+  }
+  .text-editor s {
+    @apply line-through;
+  }
+
+  .text-editor a {
+    @apply text-blue-1000 underline hover:text-blue-750 transition-colors;
+  }
+
+  .text-editor ul {
+    @apply list-disc font-peyda-400 text-sm lg:text-lg text-neutral-1000 mb-4 space-y-2;
+    padding-right: 1.5rem;
+  }
+  .text-editor ol {
+    @apply list-decimal font-peyda-400 text-sm lg:text-lg text-neutral-1000 mb-4 space-y-2;
+    padding-right: 1.5rem;
+  }
+  .text-editor li {
+    @apply !leading-8;
+  }
+  .text-editor li > ul,
+  .text-editor li > ol {
+    @apply mt-2 mb-0;
+  }
+
+  .text-editor blockquote {
+    @apply border-r-4 border-blue-1000 pr-4 lg:pr-6 my-6 font-peyda-400 text-sm lg:text-lg text-blue-1050 italic;
+  }
+
+  .text-editor hr {
+    @apply border-t border-gray-230 my-8;
+  }
+
+  .text-editor img {
+    @apply max-w-full rounded-lg my-4 mx-auto;
+  }
+  .text-editor figure {
+    @apply my-6;
+  }
+  .text-editor figure figcaption {
+    @apply text-center font-peyda-400 text-xs text-gray-550 mt-2;
+  }
+
+  .text-editor table {
+    @apply w-full border-collapse mb-6 text-sm lg:text-base;
+  }
+  .text-editor table th {
+    @apply font-peyda-600 text-blue-1050 bg-gray-150 border border-gray-230 px-3 py-2 text-right;
+  }
+  .text-editor table td {
+    @apply font-peyda-400 text-neutral-1000 border border-gray-230 px-3 py-2 text-right;
+  }
+  .text-editor table tr:nth-child(even) td {
+    @apply bg-gray-30;
+  }
+
+  .text-editor pre {
+    @apply bg-gray-150 rounded-lg p-4 my-4 overflow-x-auto text-sm font-mono;
+    direction: ltr;
+  }
+  .text-editor code {
+    @apply bg-gray-150 rounded px-1.5 py-0.5 text-sm font-mono;
+  }
+  .text-editor pre code {
+    @apply bg-transparent p-0;
+  }
+  /* ─────────────────────────────────────────────────────────────── */
 
   .banner_size {
     background-position: center;
