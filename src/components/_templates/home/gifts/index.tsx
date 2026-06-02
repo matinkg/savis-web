@@ -51,7 +51,6 @@ export default function HomeGifts({ gifts }: any) {
               <Button className="flex items-center gap-x-1 font-peyda-400 text-sm text-blue-1050 lg:px-4 lg:py-3 lg:text-xl 2xl:text-lg">
                 <span>نمایش همه</span>
                 <ArrowLeft
-                  href={gifts?.slug ?? "#"}
                   className="h-4 w-4 lg:h-6 lg:w-6"
                 />
               </Button>
@@ -182,7 +181,6 @@ export default function HomeGifts({ gifts }: any) {
             <Button className="flex items-center gap-x-1 font-peyda-400 text-sm text-blue-1050 lg:px-4 lg:py-3 lg:text-lg">
               <span>نمایش همه</span>
               <ArrowLeft
-                href={gifts?.slug ?? "#"}
                 className="h-4 w-4 lg:h-6 lg:w-6"
               />
             </Button>
