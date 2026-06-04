@@ -98,12 +98,11 @@ export default function SearchComponents({
                   <p className="text-center text-gray-500">در حال جستجو...</p>
                 ) : searchResults.length > 0 ? (
                   searchResults.map((item) => (
-                    <div onClick={() => setShowSearchModal(false)}>
-                      <SearchResult
-                        key={item.id}
-                        name={item.name}
-                        link={item.slug}
-                      />
+                    <div
+                      key={item.id}
+                      onClick={() => setShowSearchModal(false)}
+                    >
+                      <SearchResult name={item.name} link={item.slug} />
                     </div>
                   ))
                 ) : (
