@@ -42,6 +42,12 @@ interface CartState {
     qualifies: boolean;
     amount_until_free: number;
   };
+  pricing_breakdown?: {
+    base_price: number;
+    markup_price: number;
+    discount_amount: number;
+    tax_amount: number;
+  };
 }
 
 // تعریف نوع برای اقدامات (actions) سبد خرید
@@ -77,6 +83,12 @@ type CartAction =
         threshold: number;
         qualifies: boolean;
         amount_until_free: number;
+      };
+      pricing_breakdown?: {
+        base_price: number;
+        markup_price: number;
+        discount_amount: number;
+        tax_amount: number;
       };
     }; // اضافه کردن action جدید برای بارگذاری داده‌ها
 

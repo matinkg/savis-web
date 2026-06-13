@@ -135,6 +135,9 @@ export default function BasketFactor({
     0,
   );
 
+  const breakdown = state?.pricing_breakdown;
+  
+
   return (
     <div className="lg:col-span-4 flex flex-col gap-y-6">
       <div className="flex flex-col items-center bg-gray-250 p-4 lg:p-6">
@@ -143,14 +146,32 @@ export default function BasketFactor({
         </span>
 
         <div className="borderBottom my-6 flex w-full flex-col gap-y-6 lg:my-10">
-          <div className="flex items-center justify-between">
-            <span className="font-peyda-600 text-base text-blue-1050 lg:text-lg">
+          <div className="flex flex-col gap-y-4">
+            <span className="font-peyda-600 text-base lg:text-lg text-blue-1050">
               جمع جزء
             </span>
 
-            <span className="font-peyda-600 text-base text-slate-1000/50 lg:text-lg">
-              {formatPrice(subtotal)} تومان
-            </span>
+            <div className="flex justify-between">
+              <span>قیمت پایه:</span>
+              <span>{formatPrice(breakdown?.base_price ?? 0)} تومان</span>
+            </div>
+            {(breakdown?.discount_amount ?? 0) > 0 && (
+              <div className="flex justify-between">
+                <span>تخفیف:</span>
+                <span>
+                  {formatPrice(breakdown?.discount_amount ?? 0)} تومان
+                </span>
+              </div>
+            )}
+            <div className="flex justify-between">
+              <span>اجرت و سود:</span>
+              <span>{formatPrice(breakdown?.markup_price ?? 0)} تومان</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span>مالیات:</span>
+              <span>{formatPrice(breakdown?.tax_amount ?? 0)} تومان</span>
+            </div>
           </div>
 
           {packagingCost ? (
