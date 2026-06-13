@@ -31,7 +31,7 @@ export default function SignIn() {
 
         <div className="flex w-full flex-col items-center text-[#0A141A] lg:w-[69.5%]">
           <h1 className="mb-6 text-center font-peyda-600 text-2xl lg:mb-8 lg:text-[32px]">
-            ایجاد حساب کاربری
+            ورود به حساب کاربری
           </h1>
 
           <RenderSigninStep />

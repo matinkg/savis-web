@@ -46,9 +46,10 @@ function OtpInputWithValidation({
             onChange={(e) => handleChange(e.target.value, index)}
             onKeyUp={(e) => handleBackspaceAndEnter(e, index)}
             ref={(reference) => (otpBoxReference.current[index] = reference)}
+            type="number"
             className={`ltrDir h-[48px] px-3 text-center outline-none focus:border-2 focus:outline-none ${
               !otpError
-                ? 'border border-solid border-white/40 bg-white/20'
+                ? 'border border-solid border-black/20 bg-white/20'
                 : 'border border-solid border-[#F3434399] bg-[#F343431A]'
             }`}
           />
