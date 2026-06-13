@@ -22,6 +22,12 @@ const initialCartState: CartState = {
     qualifies: false,
     amount_until_free: 0,
   },
+  pricing_breakdown: {
+    base_price: 0,
+    markup_price: 0,
+    discount_amount: 0,
+    tax_amount: 0,
+  },
 };
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
