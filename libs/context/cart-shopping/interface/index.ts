@@ -27,6 +27,12 @@ interface CartItem {
   recipient_email?: any;
   recipient_name?: any;
   message?: any;
+  pricing?: {
+    base_price: number;
+    markup_price: number;
+    discount_amount: number;
+    tax_amount: number;
+  };
 }
 
 // تعریف نوع برای وضعیت (state) سبد خرید

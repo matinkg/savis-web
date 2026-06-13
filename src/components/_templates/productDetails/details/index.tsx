@@ -156,6 +156,24 @@ export default function ProductDataDetails({
       box_id: packagingData?.id ? String(packagingData?.id) : "",
       box: packagingData,
       is_preorder,
+      pricing: {
+        base_price:
+          selectedVariations?.base_price ??
+          productDetails?.product?.base_price ??
+          0,
+        markup_price:
+          selectedVariations?.markup_price ??
+          productDetails?.product?.markup_price ??
+          0,
+        discount_amount:
+          selectedVariations?.discount_amount ??
+          productDetails?.product?.discount_amount ??
+          0,
+        tax_amount:
+          selectedVariations?.tax_amount ??
+          productDetails?.product?.tax_amount ??
+          0,
+      },
     };
 
     dispatch({

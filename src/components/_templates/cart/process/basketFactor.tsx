@@ -117,26 +117,30 @@ export default function BasketFactor({
 
   const discountAmount = Number(state?.discount ?? 0);
 
-  const getItemPrice = (item: any) => {
-    const currentData = item?.variation || item?.product || item?.gift_card;
+  const items = state?.items || [];
 
-    const isPreorder =
-      Number(item?.product?.can_preorder ?? item?.variation?.can_preorder) ===
-        1 && Number(item?.product?.stock ?? item?.variation?.stock ?? 0) === 0;
+  const safeBreakdown = state?.pricing_breakdown ?? {
+    base_price: items.reduce((acc, item) => {
+      return (
+        acc +
+        (item?.pricing?.base_price ?? item?.price ?? 0) * (item?.quantity ?? 1)
+      );
+    }, 0),
 
-    if (isPreorder) {
-      return Number(currentData?.preorder_final_price ?? 0);
-    }
-    return Number(currentData?.price ?? item?.price ?? 0);
+    markup_price: items.reduce((acc, item) => {
+      return acc + (item?.pricing?.markup_price ?? 0) * (item?.quantity ?? 1);
+    }, 0),
+
+    discount_amount: items.reduce((acc, item) => {
+      return (
+        acc + (item?.pricing?.discount_amount ?? 0) * (item?.quantity ?? 1)
+      );
+    }, 0),
+
+    tax_amount: items.reduce((acc, item) => {
+      return acc + (item?.pricing?.tax_amount ?? 0) * (item?.quantity ?? 1);
+    }, 0),
   };
-
-  const subtotal = (state?.items || []).reduce(
-    (acc, item) => acc + getItemPrice(item) * (item?.quantity || 1),
-    0,
-  );
-
-  const breakdown = state?.pricing_breakdown;
-  
 
   return (
     <div className="lg:col-span-4 flex flex-col gap-y-6">
@@ -153,24 +157,24 @@ export default function BasketFactor({
 
             <div className="flex justify-between">
               <span>قیمت پایه:</span>
-              <span>{formatPrice(breakdown?.base_price ?? 0)} تومان</span>
+              <span>{formatPrice(safeBreakdown?.base_price ?? 0)} تومان</span>
             </div>
-            {(breakdown?.discount_amount ?? 0) > 0 && (
+            {(safeBreakdown?.discount_amount ?? 0) > 0 && (
               <div className="flex justify-between">
                 <span>تخفیف:</span>
                 <span>
-                  {formatPrice(breakdown?.discount_amount ?? 0)} تومان
+                  {formatPrice(safeBreakdown?.discount_amount ?? 0)} تومان
                 </span>
               </div>
             )}
             <div className="flex justify-between">
               <span>اجرت و سود:</span>
-              <span>{formatPrice(breakdown?.markup_price ?? 0)} تومان</span>
+              <span>{formatPrice(safeBreakdown?.markup_price ?? 0)} تومان</span>
             </div>
 
             <div className="flex justify-between">
               <span>مالیات:</span>
-              <span>{formatPrice(breakdown?.tax_amount ?? 0)} تومان</span>
+              <span>{formatPrice(safeBreakdown?.tax_amount ?? 0)} تومان</span>
             </div>
           </div>
 

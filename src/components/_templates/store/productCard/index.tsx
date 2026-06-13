@@ -134,6 +134,14 @@ export default function ProductCard({ product }: PropsType) {
       weight: selectedVariations?.weight ?? product?.weight,
       type: "product",
       is_preorder,
+      pricing: {
+        base_price: selectedVariations?.base_price ?? product?.base_price ?? 0,
+        markup_price:
+          selectedVariations?.markup_price ?? product?.markup_price ?? 0,
+        discount_amount:
+          selectedVariations?.discount_amount ?? product?.discount_amount ?? 0,
+        tax_amount: selectedVariations?.tax_amount ?? product?.tax_amount ?? 0,
+      },
     };
 
     dispatch({
