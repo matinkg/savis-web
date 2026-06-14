@@ -30,7 +30,18 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
     refreshCart();
   };
 
-  const currentData = item?.variation || item?.product || item?.gift_card;
+  const giftCardData =
+    item?.gift_card ||
+    (item?.type === "gift_card"
+      ? {
+          name: item?.name,
+          image: item?.image,
+          slug: item?.slug,
+          price: item?.price,
+        }
+      : null);
+
+  const currentData = item?.variation || item?.product || giftCardData;
 
   const price = Number(
     currentData?.price ?? item?.price ?? item?.gift_card?.price ?? 0,
@@ -54,10 +65,7 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
   const hasDiscount =
     finalPriceBeforeDiscount > price && rawDiscountText !== "";
 
-  const hasImage =
-    item?.variation?.gallery?.length > 0 ||
-    item?.product?.image ||
-    item?.gift_card?.image;
+  const hasImage = item?.variation?.gallery?.length > 0 || currentData?.image;
 
   const isPreorder =
     Number(item?.product?.can_preorder ?? item?.variation?.can_preorder) ===
@@ -88,14 +96,9 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
               src={
                 item?.variation?.gallery?.length > 0
                   ? item?.variation?.gallery[0]
-                  : (item?.product?.image ?? item?.gift_card?.image ?? "")
+                  : currentData?.image || ""
               }
-              alt={
-                item?.variation?.name ??
-                item?.product?.name ??
-                item?.gift_card?.name ??
-                ""
-              }
+              alt={currentData?.name || ""}
               fill
               className="rounded-md object-cover"
             />
@@ -120,13 +123,8 @@ export default function BasketCart({ item, dispatch, refreshCart }: propsType) {
           </div>
 
           <span className="block text-sm sm:text-base text-blue-1050">
-            <Link
-              href={item?.product?.slug || item?.gift_card?.slug || "#"}
-              className="hover:underline"
-            >
-              {item?.variation?.name ??
-                item?.product?.name ??
-                item?.gift_card?.name}
+            <Link href={currentData?.slug || "#"} className="hover:underline">
+              {currentData?.name}
             </Link>{" "}
             <span className="inline-block" dir="ltr">
               {item?.quantity}×

@@ -142,6 +142,8 @@ export default function BasketFactor({
     }, 0),
   };
 
+  const hasProduct = items.some((item) => item.type === "product");
+
   return (
     <div className="lg:col-span-4 flex flex-col gap-y-6">
       <div className="flex flex-col items-center bg-gray-250 p-4 lg:p-6">
@@ -159,23 +161,33 @@ export default function BasketFactor({
               <span>قیمت پایه:</span>
               <span>{formatPrice(safeBreakdown?.base_price ?? 0)} تومان</span>
             </div>
-            {(safeBreakdown?.discount_amount ?? 0) > 0 && (
-              <div className="flex justify-between">
-                <span>تخفیف:</span>
-                <span>
-                  {formatPrice(safeBreakdown?.discount_amount ?? 0)} تومان
-                </span>
-              </div>
-            )}
-            <div className="flex justify-between">
-              <span>اجرت و سود:</span>
-              <span>{formatPrice(safeBreakdown?.markup_price ?? 0)} تومان</span>
-            </div>
 
-            <div className="flex justify-between">
-              <span>مالیات:</span>
-              <span>{formatPrice(safeBreakdown?.tax_amount ?? 0)} تومان</span>
-            </div>
+            {hasProduct && (
+              <>
+                {(safeBreakdown?.discount_amount ?? 0) > 0 && (
+                  <div className="flex justify-between">
+                    <span>تخفیف:</span>
+                    <span>
+                      {formatPrice(safeBreakdown?.discount_amount ?? 0)} تومان
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex justify-between">
+                  <span>اجرت و سود:</span>
+                  <span>
+                    {formatPrice(safeBreakdown?.markup_price ?? 0)} تومان
+                  </span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span>مالیات:</span>
+                  <span>
+                    {formatPrice(safeBreakdown?.tax_amount ?? 0)} تومان
+                  </span>
+                </div>
+              </>
+            )}
           </div>
 
           {packagingCost ? (

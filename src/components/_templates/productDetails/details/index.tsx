@@ -86,9 +86,16 @@ export default function ProductDataDetails({
     if (productDetails?.product?.gallery) {
       thumbnails.push(...productDetails.product.gallery);
     }
-    setImages(thumbnails as any);
+
+    const uniqueImages = [...new Set(thumbnails)];
+
+    setImages(uniqueImages as any);
     setSelectedWeight(selectedVariations?.weight);
-  }, [selectedVariations]);
+  }, [
+    selectedVariations,
+    productDetails?.product?.image,
+    productDetails?.product?.gallery,
+  ]);
 
   const handleAddToCart = () => {
     const stock = selectedVariations?.sku
@@ -478,9 +485,11 @@ export default function ProductDataDetails({
             <div className="flex gap-x-3">
               <Button
                 onClick={handleAddToCart}
-                disabled={isUnavailable} // تغییر
+                disabled={isUnavailable}
                 className={`flex-center grow gap-x-1 py-2 lg:py-3 ${
-                  isUnavailable ? "bg-gray-400 cursor-default" : "bg-secendry"
+                  isUnavailable
+                    ? "bg-gray-400 cursor-default opacity-50"
+                    : "bg-secendry"
                 }`}
               >
                 {isAdded ? (
@@ -499,7 +508,9 @@ export default function ProductDataDetails({
                           ? "افزودن به سبد خرید (پیش‌فروش)"
                           : "افزودن به سبد خرید"}
                     </span>
-                    <Bag className="h-[18px] w-[18px] text-white lg:h-6 lg:w-6" />
+                    {!isUnavailable && (
+                      <Bag className="h-[18px] w-[18px] text-white lg:h-6 lg:w-6" />
+                    )}
                   </>
                 )}
               </Button>

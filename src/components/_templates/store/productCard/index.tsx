@@ -220,7 +220,12 @@ export default function ProductCard({ product }: PropsType) {
 
         <Button
           onClick={handleAddToCart}
-          className="absolute bottom-3 left-1/2 flex w-[90%] -translate-x-1/2 items-center justify-center gap-x-2 rounded-md bg-gray-250 py-2 shadow transition-all sm:py-2.5 lg:py-3"
+          disabled={isOutOfStock}
+          className={`absolute bottom-3 left-1/2 flex w-[90%] ${
+            isOutOfStock
+              ? "bg-gray-250 cursor-default opacity-50"
+              : "bg-gray-250"
+          } -translate-x-1/2 items-center justify-center gap-x-2 rounded-md bg-gray-250 py-2 shadow transition-all sm:py-2.5 lg:py-3`}
         >
           {isAdded ? (
             <>
@@ -232,9 +237,15 @@ export default function ProductCard({ product }: PropsType) {
           ) : (
             <>
               <span className="font-peyda-400 text-xs text-blue-1050 sm:text-sm lg:text-base">
-                {showPreorder ? "افزودن (پیش‌فروش)" : "افزودن به سبد خرید"}
+                {isOutOfStock
+                  ? "ناموجود"
+                  : showPreorder
+                    ? "افزودن (پیش‌فروش)"
+                    : "افزودن به سبد خرید"}
               </span>
-              <Bag className="h-4 w-4 text-blue-1050 sm:h-5 sm:w-5" />
+              {!isOutOfStock && (
+                <Bag className="h-4 w-4 text-blue-1050 sm:h-5 sm:w-5" />
+              )}
             </>
           )}
         </Button>
