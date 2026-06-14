@@ -6,6 +6,7 @@ import Button from "../button";
 import Bag from "@/public/icons/Bag";
 import Trash from "@/public/icons/trash";
 import useWishOperation from "../productCard/hook/useWishOperation";
+import ImageIcon from "@/public/icons/image";
 
 export default function WishCard({ item, checked, handleChange }: any) {
   const [isLoadingWish, setIsLoadingWish] = useState(false);
@@ -31,13 +32,19 @@ export default function WishCard({ item, checked, handleChange }: any) {
   return (
     <div key={item?.id} className="group relative">
       <div className="cursor-pointer bg-transparent p-2 transition-all lg:p-[14px] group-hover:lg:bg-gray-250">
-        <div className="relative ">
-          <Link href={``}>
-            <img
-              src={item?.image}
-              alt={item?.name}
-              className="w-full h-auto object-cover "
-            />
+        <div className="relative flex items-center justify-center">
+          <Link href={``} className="block w-full">
+            <div className="relative aspect-[5/5] w-full overflow-hidden bg-white flex items-center justify-center">
+              {item.image ? (
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <ImageIcon className="h-16 w-16 xs:h-24 xs:w-24 sm:h-32 sm:w-32 text-primary" />
+              )}
+            </div>
           </Link>
 
           <div className="absolute left-3 right-3 top-3 flex items-center justify-between">
