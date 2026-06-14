@@ -29,6 +29,7 @@ export default function ProductCard({ product }: propsType) {
   }, [product]);
 
   const handleWishListToggle = async (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     if (isLoadingWish) return;
     setIsLoadingWish(true);
@@ -42,20 +43,77 @@ export default function ProductCard({ product }: propsType) {
     }
   };
 
-  const handleAddToCart = () => {
-    const is_preorder =
-      selectedVariations?.stock <= 0 && selectedVariations?.can_preorder;
+  const price = Number(
+    selectedVariations?.sku
+      ? (selectedVariations?.price ?? 0)
+      : (product?.price ?? 0),
+  );
 
-    const hasStock =
-      selectedVariations?.stock > 0 || selectedVariations?.can_preorder;
+  const finalPriceBeforeDiscount = Number(
+    selectedVariations?.sku
+      ? (selectedVariations?.final_price_before_discount ?? 0)
+      : (product?.final_price_before_discount ?? 0),
+  );
 
-    if (!hasStock) return showSwal("موجودی ناکافی!", "warning");
+  const discountText = selectedVariations?.sku
+    ? (selectedVariations?.discount_text ?? "")
+    : (product?.discount_text ?? "");
 
-    const price = is_preorder
-      ? selectedVariations?.preorder_price_type === "fixed"
-        ? selectedVariations.price - selectedVariations.preorder_price
-        : selectedVariations.price * (selectedVariations.preorder_price / 100)
-      : selectedVariations?.price;
+  const hasDiscount =
+    discountText &&
+    discountText !== "0%" &&
+    discountText !== "0" &&
+    finalPriceBeforeDiscount > price;
+
+  const stock = selectedVariations?.sku
+    ? Number(selectedVariations?.stock ?? 0)
+    : Number(product?.stock ?? 0);
+
+  const canPreorder = selectedVariations?.sku
+    ? Number(selectedVariations?.can_preorder ?? 0) === 1
+    : Number(product?.can_preorder ?? 0) === 1;
+
+  const isOutOfStock = stock <= 0 && !canPreorder;
+
+  const showPreorder = stock <= 0 && canPreorder;
+
+  const rawDiscountText = selectedVariations?.sku
+    ? (selectedVariations?.discount_text ?? "")
+    : (product?.discount_text ?? "");
+
+  const parsedDiscountNumber = Number(rawDiscountText.replace("%", "").trim());
+
+  const discountDisplay = isNaN(parsedDiscountNumber)
+    ? rawDiscountText
+    : `${Math.round(parsedDiscountNumber).toLocaleString("fa-IR")}%`;
+
+  const handleAddToCart = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+
+    const isOutOfStockCompletely = stock <= 0 && !canPreorder;
+
+    if (isOutOfStockCompletely) {
+      return showSwal("این محصول موجود نمیباشد", "warning");
+    }
+
+    const is_preorder = stock <= 0 && canPreorder;
+
+    let itemPrice = selectedVariations?.price ?? product?.price;
+
+    if (is_preorder) {
+      if (selectedVariations?.sku) {
+        itemPrice =
+          selectedVariations?.preorder_price_type === "fixed"
+            ? itemPrice - selectedVariations?.preorder_price
+            : itemPrice * (selectedVariations?.preorder_price / 100);
+      } else {
+        itemPrice =
+          product?.preorder_price_type === "fixed"
+            ? itemPrice - product?.preorder_price
+            : itemPrice * (product?.preorder_price / 100);
+      }
+    }
 
     const itemToAdd = {
       product,
@@ -63,21 +121,38 @@ export default function ProductCard({ product }: propsType) {
       product_id: product?.id,
       name: selectedVariations?.name || product?.name,
       image: selectedVariations?.gallery?.[0] || product?.image,
-      price,
+      price: itemPrice,
       quantity: 1,
       sku: product?.sku,
       variation_sku: selectedVariations?.sku || "",
       variation: selectedVariations,
       color: selectedVariations?.color_name,
-      stockQuantity: selectedVariations?.stock || 0,
+      stockQuantity: stock,
       wage: product?.wage,
       weight: selectedVariations?.weight || product?.weight,
       type: "product",
+      is_preorder,
+      pricing: {
+        base_price: selectedVariations?.base_price ?? product?.base_price ?? 0,
+        markup_price:
+          selectedVariations?.markup_price ?? product?.markup_price ?? 0,
+        discount_amount:
+          selectedVariations?.discount_amount ?? product?.discount_amount ?? 0,
+        tax_amount: selectedVariations?.tax_amount ?? product?.tax_amount ?? 0,
+      },
     };
 
-    dispatch({ type: "ADD_ITEM", item: itemToAdd, dispatch });
+    dispatch({
+      type: "ADD_ITEM",
+      item: itemToAdd,
+      dispatch,
+    });
+
     setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 3000);
+
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 3000);
   };
 
   return (
@@ -119,6 +194,19 @@ export default function ProductCard({ product }: propsType) {
               <Like className="h-5 w-5 sm:h-6 sm:w-6 text-blue-1050" />
             )}
           </Button>
+          {hasDiscount ? (
+            <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-red-250 px-3 py-1.5 font-peyda-400 text-xs text-white">
+              {discountDisplay} تخفیف
+            </div>
+          ) : isOutOfStock ? (
+            <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-slate-1000/50 px-3 py-1.5 font-peyda-400 text-xs text-white">
+              ناموجود
+            </div>
+          ) : showPreorder ? (
+            <div className="flex-center absolute right-[14px] top-[14px] z-10 w-fit bg-yellow-600 px-3 py-1.5 font-peyda-400 text-xs text-white">
+              پیش سفارش
+            </div>
+          ) : null}
         </div>
 
         {/* Product name */}
@@ -129,21 +217,44 @@ export default function ProductCard({ product }: propsType) {
         {/* Price and actions */}
         <div className="flex flex-col gap-y-2">
           <p className="pt-1 text-center font-peyda-500 text-xs sm:text-sm lg:text-base text-blue-1050">
-            {selectedVariations?.price || product?.price
-              ? Number(
-                  selectedVariations?.price || product?.price,
-                ).toLocaleString("fa-IR") + " تومان"
-              : "ناموجود"}
+            {isOutOfStock ? (
+              "ناموجود"
+            ) : hasDiscount ? (
+              <>
+                <span className="line-through text-gray-400 block">
+                  {finalPriceBeforeDiscount.toLocaleString("fa-IR")} تومان
+                </span>
+                <span>{price.toLocaleString("fa-IR")} تومان</span>
+              </>
+            ) : (
+              `${price.toLocaleString("fa-IR")} تومان`
+            )}
           </p>
 
           {/* Cart and Wish buttons (only visible on hover for desktop) */}
           <div className="flex gap-x-3 transition-all lg:invisible lg:opacity-0 group-hover:lg:visible group-hover:lg:opacity-100 mt-auto">
-            <Button className="grow bg-white py-2 sm:py-2.5 md:py-3">
-              <div className="flex-center gap-x-1" onClick={handleAddToCart}>
+            <Button
+              onClick={handleAddToCart}
+              disabled={isOutOfStock}
+              className={`grow py-2 sm:py-2.5 md:py-3 ${
+                isOutOfStock
+                  ? "bg-gray-200 opacity-50 cursor-default"
+                  : "bg-white"
+              }`}
+            >
+              <div className="flex-center gap-x-1">
                 <span className="font-peyda-500 text-xs sm:text-sm lg:text-base text-blue-1050">
-                  افزودن به سبد خرید
+                  {isAdded
+                    ? "اضافه شد!"
+                    : isOutOfStock
+                      ? "ناموجود"
+                      : showPreorder
+                        ? "افزودن (پیش‌فروش)"
+                        : "افزودن به سبد خرید"}
                 </span>
-                <BagIcon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-1050" />
+                {!isAdded && !isOutOfStock && (
+                  <BagIcon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-1050" />
+                )}
               </div>
             </Button>
 
