@@ -349,7 +349,7 @@ export default function ProductDataDetails({
                 <div className="flex items-center gap-x-2">
                   {colors?.map((color: any) => (
                     <button
-                      key={color.value2}
+                      key={color.id}
                       onClick={() => handleColorClick(color.value2)}
                       style={{
                         backgroundColor: color.value2,
@@ -396,14 +396,14 @@ export default function ProductDataDetails({
               <SizeGuideModal />
             </div>
             <div className="flex items-center gap-x-2">
-              {availableSizes?.map((as: any) => {
+              {availableSizes?.map((as: any, index: number) => {
                 const size = as.attributes?.find(
                   (attr: any) => attr.name === "سایز" || attr.name === "طول",
                 );
                 return (
                   <button
                     className={`w-11 h-7 ${selectedSize?.value === size?.value?.value ? "text-white bg-primary" : "bg-transparent text-neutral-1000 border border-neutral-1000"}`}
-                    key={size?.id}
+                    key={index}
                     onClick={() => handleSizeClick(size?.value?.id)}
                   >
                     <span dir="ltr" className="inline-block">
