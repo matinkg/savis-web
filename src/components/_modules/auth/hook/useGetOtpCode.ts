@@ -6,13 +6,14 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import swal from "sweetalert";
 import Cookies from "js-cookie";
+import { toast } from "sonner";
 
 export default function useGetOtpCode(
   setCurrentStep: any,
   userPhone: any,
   setUserPhone: any,
   authRequestUrl: string,
-  action: string
+  action: string,
 ) {
   const [code, setCode] = useState([]);
   const [otpError, setOtpError] = useState("");
@@ -45,12 +46,9 @@ export default function useGetOtpCode(
         if (res?.status === 409) {
           setLoading({ ...loading, continuation: false });
           setOtpError(" کد وارد شده صحیح نمی باشد");
-
-          return showSwal("کد وارد شده معتبر نیست", "error", "تلاش مجدد");
         } else if (res?.status == 410) {
           setLoading({ ...loading, continuation: false });
           setOtpError(" کد وارد شده منقضی شده");
-          return showSwal("کد وارد شده منقضی شده", "error", "تلاش مجدد");
         } else if (res?.status === 201) {
           setLoading({ ...loading, continuation: false });
 
@@ -103,7 +101,6 @@ export default function useGetOtpCode(
         } else {
           setLoading({ ...loading, continuation: false });
           setOtpError("مشکلی پیش آمده.");
-          return showSwal("مشکلی پیش آمده.", "error", "تلاش مجدد");
         }
       } else {
         setLoading({ ...loading, continuation: false });
@@ -113,7 +110,6 @@ export default function useGetOtpCode(
     } catch (error) {
       setLoading({ ...loading, continuation: false });
       console.log("error => ", error);
-      return showSwal("خطای غیرمنتظره‌ای رخ داد.", "error", "تلاش مجدد");
     }
   };
 
@@ -126,21 +122,9 @@ export default function useGetOtpCode(
           if (!res?.error) {
             const safeData = data || {};
             setUserPhone(safeData.phone ?? "");
-            swal({
-              title: `  کد ورود با موفقیت  به شماره تلفن ${data.phone}ارسال شد`,
-              icon: "success",
-              buttons: {
-                confirm: {
-                  text: "وارد کردن کد",
-                  value: true,
-                  visible: true,
-                  className: "",
-                  closeModal: true,
-                },
-              },
-            }).then(() => {
-              setCurrentStep("GetOtpCode");
-            });
+            toast.success(
+              `کد پیامکی با موفقیت به شماره تلفن ${safeData.phone} ارسال شد`,
+            );
           }
         })
         .finally(() => {
@@ -148,7 +132,6 @@ export default function useGetOtpCode(
         });
     } catch (error) {
       console.log("message =>", error);
-      return showSwal("خطای غیرمنتظره‌ای رخ داد.", "error", "تلاش مجدد");
     }
   };
   return {
