@@ -41,7 +41,7 @@ axios.interceptors.response.use(
     const status = error?.response?.status;
 
     if (status === 401) {
-      Cookies.remove("auth-token");
+      Cookies.remove("authToken");
       if (typeof window !== "undefined") {
         const pathname = window.location.pathname;
 

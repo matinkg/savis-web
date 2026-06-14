@@ -122,6 +122,24 @@ export default function ProductDetailsSidBar({
       type: "product",
       box_id: packagingData?.id ? String(packagingData?.id) : "",
       box: packagingData,
+      pricing: {
+        base_price:
+          selectedVariations?.base_price ??
+          productDetails?.product?.base_price ??
+          0,
+        markup_price:
+          selectedVariations?.markup_price ??
+          productDetails?.product?.markup_price ??
+          0,
+        discount_amount:
+          selectedVariations?.discount_amount ??
+          productDetails?.product?.discount_amount ??
+          0,
+        tax_amount:
+          selectedVariations?.tax_amount ??
+          productDetails?.product?.tax_amount ??
+          0,
+      },
     };
 
     dispatch({ type: "ADD_ITEM", item: itemToAdd, dispatch });
@@ -191,7 +209,7 @@ export default function ProductDetailsSidBar({
           <div className="flex items-center gap-x-2">
             {availableSizes?.map((as: any, index: any) => {
               const size = as.attributes?.find(
-                (attr: any) => attr.name === "سایز" || attr.name === "طول"
+                (attr: any) => attr.name === "سایز" || attr.name === "طول",
               );
               return (
                 <button
@@ -212,17 +230,17 @@ export default function ProductDetailsSidBar({
           </div>
 
           <div className="my-6 flex gap-x-1 lg:mb-6 lg:mt-10">
-            <span className="font-peyda-400 text-xl text-blue-1050 lg:text-3xl">
+            <span className="font-peyda-400 text-xl text-blue-1050 lg:text-[21px]">
               قیمت:{" "}
               {selectedVariations
                 ? Number(selectedVariations?.price || 0).toLocaleString("fa-IR")
                 : productDetails?.product?.price
                   ? Number(productDetails?.product?.price).toLocaleString(
-                      "fa-IR"
+                      "fa-IR",
                     )
                   : "ناموجود"}
               <span> تومان</span>
-            </span> 
+            </span>
           </div>
           <div className="w-full mb-3 flex items-center gap-x-3">
             <FavoriteButton
