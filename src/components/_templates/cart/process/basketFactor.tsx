@@ -117,23 +117,32 @@ export default function BasketFactor({
 
   const discountAmount = Number(state?.discount ?? 0);
 
-  const getItemPrice = (item: any) => {
-    const currentData = item?.variation || item?.product || item?.gift_card;
+  const items = state?.items || [];
 
-    const isPreorder =
-      Number(item?.product?.can_preorder ?? item?.variation?.can_preorder) ===
-        1 && Number(item?.product?.stock ?? item?.variation?.stock ?? 0) === 0;
+  const safeBreakdown = state?.pricing_breakdown ?? {
+    base_price: items.reduce((acc, item) => {
+      return (
+        acc +
+        (item?.pricing?.base_price ?? item?.price ?? 0) * (item?.quantity ?? 1)
+      );
+    }, 0),
 
-    if (isPreorder) {
-      return Number(currentData?.preorder_final_price ?? 0);
-    }
-    return Number(currentData?.price ?? item?.price ?? 0);
+    markup_price: items.reduce((acc, item) => {
+      return acc + (item?.pricing?.markup_price ?? 0) * (item?.quantity ?? 1);
+    }, 0),
+
+    discount_amount: items.reduce((acc, item) => {
+      return (
+        acc + (item?.pricing?.discount_amount ?? 0) * (item?.quantity ?? 1)
+      );
+    }, 0),
+
+    tax_amount: items.reduce((acc, item) => {
+      return acc + (item?.pricing?.tax_amount ?? 0) * (item?.quantity ?? 1);
+    }, 0),
   };
 
-  const subtotal = (state?.items || []).reduce(
-    (acc, item) => acc + getItemPrice(item) * (item?.quantity || 1),
-    0,
-  );
+  const hasProduct = items.some((item) => item.type === "product");
 
   return (
     <div className="lg:col-span-4 flex flex-col gap-y-6">
@@ -143,14 +152,42 @@ export default function BasketFactor({
         </span>
 
         <div className="borderBottom my-6 flex w-full flex-col gap-y-6 lg:my-10">
-          <div className="flex items-center justify-between">
-            <span className="font-peyda-600 text-base text-blue-1050 lg:text-lg">
+          <div className="flex flex-col gap-y-4">
+            <span className="font-peyda-600 text-base lg:text-lg text-blue-1050">
               جمع جزء
             </span>
 
-            <span className="font-peyda-600 text-base text-slate-1000/50 lg:text-lg">
-              {formatPrice(subtotal)} تومان
-            </span>
+            <div className="flex justify-between">
+              <span>قیمت پایه:</span>
+              <span>{formatPrice(safeBreakdown?.base_price ?? 0)} تومان</span>
+            </div>
+
+            {hasProduct && (
+              <>
+                {(safeBreakdown?.discount_amount ?? 0) > 0 && (
+                  <div className="flex justify-between">
+                    <span>تخفیف:</span>
+                    <span>
+                      {formatPrice(safeBreakdown?.discount_amount ?? 0)} تومان
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex justify-between">
+                  <span>اجرت و سود:</span>
+                  <span>
+                    {formatPrice(safeBreakdown?.markup_price ?? 0)} تومان
+                  </span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span>مالیات:</span>
+                  <span>
+                    {formatPrice(safeBreakdown?.tax_amount ?? 0)} تومان
+                  </span>
+                </div>
+              </>
+            )}
           </div>
 
           {packagingCost ? (

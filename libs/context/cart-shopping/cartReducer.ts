@@ -36,6 +36,12 @@ const fetchUpdatedCart = async (dispatch: React.Dispatch<CartAction>) => {
         amount_until_free:
           response?.data?.free_shipping?.amount_until_free ?? 0,
       },
+      pricing_breakdown: response?.data?.pricing_breakdown ?? {
+        base_price: 0,
+        markup_price: 0,
+        discount_amount: 0,
+        tax_amount: 0,
+      },
     });
   } catch (error) {
     console.error("Error fetching updated cart:", error);
@@ -107,6 +113,34 @@ const updateLocalCart = (
 
   cart.totalAmount += cart.totalBoxPrice;
 
+  cart.pricing_breakdown = {
+    base_price: cart.items.reduce(
+      (sum, item) =>
+        sum + (Number(item?.pricing?.base_price) || 0) * (item?.quantity || 1),
+      0,
+    ),
+
+    markup_price: cart.items.reduce(
+      (sum, item) =>
+        sum +
+        (Number(item?.pricing?.markup_price) || 0) * (item?.quantity || 1),
+      0,
+    ),
+
+    discount_amount: cart.items.reduce(
+      (sum, item) =>
+        sum +
+        (Number(item?.pricing?.discount_amount) || 0) * (item?.quantity || 1),
+      0,
+    ),
+
+    tax_amount: cart.items.reduce(
+      (sum, item) =>
+        sum + (Number(item?.pricing?.tax_amount) || 0) * (item?.quantity || 1),
+      0,
+    ),
+  };
+
   saveLocalCart(cart);
   dispatch({ type: "SET_CART", ...cart });
 };
@@ -144,6 +178,7 @@ export const cartReducer = (
         totalBoxPrice: action.totalBoxPrice,
         original_price: action.original_price,
         free_shipping: action.free_shipping,
+        pricing_breakdown: action.pricing_breakdown,
       };
 
     case "ADD_ITEM":

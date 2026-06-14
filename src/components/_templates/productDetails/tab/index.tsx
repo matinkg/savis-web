@@ -49,7 +49,7 @@ export default function ProductDataTab({
         activeTab={activeTab}
       />
 
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 ">
         <div
           className={`${
             activeTab.index === 2
@@ -84,7 +84,7 @@ export default function ProductDataTab({
             <ProductComments productDetails={productDetails} />
           ) : null}
         </div>
-        <ProductDetailsSidBar
+        {/* <ProductDetailsSidBar
           productDetails={productDetails}
           handleSizeClick={handleSizeClick}
           handleColorClick={handleColorClick}
@@ -98,7 +98,7 @@ export default function ProductDataTab({
           colors={colors}
           availableSizes={availableSizes}
           sizeText={sizeText}
-        />
+        /> */}
       </div>
     </>
   );

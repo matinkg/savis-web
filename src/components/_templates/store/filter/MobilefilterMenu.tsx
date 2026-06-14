@@ -7,16 +7,23 @@ import FilterIcon from "@/public/icons/filter";
 import Button from "@/components/_modules/button";
 import useFilterOperation from "./hook/useFilterOperation";
 import { RotateCcw } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type MobilefilterMenuProps = {
+  categories: any;
   setShowFilterMenu: (value: boolean) => void;
   showFilterMenu: boolean;
 };
 
 export default function MobilefilterMenu({
+  categories,
   setShowFilterMenu,
   showFilterMenu,
 }: MobilefilterMenuProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const activeCategory = searchParams.get("category");
+  const pathname = usePathname();
   const {
     setMinPrice,
     setMaxPrice,
@@ -27,6 +34,16 @@ export default function MobilefilterMenu({
     handleFilterChange,
     resetFilters,
   } = useFilterOperation();
+
+  const getCategoryFromSlug = (slug: string) => {
+    const params = new URLSearchParams(slug.split("?")[1]);
+    return params.get("category");
+  };
+
+  const handleResetAll = () => {
+    resetFilters();
+    router.replace(pathname);
+  };
 
   return (
     <div
@@ -110,31 +127,33 @@ export default function MobilefilterMenu({
               کالکشن ها
             </span>
 
-            <div className="flex items-center justify-between bg-white/50 font-peyda-400 text-base text-blue-1050">
-              <div className="p-2">
-                <span>جواهرات</span>
-              </div>
+            <div className="flex flex-col gap-y-2 h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-secendry scrollbar-track-gray-250">
+              {categories?.map((item: any) => {
+                const itemCategory = getCategoryFromSlug(item.slug);
+                const isActive = itemCategory === activeCategory;
 
-              <div className="border-r border-solid border-r-blue-1050 px-4 py-2">
-                2
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between bg-white/50 font-peyda-400 text-base text-blue-1050">
-              <div className="p-2">
-                <span>نیسا</span>
-              </div>
-
-              <div className="border-r border-solid border-r-blue-1050 px-4 py-2">
-                2
-              </div>
+                return (
+                  <div
+                    key={item?.id}
+                    onClick={() => {
+                      router.push(item.slug);
+                      setShowFilterMenu(false);
+                    }}
+                    className={`cursor-pointer flex items-center justify-between text-base font-peyda-400 transition-all duration-300 ${isActive ? "bg-secendry text-white font-bold" : "bg-white/50 text-blue-1050 hover:text-white hover:bg-secendry"}`}
+                  >
+                    <div className="p-2 flex items-center gap-x-2">
+                      <span>{item?.name}</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
 
         <div className="sticky bottom-0 flex items-center gap-x-3 border-t border-[#1E1E1E14] bg-gray-250 p-4">
           <Button
-            onClick={resetFilters}
+            onClick={handleResetAll}
             className="flex h-11 w-11 group bg-secendry items-center justify-center text-white transition-all active:scale-95"
           >
             <RotateCcw className="h-5 w-5 group-hover:-rotate-180 transition-all duration-500" />

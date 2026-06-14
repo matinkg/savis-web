@@ -76,7 +76,6 @@ export default function OrderDetails() {
 
   return (
     <div className="flex flex-col">
-      {/* نوتیفیکیشن وضعیت سفارش */}
       <div className="hidden w-full lg:block">
         <Notification
           id={order?.id}
@@ -145,7 +144,7 @@ export default function OrderDetails() {
           <span>مجموع</span>
           <span>
             {Number(order.total_amount - (order.discount || 0)).toLocaleString(
-              "fa-ir"
+              "fa-ir",
             )}{" "}
             تومان
           </span>

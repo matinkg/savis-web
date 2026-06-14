@@ -55,22 +55,37 @@ export default function Page() {
               }
             />
 
-            <div className="mb-[60px] mt-10 flex lg:gap-x-6">
+            <div className="mb-[60px] mt-10 flex flex-row-reverse lg:gap-x-6">
               <div className=" hidden lg:block">
-                <Filter />
+                <Filter categories={data?.categories} />
               </div>
               <div className="flex flex-col gap-5 w-full">
-                <div className="mx-auto grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 gap-x-3 sm:gap-x-6 gap-y-8 w-full">
-                  {data?.products?.data?.map((item: any) => (
-                    <ProductCard key={item?.id} product={item} />
-                  ))}
-                </div>
-                {data?.products?.last_page > 1 && (
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={data?.products?.last_page}
-                    onPageChange={handlePageChange}
-                  />
+                {data?.products?.data?.length > 0 ? (
+                  <>
+                    <div className="mx-auto grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 gap-x-3 sm:gap-x-6 gap-y-8 w-full">
+                      {data.products.data.map((item: any) => (
+                        <ProductCard key={item.id} product={item} />
+                      ))}
+                    </div>
+
+                    {data?.products?.last_page > 1 && (
+                      <Pagination
+                        currentPage={currentPage}
+                        totalPages={data.products.last_page}
+                        onPageChange={handlePageChange}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-20 text-center h-full">
+                    <h2 className="font-peyda-600 text-3xl text-blue-1050">
+                      محصولی یافت نشد
+                    </h2>
+
+                    <p className="mt-2 text-gray-500">
+                      در حال حاضر محصولی در این دسته‌بندی وجود ندارد.
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
@@ -92,6 +107,7 @@ export default function Page() {
 
           {showFilterMenu && (
             <MobilefilterMenu
+              categories={data?.categories}
               showFilterMenu={showFilterMenu}
               setShowFilterMenu={setShowFilterMenu}
             />

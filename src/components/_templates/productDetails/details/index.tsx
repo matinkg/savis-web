@@ -38,12 +38,18 @@ export default function ProductDataDetails({
 }: any) {
   const [showModal, setShowModal] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
-  const [images, setImages] = useState([]);
+  const [mediaItems, setMediaItems] = useState<any[]>([]);
   const pathName = usePathname();
   const { dispatch } = useCart();
   const [selectedWeight, setSelectedWeight] = useState(
     selectedVariations?.weight,
   );
+
+  const getMediaType = (url: string) => {
+    if (!url) return "image";
+    if (url.toLowerCase().includes(".mp4")) return "video";
+    return "image";
+  };
 
   const formatSizeValue = (value: unknown) => {
     if (value === null || value === undefined) {
@@ -73,22 +79,35 @@ export default function ProductDataDetails({
   }, [showModal]);
 
   useEffect(() => {
-    const thumbnails = [];
+    const raw: string[] = [];
 
     if (selectedVariations?.gallery) {
-      thumbnails.push(...(selectedVariations.gallery as []));
+      raw.push(...selectedVariations.gallery);
     }
 
     if (productDetails?.product?.image) {
-      thumbnails.push(productDetails?.product?.image);
+      raw.push(productDetails.product.image);
     }
 
     if (productDetails?.product?.gallery) {
-      thumbnails.push(...productDetails.product.gallery);
+      raw.push(...productDetails.product.gallery);
     }
-    setImages(thumbnails as any);
+
+    const unique = Array.from(new Set(raw))
+      .filter(Boolean)
+      .map((url) => ({
+        url,
+        type: getMediaType(url),
+      }));
+
+    setMediaItems(unique);
+
     setSelectedWeight(selectedVariations?.weight);
-  }, [selectedVariations]);
+  }, [
+    selectedVariations,
+    productDetails?.product?.image,
+    productDetails?.product?.gallery,
+  ]);
 
   const handleAddToCart = () => {
     const stock = selectedVariations?.sku
@@ -156,6 +175,24 @@ export default function ProductDataDetails({
       box_id: packagingData?.id ? String(packagingData?.id) : "",
       box: packagingData,
       is_preorder,
+      pricing: {
+        base_price:
+          selectedVariations?.base_price ??
+          productDetails?.product?.base_price ??
+          0,
+        markup_price:
+          selectedVariations?.markup_price ??
+          productDetails?.product?.markup_price ??
+          0,
+        discount_amount:
+          selectedVariations?.discount_amount ??
+          productDetails?.product?.discount_amount ??
+          0,
+        tax_amount:
+          selectedVariations?.tax_amount ??
+          productDetails?.product?.tax_amount ??
+          0,
+      },
     };
 
     dispatch({
@@ -230,10 +267,12 @@ export default function ProductDataDetails({
             </div>
           ) : null}
 
-          {images?.length > 0 ? (
-            <div className="product-gallery-container">
-              <Thumbnails images={images} />
-            </div>
+          {mediaItems?.length > 0 ? (
+            <>
+              <div className="mt-3">
+                <Thumbnails media={mediaItems} />
+              </div>
+            </>
           ) : (
             <div className="flex justify-center items-center">
               <ImageIcon className="text-secendry w-[80%]" />
@@ -324,7 +363,7 @@ export default function ProductDataDetails({
                 <div className="flex items-center gap-x-2">
                   {colors?.map((color: any) => (
                     <button
-                      key={color.value2}
+                      key={color.id}
                       onClick={() => handleColorClick(color.value2)}
                       style={{
                         backgroundColor: color.value2,
@@ -371,14 +410,14 @@ export default function ProductDataDetails({
               <SizeGuideModal />
             </div>
             <div className="flex items-center gap-x-2">
-              {availableSizes?.map((as: any) => {
+              {availableSizes?.map((as: any, index: number) => {
                 const size = as.attributes?.find(
                   (attr: any) => attr.name === "سایز" || attr.name === "طول",
                 );
                 return (
                   <button
                     className={`w-11 h-7 ${selectedSize?.value === size?.value?.value ? "text-white bg-primary" : "bg-transparent text-neutral-1000 border border-neutral-1000"}`}
-                    key={size?.id}
+                    key={index}
                     onClick={() => handleSizeClick(size?.value?.id)}
                   >
                     <span dir="ltr" className="inline-block">
@@ -460,9 +499,11 @@ export default function ProductDataDetails({
             <div className="flex gap-x-3">
               <Button
                 onClick={handleAddToCart}
-                disabled={isUnavailable} // تغییر
+                disabled={isUnavailable}
                 className={`flex-center grow gap-x-1 py-2 lg:py-3 ${
-                  isUnavailable ? "bg-gray-400 cursor-default" : "bg-secendry"
+                  isUnavailable
+                    ? "bg-gray-400 cursor-default opacity-50"
+                    : "bg-secendry"
                 }`}
               >
                 {isAdded ? (
@@ -481,7 +522,9 @@ export default function ProductDataDetails({
                           ? "افزودن به سبد خرید (پیش‌فروش)"
                           : "افزودن به سبد خرید"}
                     </span>
-                    <Bag className="h-[18px] w-[18px] text-white lg:h-6 lg:w-6" />
+                    {!isUnavailable && (
+                      <Bag className="h-[18px] w-[18px] text-white lg:h-6 lg:w-6" />
+                    )}
                   </>
                 )}
               </Button>

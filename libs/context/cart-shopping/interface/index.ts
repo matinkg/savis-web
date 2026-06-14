@@ -27,6 +27,12 @@ interface CartItem {
   recipient_email?: any;
   recipient_name?: any;
   message?: any;
+  pricing?: {
+    base_price: number;
+    markup_price: number;
+    discount_amount: number;
+    tax_amount: number;
+  };
 }
 
 // تعریف نوع برای وضعیت (state) سبد خرید
@@ -41,6 +47,12 @@ interface CartState {
     threshold: number;
     qualifies: boolean;
     amount_until_free: number;
+  };
+  pricing_breakdown?: {
+    base_price: number;
+    markup_price: number;
+    discount_amount: number;
+    tax_amount: number;
   };
 }
 
@@ -77,6 +89,12 @@ type CartAction =
         threshold: number;
         qualifies: boolean;
         amount_until_free: number;
+      };
+      pricing_breakdown?: {
+        base_price: number;
+        markup_price: number;
+        discount_amount: number;
+        tax_amount: number;
       };
     }; // اضافه کردن action جدید برای بارگذاری داده‌ها
 

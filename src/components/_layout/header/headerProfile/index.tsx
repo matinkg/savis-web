@@ -63,10 +63,6 @@ export default function HeaderProfile() {
                     <ProfileIcon className="w-4 h-4 " />
                     <span>پنل کاربری</span>
                   </Link>
-                  <div className="flex items-center gap-x-1 w-full  px-4 py-2 font-peyda-600 text-xs text-gray-550  hover:bg-gray-100 focus:outline-none hover:text-gray-900 focus:text-gray-900 focus:shadow-outline transition duration-300 ease-in-out">
-                    <SettingIcon className="w-4 h-4 " />
-                    <span>تنظیمات</span>
-                  </div>
                   <div
                     onClick={() => siginOutUserHandler()}
                     className="flex items-center gap-x-1 w-full  px-4 py-2 font-peyda-600 text-xs text-gray-550  hover:bg-gray-100 focus:outline-none hover:text-gray-900 focus:text-gray-900 focus:shadow-outline transition duration-300 ease-in-out border-solid border-t border-t-slate-100"

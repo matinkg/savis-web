@@ -537,7 +537,7 @@
     height: 1px;
     width: 100%;
     right: 0;
-    background-color: #0796b2;
+    background-color: #B51818;
 
     @apply -bottom-2 lg:-bottom-5;
   }
@@ -560,6 +560,16 @@
 
     @apply h-[85vh];
   }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 ::-webkit-scrollbar {

@@ -3,7 +3,7 @@ import React from "react";
 
 export default function SearchInput({
   className,
-
+  value,
   children,
   placeholder,
   inputStyle,
@@ -16,6 +16,7 @@ export default function SearchInput({
       <input
         type="text"
         style={inputStyle}
+        value={value ?? ""}
         className={`h-full w-full border-none px-2 text-white outline-none`}
         onClick={onClick}
         placeholder={placeholder}

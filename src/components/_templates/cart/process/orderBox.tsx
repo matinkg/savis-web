@@ -178,14 +178,16 @@ export default function OrderBox({ isCompleted, state }: propsType) {
             )}
           </div>
         )}
-        <div className="flex items-center justify-between">
-          <span className="font-peyda-600 text-sm text-blue-1050 lg:text-lg">
-            تخفیف
-          </span>
-          <span className="font-peyda-600 text-sm text-slate-1000/50 lg:text-lg">
-            {formatPrice(discountAmount)} تومان
-          </span>
-        </div>
+        {discountAmount > 0 && (
+          <div className="flex items-center justify-between">
+            <span className="font-peyda-600 text-sm text-blue-1050 lg:text-lg">
+              تخفیف
+            </span>
+            <span className="font-peyda-600 text-sm text-green-600 lg:text-lg">
+              {formatPrice(discountAmount)} تومان
+            </span>
+          </div>
+        )}
         <div className="flex items-center justify-between">
           <span className="font-peyda-600 text-lg text-blue-1050 lg:text-2xl">
             مجموع

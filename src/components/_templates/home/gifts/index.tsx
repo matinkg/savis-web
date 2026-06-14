@@ -48,7 +48,7 @@ export default function HomeGifts({ gifts }: any) {
           </div>
           <div className="flex items-center justify-end gap-x-6 col-span-3">
             <Link href={gifts?.slug ?? "#"} className="bg-white p-2">
-              <Button className="flex items-center gap-x-1 font-peyda-400 text-sm text-blue-1050 lg:px-4 lg:py-3 lg:text-xl 2xl:text-lg">
+              <Button className="flex items-center gap-x-1 font-peyda-400 text-sm text-blue-1050 lg:px-2 lg:text-xl 2xl:text-lg">
                 <span>نمایش همه</span>
                 <ArrowLeft
                   className="h-4 w-4 lg:h-6 lg:w-6"

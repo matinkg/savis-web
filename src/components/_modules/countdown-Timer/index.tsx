@@ -66,7 +66,7 @@ export default function CountdownTimer({
           className="font-peyda-600 text-sm"
           disabled={seconds > 0 || minutes > 0}
           style={{
-            color: seconds > 0 || minutes > 0 ? "#DFE3E8" : "#DFE3E8",
+            color: seconds > 0 || minutes > 0 ? "#DFE3E8" : "#4D4D4D",
           }}
           onClick={resendOTP}
         >

@@ -86,7 +86,7 @@ export default function ProductDetails() {
             />
             <meta property="og:type" content="product" />
           </Head>
-          <section className="mx-auto mt-48 w-[91.12%] lg:mt-56 lg:w-[91.67%] 4xl:w-[85%] overflow-x-hidden">
+          <section className="mx-auto mt-48 w-[91.12%] lg:mt-32 lg:w-[91.67%] 4xl:w-[85%] overflow-x-hidden">
             <BreadcrumbRoute
               category="دسته بندی"
               productDetails={data}

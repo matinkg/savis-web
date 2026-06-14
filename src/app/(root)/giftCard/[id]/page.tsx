@@ -49,8 +49,8 @@ export default function GiftCardDetails() {
     let deliveryMethod = checked.physical
       ? "physical"
       : checked.email
-      ? "email"
-      : "code";
+        ? "email"
+        : "code";
 
     if (checked.email && !recipientInfo.email) {
       showSwal("لطفاً ایمیل گیرنده را وارد کنید", "error", "بستن");
@@ -62,14 +62,14 @@ export default function GiftCardDetails() {
       item: {
         ...item,
         delivery_method: deliveryMethod,
-        box_id: String(packagingData?.id ||  ""),
+        box_id: String(packagingData?.id || ""),
         recipient_email: recipientInfo.email || null,
         recipient_name: recipientInfo.fullName || null,
         message: recipientInfo.message || null,
         type: "gift_card",
-        box: packagingData
+        box: packagingData,
       },
-      dispatch
+      dispatch,
     });
 
     showSwal("محصول با موفقیت به سبد خرید اضافه شد", "success", "بستن");
@@ -200,7 +200,9 @@ export default function GiftCardDetails() {
                         </span>
                       </div>
                       {/* ===================== conditional content ==================== */}
-                      {checked?.email && <Form setRecipientInfo={setRecipientInfo} />}
+                      {checked?.email && (
+                        <Form setRecipientInfo={setRecipientInfo} />
+                      )}
                     </div>
                   </div>
                   {/* ============================ */}
@@ -231,6 +233,12 @@ export default function GiftCardDetails() {
                           weight: 0,
                           slug: `giftCard/${data?.id}`,
                           type: "gift_card",
+                          pricing: {
+                            base_price: data?.price ?? 0,
+                            markup_price: 0,
+                            discount_amount: 0,
+                            tax_amount: 0,
+                          },
                         })
                       }
                       className="flex-center grow gap-x-1 bg-secendry py-2 lg:py-3"

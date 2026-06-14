@@ -35,9 +35,9 @@ export default function GetNumber({
     >
       <Input
         label="شماره موبایل"
-        type="text"
+        type="number"
         name="phone"
-        className="ltrDir h-[48px] border border-solid border-white/40 bg-[#0000000D] px-3 outline-none"
+        className="ltrDir h-[48px] border border-solid border-black/10 bg-black/5 px-3 outline-none"
         labelStyle="font-peyda-400  text-xs lg:text-base mb-4  "
         validate={{
           ...register("phone", {

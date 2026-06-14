@@ -22,6 +22,12 @@ const initialCartState: CartState = {
     qualifies: false,
     amount_until_free: 0,
   },
+  pricing_breakdown: {
+    base_price: 0,
+    markup_price: 0,
+    discount_amount: 0,
+    tax_amount: 0,
+  },
 };
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -47,6 +53,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             qualifies: false,
             amount_until_free: 0,
           },
+          pricing_breakdown: {
+            base_price: 0,
+            markup_price: 0,
+            discount_amount: 0,
+            tax_amount: 0,
+          },
         };
   };
 
@@ -61,6 +73,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         discountCode: localCart?.discountCode,
         original_price: localCart?.original_price,
         totalBoxPrice: localCart?.totalBoxPrice,
+        pricing_breakdown: localCart?.pricing_breakdown ?? {
+          base_price: 0,
+          markup_price: 0,
+          discount_amount: 0,
+          tax_amount: 0,
+        },
         free_shipping: localCart?.free_shipping ?? {
           threshold: 0,
           qualifies: false,
@@ -78,6 +96,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           discountCode: data?.data?.applied_discount?.code,
           totalBoxPrice: data?.data?.totalBoxPrice || 0,
           original_price: data?.data?.original_price || 0,
+          pricing_breakdown: data?.data?.pricing_breakdown,
           free_shipping: {
             threshold: data?.data?.free_shipping?.threshold ?? 0,
             qualifies: data?.data?.free_shipping?.qualifies ?? false,

@@ -23,7 +23,7 @@ export default function Basket({ state, dispatch, refreshCart }: propsType) {
       <div className="lg:col-span-6">
         <IsFree
           price={Number(state?.totalAmount || 0)}
-          threshold={Number(state?.free_shipping?.threshold || 0)}
+          threshold={Number(state?.free_shipping?.threshold || 500000)}
         />
 
         <div className="mt-[26px] hidden w-full grid-cols-2 bg-gray-250 p-[18px] lg:grid">
