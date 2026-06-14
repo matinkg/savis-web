@@ -87,7 +87,19 @@ export default function Header({ noFixed, data }: propsType) {
             {/* /=======================Header menu ====================== */}
             <div className="flex gap-x-8">
               {data?.map((item: any) => (
-                <div key={item?.id} className="flex items-center gap-x-2">
+                <div
+                  onMouseEnter={() => {
+                    if (!item?.children?.length) return;
+
+                    setShowMegaMenu({
+                      status: true,
+                      data: item.children,
+                      ads: item.banners ?? null,
+                    });
+                  }}
+                  key={item?.id}
+                  className="flex items-center gap-x-2"
+                >
                   <Link
                     href={resolveHref(item?.href)}
                     className="text-center font-peyda-600 text-lg text-blue-1050 xl:text-xl"
@@ -96,16 +108,7 @@ export default function Header({ noFixed, data }: propsType) {
                   </Link>
 
                   {item?.children?.length > 0 ? (
-                    <ArrowDown
-                      className="h-[18px] w-[18px] cursor-pointer text-[#16161666]"
-                      onMouseEnter={() =>
-                        setShowMegaMenu({
-                          status: true,
-                          data: item?.children,
-                          ads: item?.banners ?? null,
-                        })
-                      }
-                    />
+                    <ArrowDown className="h-[18px] w-[18px] cursor-pointer text-[#16161666]" />
                   ) : null}
                 </div>
               ))}
@@ -149,7 +152,9 @@ export default function Header({ noFixed, data }: propsType) {
           </div>
         </header>
         {/* mega menu in desktop mode */}
-        {showMegaMenu.status && <MegaMenu megaMenu={showMegaMenu} />}
+        {showMegaMenu.status && showMegaMenu.data?.length > 0 && (
+          <MegaMenu megaMenu={showMegaMenu} />
+        )}
         {/* search section */}
 
         {showSearchModal && (
