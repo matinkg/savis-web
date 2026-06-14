@@ -1,11 +1,11 @@
 import Link from "next/link";
 import "@/public/style/404.css";
-import NotFoundIcon from "../../public/icons/404";
 import Button from "@/components/_modules/button";
+import ErrorIcon from "@/public/icons/500";
 export default function NotFound() {
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center">
-      <NotFoundIcon className="h-[146px] w-[210px] font-peyda-900 text-secendry" />
+      <ErrorIcon className="h-[146px] w-[210px] font-peyda-900 text-secendry" />
       <span className="mb-5 font-peyda-600 text-lg text-secendry lg:text-2xl">
         صفحه مورد نظر یافت نشد
       </span>
