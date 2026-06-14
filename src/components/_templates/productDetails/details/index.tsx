@@ -38,12 +38,18 @@ export default function ProductDataDetails({
 }: any) {
   const [showModal, setShowModal] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
-  const [images, setImages] = useState([]);
+  const [mediaItems, setMediaItems] = useState<any[]>([]);
   const pathName = usePathname();
   const { dispatch } = useCart();
   const [selectedWeight, setSelectedWeight] = useState(
     selectedVariations?.weight,
   );
+
+  const getMediaType = (url: string) => {
+    if (!url) return "image";
+    if (url.toLowerCase().includes(".mp4")) return "video";
+    return "image";
+  };
 
   const formatSizeValue = (value: unknown) => {
     if (value === null || value === undefined) {
@@ -73,23 +79,29 @@ export default function ProductDataDetails({
   }, [showModal]);
 
   useEffect(() => {
-    const thumbnails = [];
+    const raw: string[] = [];
 
     if (selectedVariations?.gallery) {
-      thumbnails.push(...(selectedVariations.gallery as []));
+      raw.push(...selectedVariations.gallery);
     }
 
     if (productDetails?.product?.image) {
-      thumbnails.push(productDetails?.product?.image);
+      raw.push(productDetails.product.image);
     }
 
     if (productDetails?.product?.gallery) {
-      thumbnails.push(...productDetails.product.gallery);
+      raw.push(...productDetails.product.gallery);
     }
 
-    const uniqueImages = [...new Set(thumbnails)];
+    const unique = Array.from(new Set(raw))
+      .filter(Boolean)
+      .map((url) => ({
+        url,
+        type: getMediaType(url),
+      }));
 
-    setImages(uniqueImages as any);
+    setMediaItems(unique);
+
     setSelectedWeight(selectedVariations?.weight);
   }, [
     selectedVariations,
@@ -255,10 +267,12 @@ export default function ProductDataDetails({
             </div>
           ) : null}
 
-          {images?.length > 0 ? (
-            <div className="product-gallery-container">
-              <Thumbnails images={images} />
-            </div>
+          {mediaItems?.length > 0 ? (
+            <>
+              <div className="mt-3">
+                <Thumbnails media={mediaItems} />
+              </div>
+            </>
           ) : (
             <div className="flex justify-center items-center">
               <ImageIcon className="text-secendry w-[80%]" />

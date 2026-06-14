@@ -69,7 +69,7 @@ export default function GetOtpCode({
           )}
         </Button>
 
-        <Button className="h-[48px] border border-solid border-white/40 bg-white/20 font-peyda-400 text-sm lg:text-lg">
+        <Button className="h-[48px] border border-solid border-black/10 bg-black/5 font-peyda-400 text-sm lg:text-lg">
           <CountdownTimer
             resendOTPHandler={resendOTPHandler}
             loading={loading}

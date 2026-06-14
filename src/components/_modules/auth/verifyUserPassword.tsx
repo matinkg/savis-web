@@ -32,7 +32,7 @@ export default function VerifyUserPassword({ userPhone }: StepsProps) {
         className={`ltrDir h-[48px] px-3 outline-none focus:border-2 focus:outline-none ${
           errors.password || passwordError
             ? "border border-solid border-[#F3434399] bg-[#F343431A] text-red-250"
-            : "border border-solid border-white/40 bg-white/20"
+            : "border border-solid border-black/10 bg-black/5"
         }`}
         labelStyle="font-peyda-400  text-xs lg:text-base mb-4"
         validate={{
@@ -51,9 +51,9 @@ export default function VerifyUserPassword({ userPhone }: StepsProps) {
           className="eyePosition"
         >
           {showPassword ? (
-            <Eye className="h-6 w-6 text-white" />
+            <Eye className="h-6 w-6 text-black" />
           ) : (
-            <EyeSlash className="h-6 w-6 text-white" />
+            <EyeSlash className="h-6 w-6 text-black" />
           )}
         </div>
       </Input>
@@ -68,7 +68,7 @@ export default function VerifyUserPassword({ userPhone }: StepsProps) {
           </p>
         </div>
       ) : (
-        <small className="mt-2 font-peyda-400 text-xs text-white/50">
+        <small className="mt-2 font-peyda-400 text-xs text-black">
           رمز عبور شما حتما باید شامل حروف کوچک و بزرگ ( A-z) ، اعداد (9-0) و
           متغیر ها (!،@،#،$،&،_،-) باشد.
         </small>
