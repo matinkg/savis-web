@@ -4,7 +4,7 @@ import { request } from "@/configs/HTTPService";
 import { handleQueryParams } from "@/helper/QueryParams";
 
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function useOperation() {
   const [loading, setLoading] = useState(true);
