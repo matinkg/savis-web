@@ -10,9 +10,11 @@ export default function useFetchData() {
   const [data, setData] = useState<any>(productDetailsValue);
   const [loading, setLoading] = useState(false);
   const [selectedSize, setSelectedSize] = useState<any>("");
-  const [sizeText, setSizeText] = useState<any>('سایز');
+  const [sizeText, setSizeText] = useState<any>("سایز");
   const [selectedColor, setSelectedColor] = useState<any>("");
-  const [selectedColorData, setSelectedColorData] = useState<any>(selectedColorDataValue);
+  const [selectedColorData, setSelectedColorData] = useState<any>(
+    selectedColorDataValue,
+  );
   const [availableSizes, setAvailableSizes] = useState([]);
   const [colors, setColors] = useState<any>([]);
   const [selectedVariations, setSelectedVariations] = useState<any>(null);
@@ -30,38 +32,44 @@ export default function useFetchData() {
 
           const variations = res?.data?.product?.variations || [];
           setVariationsData(variations);
-          const uniqueColors = [...new Set(res?.data?.attributes?.colors)].filter(Boolean);
+          const uniqueColors = [
+            ...new Set(res?.data?.attributes?.colors),
+          ].filter(Boolean);
           setColors(uniqueColors);
-          const uniqueSizes = [...new Set(res?.data?.attributes?.sizes)].filter(Boolean);
-          const text = variations[0]?.attributes?.find((attr: any)=> attr.name === "سایز" || attr.name === "طول")?.name;
-          setSizeText(text)
+          const uniqueSizes = [...new Set(res?.data?.attributes?.sizes)].filter(
+            Boolean,
+          );
+          const text = variations[0]?.attributes?.find(
+            (attr: any) => attr.name === "سایز" || attr.name === "طول",
+          )?.name;
+          setSizeText(text);
 
           if (uniqueColors.length > 0) {
-            const defaultColor:any = uniqueColors[0];
-            setSelectedColor(defaultColor);
+            const defaultColor: any = uniqueColors[0];
+            setSelectedColor(defaultColor.value);
 
             const colorVariations = variations.filter((v: any) =>
               v.attributes.some(
                 (attr: any) =>
                   attr.name === "رنگ" &&
                   attr?.value?.id === defaultColor?.id &&
-                  attr?.value?.value === defaultColor?.value
-              )
+                  attr?.value?.value === defaultColor?.value,
+              ),
             );
 
             if (colorVariations.length > 0) {
               const defaultSizeVariation = colorVariations[0];
               const defaultSize = defaultSizeVariation.attributes.find(
-                (attr: any) => attr.name === "سایز" || attr.name === "طول"
+                (attr: any) => attr.name === "سایز" || attr.name === "طول",
               )?.value;
 
               setSelectedSize(defaultSize || "");
-              if(defaultSize){
-                setAvailableSizes(colorVariations)
+              if (defaultSize) {
+                setAvailableSizes(colorVariations);
               }
               setSelectedVariations(defaultSizeVariation);
               setSelectedColorData({
-                color: defaultColor.value2,
+                color: defaultColor.value,
                 gallery: defaultSizeVariation.gallery || [],
                 stock: defaultSizeVariation.stock || 0,
                 price: defaultSizeVariation.price || 0,
@@ -77,8 +85,8 @@ export default function useFetchData() {
                 (attr: any) =>
                   (attr.name === "سایز" || attr.name === "طول") &&
                   attr?.value?.id === defaultSize?.id &&
-                  attr?.value?.value === defaultSize?.value
-              )
+                  attr?.value?.value === defaultSize?.value,
+              ),
             );
             setSelectedVariations(sizeVariations[0]);
             if (sizeVariations.length > 0) {
@@ -107,33 +115,38 @@ export default function useFetchData() {
     const sizeData: any = availableSizes.find((v: any) => {
       return v.attributes?.some(
         (attr: any) =>
-          (attr.name === "سایز" || attr.name === "طول") && attr?.value?.id === size
+          (attr.name === "سایز" || attr.name === "طول") &&
+          attr?.value?.id === size,
       );
-    });    
+    });
 
     setSelectedVariations(sizeData);
-    const newSize = sizeData?.attributes?.find((sd: any)=> sd.name === "سایز" || sd.name === "طول")?.value;
+    const newSize = sizeData?.attributes?.find(
+      (sd: any) => sd.name === "سایز" || sd.name === "طول",
+    )?.value;
 
     setSelectedSize(newSize);
 
     const sizeVariations = data?.product?.variations?.filter((v: any) =>
       v.attributes.some(
-        (attr: any) => (attr.name === "سایز" || attr.name === "طول") && attr.value?.value === size?.value?.value
-      )
+        (attr: any) =>
+          (attr.name === "سایز" || attr.name === "طول") &&
+          attr.value?.value === size?.value?.value,
+      ),
     );
 
     if (sizeVariations.length > 0) {
       const defaultColorVariation = sizeVariations.find((v: any) =>
-        v.attributes.some((attr: any) => attr.name === "رنگ")
+        v.attributes.some((attr: any) => attr.name === "رنگ"),
       );
 
       const defaultColor = defaultColorVariation?.attributes.find(
-        (attr: any) => attr.name === "رنگ"
+        (attr: any) => attr.name === "رنگ",
       )?.value;
 
-      setSelectedColor(defaultColor || "");
+      setSelectedColor(defaultColor?.value || "");
       setSelectedColorData({
-        color: defaultColor || "",
+        color: defaultColor?.value || "",
         gallery: sizeVariations[0]?.gallery || [],
         stock: sizeVariations[0]?.stock || 0,
         price: sizeVariations[0]?.price || 0,
@@ -143,33 +156,31 @@ export default function useFetchData() {
 
   const handleColorClick = (color: string) => {
     setSelectedColor(color);
-  
+
     const colorVariations = variationsData?.filter((v: any) =>
       v.attributes.some(
-        (attr: any) =>
-          attr.name === "رنگ" &&
-          attr?.value?.value2 === color
-      )
+        (attr: any) => attr.name === "رنگ" && attr?.value?.value === color,
+      ),
     );
 
     if (colorVariations.length > 0) {
       const selectedVariation = colorVariations[0];
+
       setSelectedVariations(selectedVariation);
-  
+
       setSelectedColorData({
         color,
         gallery: selectedVariation?.gallery || [],
         stock: selectedVariation?.stock || 0,
         price: selectedVariation?.price || 0,
-        color_name: selectedVariation?.attributes.find(
-          (attr: any) => attr.name === "رنگ"
-        )?.value?.value,
+        color_name: color,
       });
-  
+
       const size = selectedVariation.attributes.find(
-        (attr: any) => (attr.name === "سایز" || attr.name === "طول")
+        (attr: any) => attr.name === "سایز" || attr.name === "طول",
       )?.value;
-      if(size){
+
+      if (size) {
         setAvailableSizes(colorVariations);
         setSelectedSize(size);
       }
@@ -179,7 +190,6 @@ export default function useFetchData() {
       setSelectedVariations(null);
     }
   };
-  
 
   return {
     data,
@@ -195,6 +205,6 @@ export default function useFetchData() {
     availableSizes,
     colors,
     selectedVariations,
-    sizeText
+    sizeText,
   };
 }
