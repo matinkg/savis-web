@@ -7,7 +7,7 @@ export default function BannerSkeleton() {
         role="status"
         className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex md:items-center"
       >
-        <div className="relative flex items-center justify-center w-full h-[100vh] bg-gray-200 rounded  dark:bg-gray-300">
+        <div className="relative flex items-center justify-center w-full h-[360px] md:h-[550px] 2xl:h-[650px] 3xl:h-[950px] bg-gray-200 rounded dark:bg-gray-300">
           <svg
             className="absolute top-0 bottom-0 left-0 right-0 m-auto w-10 h-10 text-gray-100 dark:text-gray-200"
             aria-hidden="true"

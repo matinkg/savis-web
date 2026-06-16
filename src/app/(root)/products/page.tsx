@@ -57,7 +57,7 @@ export default function Page() {
 
             <div className="mb-[60px] mt-10 flex flex-row-reverse lg:gap-x-6">
               <div className=" hidden lg:block">
-                <Filter categories={data?.categories} />
+                <Filter categories={data?.categories_list} />
               </div>
               <div className="flex flex-col gap-5 w-full">
                 {data?.products?.data?.length > 0 ? (
