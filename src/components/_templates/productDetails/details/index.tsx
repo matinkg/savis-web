@@ -249,6 +249,8 @@ export default function ProductDataDetails({
     ? rawDiscountText
     : `${Math.round(parsedDiscountNumber).toLocaleString("fa-IR")}%`;
 
+  console.log(colors);
+
   return (
     <>
       <div className="mb-10 grid grid-cols-1 gap-y-6 lg:grid-cols-5 lg:gap-x-10">
@@ -360,25 +362,19 @@ export default function ProductDataDetails({
                   : ""}
               </span>
               {colors && (
-                <div className="flex items-center gap-x-2">
-                  {colors?.map((color: any) => (
+                <div className="flex flex-wrap items-center gap-2">
+                  {colors.map((color: any) => (
                     <button
                       key={color.id}
-                      onClick={() => handleColorClick(color.value2)}
-                      style={{
-                        backgroundColor: color.value2,
-                        width: "30px",
-                        height: "30px",
-                        border:
-                          selectedColor === color.value2
-                            ? "2px solid #ffffff"
-                            : "none",
-                      }}
-                      className="flex items-center justify-center"
+                      onClick={() => handleColorClick(color.value)}
+                      className={`px-4 h-8 border transition-all
+          ${
+            selectedColor === color.value
+              ? "bg-primary text-white border-primary"
+              : "bg-white text-neutral-1000 border-neutral-1000"
+          }`}
                     >
-                      {selectedColor.value2 === color.value2 ? (
-                        <Check className="text-white w-5 h-5" />
-                      ) : null}
+                      {color.value}
                     </button>
                   ))}
                 </div>

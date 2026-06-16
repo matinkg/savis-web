@@ -79,7 +79,7 @@ export default function BasketFactor({
         });
       } else {
         setDiscountMessage({
-          text: "خطا در ارتباط با سرور!",
+          text: data?.error || "خطا در ارتباط با سرور!",
           type: "error",
         });
       }

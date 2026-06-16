@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MultiRangeSlider from "../multiRangeSlider";
 import Button from "@/components/_modules/button";
 import useFilterOperation from "./hook/useFilterOperation";
-import { RotateCcw } from "lucide-react";
+import { ChevronDown, RotateCcw } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function Filter({ categories }: { categories: any }) {
@@ -12,6 +12,7 @@ export default function Filter({ categories }: { categories: any }) {
   const searchParams = useSearchParams();
   const activeCategory = searchParams.get("category");
   const pathname = usePathname();
+  const [openCategory, setOpenCategory] = useState<number | null>(null);
   const {
     setMinPrice,
     setMaxPrice,
@@ -32,6 +33,27 @@ export default function Filter({ categories }: { categories: any }) {
     resetFilters();
     router.replace(pathname);
   };
+
+  const toggleCategory = (id: number) => {
+    setOpenCategory((prev) => (prev === id ? null : id));
+  };
+
+  useEffect(() => {
+    const activeParent = categories?.find((item: any) => {
+      const itemCategory = getCategoryFromSlug(item.slug);
+
+      const hasActiveChild = item.children.some((child: any) => {
+        const childCategory = getCategoryFromSlug(child.slug);
+        return childCategory === activeCategory;
+      });
+
+      return itemCategory === activeCategory || hasActiveChild;
+    });
+
+    if (activeParent) {
+      setOpenCategory(activeParent.id);
+    }
+  }, [activeCategory, categories]);
 
   return (
     <div className="bg-gray-250 px-3 2xl:px-5 flex flex-col">
@@ -97,16 +119,71 @@ export default function Filter({ categories }: { categories: any }) {
         <div className="flex flex-col gap-y-2 h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-secendry scrollbar-track-gray-250">
           {categories?.map((item: any) => {
             const itemCategory = getCategoryFromSlug(item.slug);
-            const isActive = itemCategory === activeCategory;
+            const hasActiveChild = item.children.some((child: any) => {
+              const childCategory = getCategoryFromSlug(child.slug);
+              return childCategory === activeCategory;
+            });
+            const isParentActive =
+              itemCategory === activeCategory || hasActiveChild;
+            const shouldBeOpen = openCategory === item.id;
 
             return (
-              <div
-                key={item?.id}
-                onClick={() => router.push(item.slug)}
-                className={`cursor-pointer flex items-center justify-between text-base font-peyda-400 transition-all duration-300 ${isActive ? "bg-secendry text-white font-bold" : "bg-white/50 text-blue-1050 hover:text-white hover:bg-secendry"}`}
-              >
-                <div className="p-2 flex items-center gap-x-2">
-                  <span>{item?.name}</span>
+              <div key={item.id} className="flex flex-col">
+                <div
+                  className={`flex items-center justify-between ${
+                    isParentActive || shouldBeOpen
+                      ? "bg-secendry text-white font-bold"
+                      : "bg-white/50 text-blue-1050"
+                  } hover:text-white hover:bg-secendry transition-all duration-300`}
+                >
+                  <div
+                    onClick={() => router.push(item.slug)}
+                    className="flex-1 p-2 flex items-center gap-x-2 cursor-pointer"
+                  >
+                    <span>{item.name}</span>
+                  </div>
+
+                  {item.children.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleCategory(item.id);
+                      }}
+                      className="p-2"
+                    >
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform duration-300 ${
+                          shouldBeOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  )}
+                </div>
+
+                <div
+                  className={`overflow-hidden transition-all duration-300 mt-1 ${
+                    shouldBeOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  {item.children.map((child: any) => {
+                    const childCategory = getCategoryFromSlug(child.slug);
+                    const isChildActive = childCategory === activeCategory;
+
+                    return (
+                      <div
+                        key={child.id}
+                        onClick={() => router.push(child.slug)}
+                        className={`p-1.5 ps-3 cursor-pointer transition-all duration-300 my-0.5 ${
+                          isChildActive
+                            ? "bg-white/50 text-secendry"
+                            : "hover:bg-white/50"
+                        }`}
+                      >
+                        {child.name}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             );

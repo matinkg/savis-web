@@ -66,12 +66,12 @@ export default function SwiperSearch({
               <SwiperSlide key={index}>
                 <button
                   onClick={() => onItemClick(item.name)}
-                  className="flex-center h-8 w-full cursor-pointer gap-x-1.5 border border-solid border-white lg:border-black px-3 rounded-md"
+                  className="hover:bg-secendry group transition-all duration-300 flex-center h-8 w-full cursor-pointer gap-x-1.5 border border-solid border-white hover:border-transparent lg:border-black px-3 rounded-md"
                 >
-                  <span className="font-peyda-400 text-xs text-white lg:text-sm lg:text-black">
+                  <span className="font-peyda-400 text-xs text-white group-hover:text-white transition-all duration-300 lg:text-sm lg:text-black">
                     {item?.name}
                   </span>
-                  <ArrowLeftlessLine className="h-[18px] w-[18px] rotate-180 text-white lg:text-slate-1000" />
+                  <ArrowLeftlessLine className="h-[18px] w-[18px] rotate-180 text-white group-hover:text-white transition-all duration-300 lg:text-slate-1000" />
                 </button>
               </SwiperSlide>
             ))}

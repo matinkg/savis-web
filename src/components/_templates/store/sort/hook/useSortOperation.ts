@@ -2,21 +2,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 export default function useSortOperation() {
   const router = useRouter();
-  const searchParams = useSearchParams(); // دریافت پارامترهای موجود در URL
+  const searchParams = useSearchParams();
 
-  const handleFilterChange = (sortBy?: string, sortOrder?: string) => {
-    // ایجاد یک نمونه جدید از URLSearchParams با پارامترهای فعلی
+  const handleFilterChange = (sort: string) => {
     const queryParams = new URLSearchParams(searchParams.toString());
 
-    // حذف پارامترهای قبلی
-    queryParams.delete("sortBy");
-    queryParams.delete("sortOrder");
+    queryParams.set("sort", sort);
 
-    // اضافه کردن پارامترهای جدید
-    if (sortBy) queryParams.set("sortBy", String(sortBy));
-    if (sortOrder) queryParams.set("sortOrder", String(sortOrder));
-
-    // به‌روزرسانی URL با پارامترهای جدید
     router.replace(`?${queryParams.toString()}`);
   };
 

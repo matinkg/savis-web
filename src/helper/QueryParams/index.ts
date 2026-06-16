@@ -4,7 +4,8 @@ const handleQueryParams = (searchParams: any) => {
   const maxPrice = searchParams.get("max_price");
   const isDiscounted = searchParams.get("isDiscounted");
   const isAvailable = searchParams.get("isAvailable");
-  const pageSize = searchParams.get("pageSize"); 
+  const pageSize = searchParams.get("pageSize");
+  const sort = searchParams.get("sort");
 
   // ایجاد یک شیء برای نگه‌داری پارامترها
   const params = {
@@ -14,6 +15,7 @@ const handleQueryParams = (searchParams: any) => {
     isDiscounted: isDiscounted || undefined,
     isAvailable: isAvailable || undefined,
     pageSize: pageSize || undefined,
+    sort: sort || undefined,
   };
 
   // ساختن URLSearchParams فقط با پارامترهایی که مقدار دارند
@@ -39,7 +41,7 @@ const clearAllQueryParams = (router: any, routeUrl: string) => {
 const clearQueryParams = (
   paramsToRemove: any,
   router: any,
-  searchParams: any
+  searchParams: any,
 ) => {
   // کپی از searchParams برای حذف پارامترها
   const query = new URLSearchParams(searchParams.toString());
