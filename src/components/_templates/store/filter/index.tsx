@@ -7,10 +7,17 @@ import useFilterOperation from "./hook/useFilterOperation";
 import { ChevronDown, RotateCcw } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function Filter({ categories }: { categories: any }) {
+export default function Filter({
+  categories,
+  tags,
+}: {
+  categories: any;
+  tags: any;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeCategory = searchParams.get("category");
+  const activeTag = searchParams.get("tag_ids");
   const pathname = usePathname();
   const [openCategory, setOpenCategory] = useState<number | null>(null);
   const {
@@ -36,6 +43,12 @@ export default function Filter({ categories }: { categories: any }) {
 
   const toggleCategory = (id: number) => {
     setOpenCategory((prev) => (prev === id ? null : id));
+  };
+
+  const updateQuery = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(key, value);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   useEffect(() => {
@@ -137,7 +150,14 @@ export default function Filter({ categories }: { categories: any }) {
                   } hover:text-white hover:bg-secendry transition-all duration-300`}
                 >
                   <div
-                    onClick={() => router.push(item.slug)}
+                    onClick={() => {
+                      const newParams = new URLSearchParams(
+                        item.slug.split("?")[1],
+                      );
+                      const category = newParams.get("category");
+
+                      if (category) updateQuery("category", category);
+                    }}
                     className="flex-1 p-2 flex items-center gap-x-2 cursor-pointer"
                   >
                     <span>{item.name}</span>
@@ -185,6 +205,39 @@ export default function Filter({ categories }: { categories: any }) {
                     );
                   })}
                 </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="py-[18px] flex flex-col gap-y-[18px]">
+        <span className="block font-peyda-600 text-sm xl:text-lg text-blue-1050">
+          تگ ها
+        </span>
+        <div className="flex flex-col gap-y-2 h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-secendry scrollbar-track-gray-250">
+          {tags?.map((item: any) => {
+            const isActive = activeTag === String(item.id);
+
+            return (
+              <div
+                key={item.id}
+                onClick={() => {
+                  updateQuery("tag_ids", String(item.id));
+                }}
+                className={`
+          p-2
+          cursor-pointer
+          transition-all
+          duration-300
+          ${
+            isActive
+              ? "bg-secendry text-white font-bold"
+              : "bg-white/50 text-blue-1050 hover:bg-secendry hover:text-white"
+          }
+        `}
+              >
+                {item.name}
               </div>
             );
           })}
