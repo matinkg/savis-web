@@ -1,28 +1,43 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MultiRangeSlider from "../multiRangeSlider";
 import Close from "@/public/icons/close";
 import FilterIcon from "@/public/icons/filter";
 import Button from "@/components/_modules/button";
 import useFilterOperation from "./hook/useFilterOperation";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, ChevronDown } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type MobilefilterMenuProps = {
   categories: any;
+  tags: any;
   setShowFilterMenu: (value: boolean) => void;
   showFilterMenu: boolean;
 };
 
 export default function MobilefilterMenu({
   categories,
+  tags,
   setShowFilterMenu,
   showFilterMenu,
 }: MobilefilterMenuProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const activeTag = searchParams.get("tag_ids");
+  const [openCategory, setOpenCategory] = useState<number | null>(null);
+  const toggleCategory = (id: number) => {
+    setOpenCategory((prev) => (prev === id ? null : id));
+  };
+  const updateQuery = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(key, value);
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
   const activeCategory = searchParams.get("category");
+  const [selectedCategory, setSelectedCategory] = useState(activeCategory);
+  const [selectedTag, setSelectedTag] = useState(activeTag);
   const pathname = usePathname();
   const {
     setMinPrice,
@@ -39,6 +54,30 @@ export default function MobilefilterMenu({
     const params = new URLSearchParams(slug.split("?")[1]);
     return params.get("category");
   };
+
+  useEffect(() => {
+    if (showFilterMenu) {
+      setSelectedCategory(activeCategory);
+      setSelectedTag(activeTag);
+    }
+  }, [showFilterMenu, activeCategory, activeTag]);
+
+  useEffect(() => {
+    const activeParent = categories?.find((item: any) => {
+      const itemCategory = getCategoryFromSlug(item.slug);
+
+      const hasActiveChild = item.children.some((child: any) => {
+        const childCategory = getCategoryFromSlug(child.slug);
+        return childCategory === selectedCategory;
+      });
+
+      return itemCategory === selectedCategory || hasActiveChild;
+    });
+
+    if (activeParent) {
+      setOpenCategory(activeParent.id);
+    }
+  }, [selectedCategory, categories]);
 
   const handleResetAll = () => {
     resetFilters();
@@ -124,26 +163,124 @@ export default function MobilefilterMenu({
 
           <div className="flex flex-col gap-y-[18px] p-4">
             <span className="block font-peyda-600 text-sm text-blue-1050 xl:text-lg">
-              کالکشن ها
+              دسته بندی ها
             </span>
 
             <div className="flex flex-col gap-y-2 h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-secendry scrollbar-track-gray-250">
               {categories?.map((item: any) => {
                 const itemCategory = getCategoryFromSlug(item.slug);
-                const isActive = itemCategory === activeCategory;
+
+                const hasActiveChild = item.children.some((child: any) => {
+                  const childCategory = getCategoryFromSlug(child.slug);
+                  return childCategory === selectedCategory;
+                });
+
+                const isParentActive =
+                  itemCategory === selectedCategory || hasActiveChild;
+
+                const shouldBeOpen = openCategory === item.id;
+
+                return (
+                  <div key={item.id} className="flex flex-col">
+                    <div
+                      className={`flex items-center justify-between ${
+                        isParentActive || shouldBeOpen
+                          ? "bg-secendry text-white font-bold"
+                          : "bg-white/50 text-blue-1050"
+                      } hover:text-white hover:bg-secendry transition-all duration-300`}
+                    >
+                      <div
+                        onClick={() => {
+                          const newParams = new URLSearchParams(
+                            item.slug.split("?")[1],
+                          );
+
+                          const category = newParams.get("category");
+
+                          if (category) {
+                            setSelectedCategory(category);
+                          }
+                        }}
+                        className="flex-1 p-2 flex items-center gap-x-2 cursor-pointer"
+                      >
+                        <span>{item.name}</span>
+                      </div>
+
+                      {item.children.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleCategory(item.id);
+                          }}
+                          className="p-2"
+                        >
+                          <ChevronDown
+                            className={`h-4 w-4 transition-transform duration-300 ${
+                              shouldBeOpen ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
+                      )}
+                    </div>
+
+                    <div
+                      className={`overflow-hidden transition-all duration-300 mt-1 ${
+                        shouldBeOpen
+                          ? "max-h-96 opacity-100"
+                          : "max-h-0 opacity-0"
+                      }`}
+                    >
+                      {item.children.map((child: any) => {
+                        const childCategory = getCategoryFromSlug(child.slug);
+                        const isChildActive =
+                          childCategory === selectedCategory;
+
+                        return (
+                          <div
+                            key={child.id}
+                            onClick={() => {
+                              setSelectedCategory(childCategory);
+                            }}
+                            className={`p-1.5 ps-3 cursor-pointer transition-all duration-300 my-0.5 ${
+                              isChildActive
+                                ? "bg-white/50 text-secendry"
+                                : "hover:bg-white/50"
+                            }`}
+                          >
+                            {child.name}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-y-[18px] p-4">
+            <span className="block font-peyda-600 text-sm text-blue-1050 xl:text-lg">
+              تگ ها
+            </span>
+
+            <div className="flex flex-col gap-y-2 h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-secendry scrollbar-track-gray-250">
+              {tags?.map((item: any) => {
+                const isActive = selectedTag === String(item.id);
 
                 return (
                   <div
-                    key={item?.id}
+                    key={item.id}
                     onClick={() => {
-                      router.push(item.slug);
-                      setShowFilterMenu(false);
+                      setSelectedTag(String(item.id));
                     }}
-                    className={`cursor-pointer flex items-center justify-between text-base font-peyda-400 transition-all duration-300 ${isActive ? "bg-secendry text-white font-bold" : "bg-white/50 text-blue-1050 hover:text-white hover:bg-secendry"}`}
+                    className={`p-2 cursor-pointer transition-all duration-300 ${
+                      isActive
+                        ? "bg-secendry text-white font-bold"
+                        : "bg-white/50 text-blue-1050 hover:bg-secendry hover:text-white"
+                    }`}
                   >
-                    <div className="p-2 flex items-center gap-x-2">
-                      <span>{item?.name}</span>
-                    </div>
+                    {item.name}
                   </div>
                 );
               })}
@@ -162,7 +299,24 @@ export default function MobilefilterMenu({
           <Button
             className="flex-1 bg-secendry py-3 font-peyda-500 text-sm text-white"
             onClick={() => {
+              const params = new URLSearchParams(searchParams.toString());
+
+              if (selectedCategory) {
+                params.set("category", selectedCategory);
+              } else {
+                params.delete("category");
+              }
+
+              if (selectedTag) {
+                params.set("tag_ids", selectedTag);
+              } else {
+                params.delete("tag_ids");
+              }
+
               handleFilterChange();
+
+              router.push(`${pathname}?${params.toString()}`);
+
               setShowFilterMenu(false);
             }}
           >

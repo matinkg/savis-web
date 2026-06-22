@@ -107,7 +107,8 @@ export default function Page() {
 
           {showFilterMenu && (
             <MobilefilterMenu
-              categories={data?.categories}
+              categories={data?.categories_list}
+              tags={data?.tags}
               showFilterMenu={showFilterMenu}
               setShowFilterMenu={setShowFilterMenu}
             />
