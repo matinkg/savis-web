@@ -11,17 +11,29 @@ export default function PrivacyPolicyContent() {
   return (
     <section className="mx-auto mt-10 w-[91.12%] lg:mt-[60px] lg:w-[91.67%] 4xl:w-[85%]">
       <div className="mx-auto grid w-full grid-cols-2 gap-4 lg:w-[73.63%] lg:grid-cols-4 lg:gap-6">
-        {privacy.map((item, index) => (
-          <div
-            key={item?.id}
-            className={`flex flex-col items-center gap-y-6 pb-6 border-b border-solid ${index === 0 ? "border-b-primary  text-primary" : "border-b-blue-1050  text-blue-1050"}`}
-          >
-            <div dangerouslySetInnerHTML={{ __html: item?.img }} />
-            <span className="font-peyda-600 text-sm xl:text-lg 2xl:text-2xl text-center">
-              {item?.title}
-            </span>
-          </div>
-        ))}
+        {privacyData?.map((item: any, index: number) => {
+          const localItem = privacy.find(
+            (p) => p.title.trim() === item?.title?.trim(),
+          );
+
+          return (
+            <div
+              key={item?.id}
+              className={`flex flex-col items-center gap-y-6 pb-6 border-b border-solid ${index === 0 ? "border-b-primary  text-primary" : "border-b-blue-1050  text-blue-1050"}`}
+            >
+              {localItem?.img && (
+                <div
+                  className="w-[50px] h-[50px]"
+                  dangerouslySetInnerHTML={{ __html: localItem.img }}
+                />
+              )}
+
+              <span className="font-peyda-600 text-sm xl:text-lg 2xl:text-2xl text-center">
+                {item?.title}
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       <div className="mb-[80px] mt-[60px] space-y-4 lg:mb-[120px] lg:mt-[80px] lg:space-y-6">
