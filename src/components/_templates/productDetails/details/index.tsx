@@ -320,7 +320,7 @@ export default function ProductDataDetails({
                     <div className="cursor-default rounded-lg bg-secendry px-3 py-2 font-peyda-400 text-[10px] text-white shadow-md ml-1">
                       <span className="leading-4">
                         وزن طلا × (قیمت روز طلا + اجرت) + ۷ % سود + <br />
-                        متعلقات + ۹ % مالیات از سود و اجرت
+                        متعلقات + ۱۰ % مالیات از سود و اجرت
                       </span>
                     </div>
                     <div className="-mb-[1px] h-0 w-0 border-b-[8px] border-l-[12px] border-r-[12px] border-b-secendry border-l-transparent border-r-transparent"></div>
