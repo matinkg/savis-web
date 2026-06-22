@@ -19,9 +19,16 @@ export default function useFetchData() {
   const [colors, setColors] = useState<any>([]);
   const [selectedVariations, setSelectedVariations] = useState<any>(null);
   const [variationsData, setVariationsData] = useState<any>(null);
+  const [availableChains, setAvailableChains] = useState<any[]>([]);
+  const [selectedChain, setSelectedChain] = useState<any>(null);
 
   const params = useParams();
   const { id } = params;
+
+  const getChainAttribute = (variation: any) => {
+    return variation?.attributes?.find((attr: any) => attr.name === "نوع زنجیر")
+      ?.value;
+  };
 
   const fetchDataFromServer = () => {
     setLoading(true);
@@ -68,6 +75,12 @@ export default function useFetchData() {
                 setAvailableSizes(colorVariations);
               }
               setSelectedVariations(defaultSizeVariation);
+              const chain = getChainAttribute(defaultSizeVariation);
+
+              if (chain) {
+                setAvailableChains([chain]);
+                setSelectedChain(chain);
+              }
               setSelectedColorData({
                 color: defaultColor.value,
                 gallery: defaultSizeVariation.gallery || [],
@@ -89,6 +102,12 @@ export default function useFetchData() {
               ),
             );
             setSelectedVariations(sizeVariations[0]);
+            const chain = getChainAttribute(sizeVariations[0]);
+
+            if (chain) {
+              setAvailableChains([chain]);
+              setSelectedChain(chain);
+            }
             if (sizeVariations.length > 0) {
               setSelectedColorData({
                 color: "",
@@ -127,6 +146,30 @@ export default function useFetchData() {
 
     setSelectedSize(newSize);
 
+    const matchedVariations = availableSizes.filter((v: any) =>
+      v.attributes.some(
+        (attr: any) =>
+          (attr.name === "سایز" || attr.name === "طول") &&
+          attr.value?.id === size,
+      ),
+    );
+
+    const chains = matchedVariations
+      .map((v: any) => getChainAttribute(v))
+      .filter(Boolean);
+
+    const uniqueChains = Array.from(
+      new Map(chains.map((item: any) => [item.id, item])).values(),
+    );
+
+    setAvailableChains(uniqueChains);
+
+    if (uniqueChains.length > 0) {
+      setSelectedChain(uniqueChains[0]);
+    } else {
+      setSelectedChain(null);
+    }
+
     const sizeVariations = data?.product?.variations?.filter((v: any) =>
       v.attributes.some(
         (attr: any) =>
@@ -163,11 +206,26 @@ export default function useFetchData() {
       ),
     );
 
+    setAvailableChains([]);
+    setSelectedChain(null);
+
     if (colorVariations.length > 0) {
       const selectedVariation = colorVariations[0];
 
       setSelectedVariations(selectedVariation);
+      const chains = colorVariations
+        .map((v: any) => getChainAttribute(v))
+        .filter(Boolean);
 
+      const uniqueChains = Array.from(
+        new Map(chains.map((item: any) => [item.id, item])).values(),
+      );
+
+      setAvailableChains(uniqueChains);
+
+      if (uniqueChains.length > 0) {
+        setSelectedChain(uniqueChains[0]);
+      }
       setSelectedColorData({
         color,
         gallery: selectedVariation?.gallery || [],
@@ -191,11 +249,27 @@ export default function useFetchData() {
     }
   };
 
+  const handleChainClick = (chainId: number) => {
+    if (!variationsData?.length) return;
+
+    const variation = variationsData.find((v: any) => {
+      const chain = getChainAttribute(v);
+      return chain?.id === chainId;
+    });
+
+    if (!variation) return;
+
+    setSelectedChain(getChainAttribute(variation));
+    setSelectedVariations(variation);
+  };
+
   return {
     data,
     id,
     loading,
-
+    availableChains,
+    selectedChain,
+    handleChainClick,
     handleSizeClick,
     handleColorClick,
     selectedSize,
