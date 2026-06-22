@@ -1,5 +1,3 @@
-import Footer from "@/components/_layout/footer";
-import Header from "@/components/_layout/header";
 import { privacy, privacyContent } from "@/static_data/privacyPolicy";
 import React from "react";
 
