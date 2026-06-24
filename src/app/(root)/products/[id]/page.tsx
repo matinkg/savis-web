@@ -28,6 +28,9 @@ export default function ProductDetails() {
     colors,
     selectedVariations,
     sizeText,
+    availableChains,
+    selectedChain,
+    handleChainClick,
   } = useFetchData();
 
   // -------------------------------------------------------------------------------
@@ -108,6 +111,9 @@ export default function ProductDetails() {
               colors={colors}
               selectedVariations={selectedVariations}
               sizeText={sizeText}
+              availableChains={availableChains}
+              selectedChain={selectedChain}
+              handleChainClick={handleChainClick}
             />
             <ProductDataTab
               productDetails={data}

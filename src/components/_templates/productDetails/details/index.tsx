@@ -35,6 +35,9 @@ export default function ProductDataDetails({
   colors,
   selectedVariations,
   sizeText,
+  availableChains,
+  selectedChain,
+  handleChainClick,
 }: any) {
   const [showModal, setShowModal] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
@@ -249,7 +252,7 @@ export default function ProductDataDetails({
     ? rawDiscountText
     : `${Math.round(parsedDiscountNumber).toLocaleString("fa-IR")}%`;
 
-  console.log(colors);
+  const chains = availableChains || [];
 
   return (
     <>
@@ -423,6 +426,33 @@ export default function ProductDataDetails({
                 );
               })}
             </div>
+
+            {chains.length > 0 && (
+              <div className="my-6">
+                <span className="font-peyda-500 text-lg text-blue-1050">
+                  نوع زنجیر:
+                  {selectedChain?.value ? " " + selectedChain.value : ""}
+                </span>
+
+                <div className="flex gap-2 mt-3 flex-wrap">
+                  {availableChains.map((chain: any) => (
+                    <button
+                      key={chain.id}
+                      onClick={() => handleChainClick(chain.id)}
+                      className={`px-4 h-8 border transition-all
+            ${
+              selectedChain?.id === chain.id
+                ? "bg-primary text-white border-primary"
+                : "bg-white border-neutral-1000"
+            }
+          `}
+                    >
+                      {chain.value}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* ------------------------------------------ */}
             <Packaging
