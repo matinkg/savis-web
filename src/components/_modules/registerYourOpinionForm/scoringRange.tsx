@@ -5,7 +5,7 @@ import StarOutLine from "@/public/icons/starOutLine";
 import { Controller } from "react-hook-form";
 
 function RangeSliderComponents({ control, name }: any) {
-  const [numOfStars, setNumOfStars] = useState<number>(0); 
+  const [numOfStars, setNumOfStars] = useState<number>(1);
   const sliderEl = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -13,11 +13,16 @@ function RangeSliderComponents({ control, name }: any) {
 
     const handleSliderInput = (event: Event) => {
       const tempSliderValue = (event.target as HTMLInputElement).valueAsNumber;
-      const progress =
-        (tempSliderValue / (Number(sliderElNode?.max) || 100)) * 100;
+      const min = Number(sliderElNode?.min) || 20;
+      const max = Number(sliderElNode?.max) || 100;
+      const progress = ((tempSliderValue - min) / (max - min)) * 100;
 
       if (sliderElNode) {
-        sliderElNode.style.background = `linear-gradient(to right, rgba(243, 176, 67, 1) ${progress}%, #fff ${progress}%)`;
+        sliderElNode.style.background = `linear-gradient(
+          to right,
+          rgba(243, 176, 67, 1) ${progress}%,
+          #fff ${progress}%
+        )`;
       }
     };
 
@@ -41,13 +46,13 @@ function RangeSliderComponents({ control, name }: any) {
           <div className="range-slider">
             <input
               type="range"
-              min="0"
+              min="20"
               max="100"
               value={value}
               ref={sliderEl}
               className="range-input"
               id="range4"
-              step="25"
+              step="20"
               onChange={(e) => {
                 const tempSliderValue = Number(e.target.value);
                 onChange(tempSliderValue); // آپدیت مقدار فرم
@@ -64,7 +69,7 @@ function RangeSliderComponents({ control, name }: any) {
                     key={index}
                     className="h-6 w-6 text-yellow-500"
                   />
-                )
+                ),
               )}
             </div>
           </div>

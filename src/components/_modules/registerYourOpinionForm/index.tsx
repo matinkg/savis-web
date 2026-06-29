@@ -9,10 +9,14 @@ export default function RegisterYourOpinionForm({ productId }: any) {
   const { handleRequest, loading, register, handleSubmit, errors, control } =
     useOperation();
 
+  const handleSubmitForm = (data: any) => {
+    handleRequest({ ...data, productId });
+  };
+
   return (
     <form
       className="space-y-5 bg-gray-250 p-4"
-      onSubmit={handleSubmit((data) => handleRequest({ ...data, productId }))}
+      onSubmit={handleSubmit(handleSubmitForm)}
     >
       <div className="space-y-2 border-b border-solid border-b-slate-1000/20 pb-4">
         <h1 className="font-peyda-600 text-base text-blue-1050">
@@ -37,7 +41,9 @@ export default function RegisterYourOpinionForm({ productId }: any) {
                 }),
               }}
               className={`mt-1 h-10 w-full border border-solid bg-white/50 px-3 font-peyda-400 text-xs text-slate-1000 ${
-                errors.full_name?.message ? "border-red-600" : "border-[#D3D8DA]"
+                errors.full_name?.message
+                  ? "border-red-600"
+                  : "border-[#D3D8DA]"
               } `}
             >
               {errors.full_name?.message && (
@@ -102,6 +108,7 @@ export default function RegisterYourOpinionForm({ productId }: any) {
       </div>
       <Button
         disabled={loading}
+        type="submit"
         className={`h-10 w-full font-peyda-400 text-sm text-white lg:text-lg ${
           loading ? "bg-gray-400 cursor-not-allowed" : "bg-secendry"
         }`}

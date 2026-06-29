@@ -1,7 +1,6 @@
 import React from "react";
 import UserComments from "./userComments";
 import RegisterYourOpinionForm from "@/components/_modules/registerYourOpinionForm";
-import Spinner from "@/components/_modules/loading/spinner";
 
 export default function ProductComments({ productDetails }: any) {
   return (
