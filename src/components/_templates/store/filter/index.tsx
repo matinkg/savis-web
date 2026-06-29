@@ -129,85 +129,106 @@ export default function Filter({
         <span className="block font-peyda-600 text-sm xl:text-lg text-blue-1050">
           دسته بندی ها
         </span>
-        <div className="flex flex-col gap-y-2 h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-secendry scrollbar-track-gray-250">
-          {categories?.map((item: any) => {
-            const itemCategory = getCategoryFromSlug(item.slug);
-            const hasActiveChild = item.children.some((child: any) => {
-              const childCategory = getCategoryFromSlug(child.slug);
-              return childCategory === activeCategory;
-            });
-            const isParentActive =
-              itemCategory === activeCategory || hasActiveChild;
-            const shouldBeOpen = openCategory === item.id;
 
-            return (
-              <div key={item.id} className="flex flex-col">
-                <div
-                  className={`flex items-center justify-between ${
-                    isParentActive || shouldBeOpen
-                      ? "bg-secendry text-white font-bold"
-                      : "bg-white/50 text-blue-1050"
-                  } hover:text-white hover:bg-secendry transition-all duration-300`}
-                >
+        <div
+          className={`flex flex-col gap-y-2 ${
+            categories?.length > 0
+              ? "h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-secendry scrollbar-track-gray-250"
+              : ""
+          }`}
+        >
+          {categories?.length > 0 ? (
+            categories.map((item: any) => {
+              const itemCategory = getCategoryFromSlug(item.slug);
+
+              const hasActiveChild = item.children.some((child: any) => {
+                const childCategory = getCategoryFromSlug(child.slug);
+                return childCategory === activeCategory;
+              });
+
+              const isParentActive =
+                itemCategory === activeCategory || hasActiveChild;
+
+              const shouldBeOpen = openCategory === item.id;
+
+              return (
+                <div key={item.id} className="flex flex-col">
                   <div
-                    onClick={() => {
-                      const newParams = new URLSearchParams(
-                        item.slug.split("?")[1],
-                      );
-                      const category = newParams.get("category");
-
-                      if (category) updateQuery("category", category);
-                    }}
-                    className="flex-1 p-2 flex items-center gap-x-2 cursor-pointer"
+                    className={`flex items-center justify-between ${
+                      isParentActive || shouldBeOpen
+                        ? "bg-secendry text-white font-bold"
+                        : "bg-white/50 text-blue-1050"
+                    } hover:text-white hover:bg-secendry transition-all duration-300`}
                   >
-                    <span>{item.name}</span>
+                    <div
+                      onClick={() => {
+                        const newParams = new URLSearchParams(
+                          item.slug.split("?")[1],
+                        );
+
+                        const category = newParams.get("category");
+
+                        if (category) updateQuery("category", category);
+                      }}
+                      className="flex-1 p-2 flex items-center gap-x-2 cursor-pointer"
+                    >
+                      <span>{item.name}</span>
+                    </div>
+
+                    {item.children.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleCategory(item.id);
+                        }}
+                        className="p-2"
+                      >
+                        <ChevronDown
+                          className={`h-4 w-4 transition-transform duration-300 ${
+                            shouldBeOpen ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+                    )}
                   </div>
 
-                  {item.children.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleCategory(item.id);
-                      }}
-                      className="p-2"
-                    >
-                      <ChevronDown
-                        className={`h-4 w-4 transition-transform duration-300 ${
-                          shouldBeOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                  )}
-                </div>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 mt-1 ${
+                      shouldBeOpen
+                        ? "max-h-96 opacity-100"
+                        : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    {item.children.map((child: any) => {
+                      const childCategory = getCategoryFromSlug(child.slug);
+                      const isChildActive = childCategory === activeCategory;
 
-                <div
-                  className={`overflow-hidden transition-all duration-300 mt-1 ${
-                    shouldBeOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                  }`}
-                >
-                  {item.children.map((child: any) => {
-                    const childCategory = getCategoryFromSlug(child.slug);
-                    const isChildActive = childCategory === activeCategory;
-
-                    return (
-                      <div
-                        key={child.id}
-                        onClick={() => router.push(child.slug)}
-                        className={`p-1.5 ps-3 cursor-pointer transition-all duration-300 my-0.5 ${
-                          isChildActive
-                            ? "bg-white/50 text-secendry"
-                            : "hover:bg-white/50"
-                        }`}
-                      >
-                        {child.name}
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div
+                          key={child.id}
+                          onClick={() => router.push(child.slug)}
+                          className={`p-1.5 ps-3 cursor-pointer transition-all duration-300 my-0.5 ${
+                            isChildActive
+                              ? "bg-white/50 text-secendry"
+                              : "hover:bg-white/50"
+                          }`}
+                        >
+                          {child.name}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <div className="flex items-center justify-center rounded-md bg-white/50 py-6">
+              <span className="font-peyda-400 text-sm text-slate-500">
+                دسته‌بندی‌ای یافت نشد
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -215,32 +236,41 @@ export default function Filter({
         <span className="block font-peyda-600 text-sm xl:text-lg text-blue-1050">
           تگ ها
         </span>
-        <div className="flex flex-col gap-y-2 h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-secendry scrollbar-track-gray-250">
-          {tags?.map((item: any) => {
-            const isActive = activeTag === String(item.id);
 
-            return (
-              <div
-                key={item.id}
-                onClick={() => {
-                  updateQuery("tag_ids", String(item.id));
-                }}
-                className={`
-          p-2
-          cursor-pointer
-          transition-all
-          duration-300
-          ${
-            isActive
-              ? "bg-secendry text-white font-bold"
-              : "bg-white/50 text-blue-1050 hover:bg-secendry hover:text-white"
-          }
-        `}
-              >
-                {item.name}
-              </div>
-            );
-          })}
+        <div
+          className={`flex flex-col gap-y-2 ${
+            tags?.length > 0
+              ? "h-52 overflow-y-auto scrollbar-thin scrollbar-thumb-secendry scrollbar-track-gray-250"
+              : "pb-4"
+          }`}
+        >
+          {tags?.length > 0 ? (
+            tags.map((item: any) => {
+              const isActive = activeTag === String(item.id);
+
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => {
+                    updateQuery("tag_ids", String(item.id));
+                  }}
+                  className={`p-2 cursor-pointer transition-all duration-300 ${
+                    isActive
+                      ? "bg-secendry text-white font-bold"
+                      : "bg-white/50 text-blue-1050 hover:bg-secendry hover:text-white"
+                  }`}
+                >
+                  {item.name}
+                </div>
+              );
+            })
+          ) : (
+            <div className="flex items-center justify-center rounded-md bg-white/50 py-6">
+              <span className="font-peyda-400 text-sm text-slate-500">
+                تگی یافت نشد
+              </span>
+            </div>
+          )}
         </div>
       </div>
       <div className="sticky bottom-0 flex items-center gap-x-1 border-t border-[#1E1E1E14] bg-gray-250 mb-2">
