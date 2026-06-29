@@ -87,7 +87,7 @@ export default function Page() {
             />
 
             <div className="mb-[60px] mt-10 flex flex-row-reverse lg:gap-x-6">
-              <div className=" hidden lg:block">
+              <div className="hidden lg:block sticky top-40 self-start">
                 <Filter
                   categories={pageData?.categories_list}
                   tags={pageData?.tags}
