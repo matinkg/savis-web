@@ -259,15 +259,15 @@ export default function ProductDataDetails({
       <div className="mb-10 grid grid-cols-1 gap-y-6 lg:grid-cols-5 lg:gap-x-10">
         <div className="lg:col-span-2 relative">
           {hasDiscount ? (
-            <div className="absolute right-4 top-4 z-20 w-fit bg-red-250 px-3 py-1.5 font-peyda-400 text-xs text-white">
+            <div className="absolute right-4 top-4 z-10 w-fit bg-red-250 px-3 py-1.5 font-peyda-400 text-xs text-white">
               {discountDisplay} تخفیف
             </div>
           ) : isUnavailable ? (
-            <div className="absolute right-4 top-4 z-20 w-fit bg-slate-1000/50 px-3 py-1.5 font-peyda-400 text-xs text-white">
+            <div className="absolute right-4 top-4 z-10 w-fit bg-slate-1000/50 px-3 py-1.5 font-peyda-400 text-xs text-white">
               ناموجود
             </div>
           ) : isPreorder ? (
-            <div className="absolute right-4 top-4 z-20 w-fit bg-yellow-600 px-3 py-1.5 font-peyda-400 text-xs text-white">
+            <div className="absolute right-4 top-4 z-10 w-fit bg-yellow-600 px-3 py-1.5 font-peyda-400 text-xs text-white">
               پیش سفارش
             </div>
           ) : null}

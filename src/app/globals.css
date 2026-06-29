@@ -481,7 +481,7 @@
     @apply h-[85vh];
   }
   .cart_banner_desk {
-    background-image: url("/images/cartBanner1.png");
+    background-image: url("/images/profile-bg.webp");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -489,7 +489,7 @@
     @apply h-[85vh];
   }
   .cart_banner_mobile {
-    background-image: url("/images/cartBanner2.png");
+    background-image: url("/images/profile-bg.webp");
     background-position: left;
     background-repeat: no-repeat;
     background-size: cover;
@@ -499,7 +499,7 @@
   }
 
   .SizeGuide_banner_desk {
-    background-image: url("/images/SizeGuide/SizeGuide1.png");
+    background-image: url("/images/SizeGuide/size-guide-banner.webp");
     background-position: left;
     background-repeat: no-repeat;
     background-size: cover;
@@ -508,7 +508,7 @@
     @apply h-[85vh];
   }
   .SizeGuide_banner_mobile {
-    background-image: url("/images/SizeGuide/SizeGuide2.png");
+    background-image: url("/images/SizeGuide/size-guide-banner.webp");
     background-position: left;
     background-repeat: no-repeat;
     background-size: cover;
@@ -537,7 +537,7 @@
     height: 1px;
     width: 100%;
     right: 0;
-    background-color: #B51818;
+    background-color: #b51818;
 
     @apply -bottom-2 lg:-bottom-5;
   }

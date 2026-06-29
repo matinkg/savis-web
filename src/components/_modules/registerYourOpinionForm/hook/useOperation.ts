@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { request } from "@/configs/HTTPService";
+import { toast } from "sonner";
 export default function useOperation() {
   const [loading, setLoading] = useState(false);
 
@@ -15,8 +16,8 @@ export default function useOperation() {
       full_name: "",
       email: "",
       comment: "",
-      rating: 0,
-      productId: null
+      rating: 20,
+      productId: null,
     },
   });
 
@@ -26,12 +27,18 @@ export default function useOperation() {
       rating: data?.rating / 20,
     };
     setLoading(true);
-    request(`/api/v1/product/addcomment/${data?.productId}`, "POST", ORIGIN_DATA)
+    request(
+      `/api/v1/product/addcomment/${data?.productId}`,
+      "POST",
+      ORIGIN_DATA,
+    )
       .then((res) => {
-        window?.location?.reload();
+        // window?.location?.reload();
       })
       .finally(() => {
         setLoading(false);
+        reset();
+        toast.success("دیدگاه با موفقیت ثبت شد");
       });
   };
 
