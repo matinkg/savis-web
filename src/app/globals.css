@@ -481,7 +481,7 @@
     @apply h-[85vh];
   }
   .cart_banner_desk {
-    background-image: url("/images/profile-bg.webp");
+    background-image: url("/images/cartBanner1.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -489,6 +489,24 @@
     @apply h-[85vh];
   }
   .cart_banner_mobile {
+    background-image: url("/images/cartBanner1.png");
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* aspect-ratio: 3/4; */
+
+    @apply h-[85vh];
+  }
+
+  .profile_banner_desk {
+    background-image: url("/images/profile-bg.webp");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @apply h-[85vh];
+  }
+  .profile_banner_mobile {
     background-image: url("/images/profile-bg.webp");
     background-position: left;
     background-repeat: no-repeat;
