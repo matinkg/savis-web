@@ -25,11 +25,9 @@
     position: sticky;
     position: -webkit-sticky;
     width: auto;
-    height: 900px;
-    top: 100px;
+    top: 150px;
+    align-self: start;
     left: 0;
-
-    margin-bottom: 50px;
   }
 }
 
@@ -333,7 +331,7 @@ textarea {
   cursor: pointer;
 }
 .checkbox2 input:checked ~ .checkmark2 {
-  background-color: #B51818;
+  background-color: #b51818;
 }
 /* custome check box  */
 
