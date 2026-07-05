@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       {/* banner  */}
-      <div className="cart_banner_mobile lg:cart_banner_desk mb-10 flex items-center lg:mb-[60px] mt-20 md:mt-14 h-[360px] md:h-[550px] 2xl:h-[650px] 3xl:h-[950px]"></div>
+      <div className="profile_banner_mobile lg:profile_banner_desk mb-10 flex items-center lg:mb-[60px] mt-20 md:mt-14 h-[360px] md:h-[550px] 2xl:h-[650px] 3xl:h-[950px]"></div>
       {/* banner  */}
 
       <UserPanelLayout>{children}</UserPanelLayout>
