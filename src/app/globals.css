@@ -54,6 +54,12 @@
       local("PeydaWeb-ExtraBold"),
       url("/fonts/peyda/PeydaWeb-ExtraBold.woff") format("woff");
   }
+  @font-face {
+    font-family: "PEYDAFANUM-REGULAR";
+    src:
+      local("PEYDAFANUM-REGULAR"),
+      url("/fonts/peyda/PEYDAFANUM-REGULAR.TTF") format("truetype");
+  }
 
   body {
     @apply !font-peyda-400;

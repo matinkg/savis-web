@@ -37,8 +37,8 @@ export default function GetNumber({
         label="شماره موبایل"
         type="tel"
         name="phone"
-        className="ltrDir h-[48px] border border-solid border-black/10 bg-black/5 px-3 outline-none"
-        labelStyle="font-peyda-400  text-xs lg:text-base mb-4  "
+        className="ltrDir h-[48px] font-peyda-num-400 border border-solid border-black/10 bg-black/5 px-3 outline-none"
+        labelStyle="font-peyda-400 text-xs lg:text-base mb-4  "
         validate={{
           ...register("phone", {
             required: "لطفا فیلد شماره موبایل را پرکنید",
