@@ -51,6 +51,7 @@ module.exports = {
         "peyda-500": "PeydaWeb-Medium",
         "peyda-400": "PeydaWeb-Regular",
         "peyda-300": "PeydaWeb-Light",
+        "peyda-num-400": "PEYDAFANUM-REGULAR",
       },
       screens: {
         "xs": "450px",
