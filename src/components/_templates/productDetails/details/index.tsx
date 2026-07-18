@@ -254,6 +254,8 @@ export default function ProductDataDetails({
 
   const chains = availableChains || [];
 
+  const displayWeight = selectedWeight || productDetails?.product?.weight;
+
   return (
     <>
       <div className="mb-10 grid grid-cols-1 gap-y-6 lg:grid-cols-5 lg:gap-x-10">
@@ -386,8 +388,8 @@ export default function ProductDataDetails({
 
             <div className="mb-4">
               <span className="font-peyda-500 text-lg text-blue-1050 lg:text-xl">
-                {selectedWeight
-                  ? `وزن: ${Number(selectedWeight).toLocaleString("fa")} گرم`
+                {displayWeight
+                  ? `وزن: ${Number(displayWeight).toLocaleString("fa")} گرم`
                   : ""}
               </span>
             </div>
