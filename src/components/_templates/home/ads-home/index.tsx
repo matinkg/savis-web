@@ -55,7 +55,7 @@ export default function HomeAds({ HomeAdsData }: any) {
             <div
               key={`mobile-ads-${index}`}
               className={`${
-                index === 0 || index === 4 ? "col-span-2" : ""
+                index === 0 ? "col-span-2" : ""
               }`}
             >
               <img
