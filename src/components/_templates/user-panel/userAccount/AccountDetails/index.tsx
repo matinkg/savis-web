@@ -17,15 +17,14 @@ export default function AccountDetailsForm() {
     errors,
     loading,
     userInfoLoading,
-    userInfo,
-    fetchUserInfo
+    fetchUserInfo,
   } = useOperation();
-  
+
   // \-------------------------------------------
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     fetchUserInfo();
-  }, []);  
+  }, []);
 
   return (
     <>
@@ -44,7 +43,6 @@ export default function AccountDetailsForm() {
               labelStyle="font-peyda-400 text-sm text-blue-1050"
               isStar={true}
               type="text"
-              value={userInfo?.first_name ?? ""}
               validate={{
                 ...register("first_name", {
                   required: "لطفا فیلد  نام را پرکنید ",
@@ -64,7 +62,6 @@ export default function AccountDetailsForm() {
               label="نام خانوادگی"
               labelStyle="font-peyda-400 text-sm text-blue-1050"
               isStar={true}
-              value={userInfo?.last_name ?? ""}
               type="text"
               validate={{
                 ...register("last_name", {
@@ -86,7 +83,6 @@ export default function AccountDetailsForm() {
             label=" نام نمایشی"
             labelStyle="font-peyda-400 text-sm text-blue-1050"
             isStar={true}
-            value={userInfo?.nickname ?? ""}
             type="text"
             validate={{
               ...register("nickname", {
@@ -107,7 +103,6 @@ export default function AccountDetailsForm() {
               labelStyle="font-peyda-400 text-sm text-blue-1050"
               isStar={true}
               type="text"
-              value={userInfo?.email ?? ""}
               validate={{
                 ...register("email", {
                   required: "لطفا فیلد  ایمیل را پرکنید ",

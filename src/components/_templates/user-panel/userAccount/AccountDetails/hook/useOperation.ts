@@ -1,6 +1,6 @@
 import { request } from "@/configs/HTTPService";
 import { useDataContext } from "@/libs/context/app-data";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -33,11 +33,19 @@ export default function useOperation() {
     register,
     handleSubmit,
     reset,
-
     formState: { errors },
   } = useForm({
     defaultValues: userInfo ? perviousValue : defaultUserValues,
   });
+
+  useEffect(() => {
+    if (userInfo) {
+      reset({
+        ...defaultUserValues,
+        ...userInfo,
+      });
+    }
+  }, [userInfo, reset]);
 
   const handleRequest = async (data: Object) => {
     const ORIGIN_DATA = {
