@@ -31,6 +31,8 @@ export default function ProductDetails() {
     availableChains,
     selectedChain,
     handleChainClick,
+    selectedWeight,
+    handleWeightClick,
   } = useFetchData();
 
   // -------------------------------------------------------------------------------
@@ -114,6 +116,8 @@ export default function ProductDetails() {
               availableChains={availableChains}
               selectedChain={selectedChain}
               handleChainClick={handleChainClick}
+              selectedWeight={selectedWeight}
+              handleWeightClick={handleWeightClick}
             />
             <ProductDataTab
               productDetails={data}

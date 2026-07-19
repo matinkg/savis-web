@@ -16,6 +16,7 @@ export default function useFetchData() {
     selectedColorDataValue,
   );
   const [availableSizes, setAvailableSizes] = useState([]);
+  const [selectedWeight, setSelectedWeight] = useState<string>("");
   const [colors, setColors] = useState<any>([]);
   const [selectedVariations, setSelectedVariations] = useState<any>(null);
   const [variationsData, setVariationsData] = useState<any>(null);
@@ -75,6 +76,7 @@ export default function useFetchData() {
                 setAvailableSizes(colorVariations);
               }
               setSelectedVariations(defaultSizeVariation);
+              setSelectedWeight(defaultSizeVariation.weight);
               const chain = getChainAttribute(defaultSizeVariation);
 
               if (chain) {
@@ -263,6 +265,25 @@ export default function useFetchData() {
     setSelectedVariations(variation);
   };
 
+  const handleWeightClick = (weight: string) => {
+    setSelectedWeight(weight);
+
+    if (!variationsData?.length) return;
+
+    const variation = variationsData.find((v: any) => v.weight === weight);
+
+    if (!variation) return;
+
+    setSelectedVariations(variation);
+
+    setSelectedColorData((prev: any) => ({
+      ...prev,
+      gallery: variation.gallery || [],
+      stock: variation.stock || 0,
+      price: variation.price || 0,
+    }));
+  };
+
   return {
     data,
     id,
@@ -280,5 +301,7 @@ export default function useFetchData() {
     colors,
     selectedVariations,
     sizeText,
+    selectedWeight,
+    handleWeightClick,
   };
 }

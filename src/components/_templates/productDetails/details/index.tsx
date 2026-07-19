@@ -38,15 +38,14 @@ export default function ProductDataDetails({
   availableChains,
   selectedChain,
   handleChainClick,
+  selectedWeight,
+  handleWeightClick,
 }: any) {
   const [showModal, setShowModal] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   const [mediaItems, setMediaItems] = useState<any[]>([]);
   const pathName = usePathname();
   const { dispatch } = useCart();
-  const [selectedWeight, setSelectedWeight] = useState(
-    selectedVariations?.weight,
-  );
 
   const getMediaType = (url: string) => {
     if (!url) return "image";
@@ -105,7 +104,7 @@ export default function ProductDataDetails({
 
     setMediaItems(unique);
 
-    setSelectedWeight(selectedVariations?.weight);
+    handleWeightClick(selectedVariations?.weight);
   }, [
     selectedVariations,
     productDetails?.product?.image,
@@ -256,6 +255,26 @@ export default function ProductDataDetails({
 
   const displayWeight = selectedWeight || productDetails?.product?.weight;
 
+  const weights = Array.from(
+    new Set(
+      (productDetails?.product?.variations || [])
+        .map((v: any) => v.weight)
+        .filter(
+          (weight: any) =>
+            weight !== null &&
+            weight !== undefined &&
+            weight !== "" &&
+            Number(weight) > 0,
+        ),
+    ),
+  );
+
+  const hasWeightSelector = weights.length > 1;
+
+  const availableColors = (colors || []).filter(Boolean);
+
+  const hasColorSelector = availableColors.length >= 1;
+
   return (
     <>
       <div className="mb-10 grid grid-cols-1 gap-y-6 lg:grid-cols-5 lg:gap-x-10">
@@ -360,31 +379,62 @@ export default function ProductDataDetails({
               className="font-peyda-500 text-xs text-slate-1000/50 lg:w-[424px] lg:text-sm"
             ></p>
 
-            <div className="my-6 space-y-2 lg:mb-10 lg:mt-4">
-              <span className="font-peyda-500 text-lg text-blue-1050 lg:text-xl">
-                {selectedColorData?.color_name
-                  ? "رنگ: " + selectedColorData?.color_name
-                  : ""}
-              </span>
-              {colors && (
-                <div className="flex flex-wrap items-center gap-2">
-                  {colors.map((color: any) => (
+            {(selectedColorData?.color_name || hasColorSelector) && (
+              <div className="my-6 space-y-2 lg:mb-4 lg:mt-4">
+                {selectedColorData?.color_name && (
+                  <div className="mb-4">
+                    <span className="font-peyda-500 text-lg text-blue-1050 lg:text-xl">
+                      رنگ: {selectedColorData.color_name}
+                    </span>
+                  </div>
+                )}
+
+                {hasColorSelector && (
+                  <div className="mb-6 lg:mb-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      {availableColors.map((color: any) => (
+                        <button
+                          key={color.id}
+                          onClick={() => handleColorClick(color.value)}
+                          className={`px-4 h-8 border transition-all ${
+                            selectedColor === color.value
+                              ? "bg-primary text-white border-primary"
+                              : "bg-white text-neutral-1000 border-neutral-1000"
+                          }`}
+                        >
+                          {color.value}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {hasWeightSelector && (
+              <div className="flex flex-col gap-2 mb-6 lg:mb-4">
+                <span className="font-peyda-500 text-lg text-blue-1050 lg:text-xl">
+                  وزن:
+                </span>
+
+                <div className="flex gap-2 flex-wrap">
+                  {weights.map((weight: any) => (
                     <button
-                      key={color.id}
-                      onClick={() => handleColorClick(color.value)}
-                      className={`px-4 h-8 border transition-all
-          ${
-            selectedColor === color.value
-              ? "bg-primary text-white border-primary"
-              : "bg-white text-neutral-1000 border-neutral-1000"
-          }`}
+                      key={weight}
+                      onClick={() => handleWeightClick(weight)}
+                      className={`cursor-pointer flex items-center justify-center border px-4 pt-2 pb-1 transition text-sm
+            ${
+              selectedWeight === weight
+                ? "border-primary bg-primary text-white"
+                : "border-gray-300"
+            }`}
                     >
-                      {color.value}
+                      <span>{weight} گرم</span>
                     </button>
                   ))}
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
             <div className="mb-4">
               <span className="font-peyda-500 text-lg text-blue-1050 lg:text-xl">
