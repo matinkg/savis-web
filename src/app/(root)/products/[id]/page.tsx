@@ -10,7 +10,7 @@ import useFetchData from "./hook/useFetchData";
 import { useCart } from "@/libs/context/cart-shopping/CartContext";
 import { CartItem } from "@/libs/context/cart-shopping/interface";
 import { showSwal } from "@/helper/swal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useOperation from "./hook/useOperation";
 import Head from "next/head";
 
@@ -31,6 +31,8 @@ export default function ProductDetails() {
     availableChains,
     selectedChain,
     handleChainClick,
+    selectedWeight,
+    handleWeightClick,
   } = useFetchData();
 
   // -------------------------------------------------------------------------------
@@ -114,6 +116,8 @@ export default function ProductDetails() {
               availableChains={availableChains}
               selectedChain={selectedChain}
               handleChainClick={handleChainClick}
+              selectedWeight={selectedWeight}
+              handleWeightClick={handleWeightClick}
             />
             <ProductDataTab
               productDetails={data}
