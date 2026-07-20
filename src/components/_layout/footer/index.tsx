@@ -35,11 +35,7 @@ export default function Footer() {
             پاسخگوی سریع
           </span>
           <a
-            href={
-              siteSetting?.["support_telegram"]
-                ? `tel:${siteSetting["support_telegram"]}`
-                : "#"
-            }
+            href="https://t.me/nissa_jewellery"
             target="_blank"
             className="my-1 flex items-center justify-between bg-[#EFF5F6] p-3 font-peyda-500 text-lg text-blue-1050 lg:text-xl"
           >
