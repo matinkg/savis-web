@@ -201,14 +201,14 @@ export default function ProductCard({ product }: PropsType) {
           className="cursor-pointer"
           onClick={() => router.push(product?.slug ?? "")}
         >
-          <div className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-md border border-gray-200 bg-white">
+          <div className="relative flex aspect-[3.8/5] w-full items-center justify-center overflow-hidden rounded-md border border-gray-200 bg-white">
             {productImage ? (
               <Image
                 src={productImage}
                 alt={product?.name}
                 fill
                 sizes="(min-width: 768px) 20vw, 45vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                className="object-contain object-top transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
               <ImageIcon
