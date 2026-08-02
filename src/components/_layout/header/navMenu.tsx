@@ -1,7 +1,5 @@
 import Close from "@/public/icons/close";
-import SearchIcon from "@/public/icons/Search";
 import nisaLightLogoImg from "@/lib/assets/images/nisa-light-logo.webp";
-import SearchInput from "@/components/_modules/search";
 import SocialMedia from "@/components/_modules/socialMedia";
 import {
   ExtraSubMenuItem,
@@ -13,6 +11,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { navMenu } from "@/static_data/header/nav";
 import Image from "next/image";
+import MobileSearch from "@/components/_modules/searchComponents/mobile-search";
 
 export default function NavMenu({
   showNavMenu,
@@ -73,10 +72,14 @@ export default function NavMenu({
             />
           </div>
           <div className="flex-center grow">
-            <Image className="w-[70px]" src={nisaLightLogoImg} alt="nisa-light-logo" />
+            <Image
+              className="w-[70px]"
+              src={nisaLightLogoImg}
+              alt="nisa-light-logo"
+            />
           </div>
         </div>
-
+        {/* 
         <SearchInput
           className="h-10 w-full mb-3 border border-solid border-[#DDE4E6B2] bg-transparent font-peyda-400 text-xs text-white lg:mb-10"
           placeholder="جتسجو"
@@ -87,7 +90,9 @@ export default function NavMenu({
           }}
         >
           <SearchIcon className="absolute left-2 top-[10px] h-[18px] w-[18px]" />
-        </SearchInput>
+        </SearchInput> */}
+
+        <MobileSearch onResultClick={() => setShowNavMenu(false)} />
 
         {/* <SearchComponents inMobile={true} /> */}
 
@@ -216,7 +221,10 @@ export default function NavMenu({
           <>
             <div className="mb-6">
               {data?.map((item: any, index: any) => (
-                <div key={index} className="border-b border-solid border-b-white py-3">
+                <div
+                  key={index}
+                  className="border-b border-solid border-b-white py-3"
+                >
                   {item?.children?.length > 0 ? (
                     <div
                       onClick={() => {
