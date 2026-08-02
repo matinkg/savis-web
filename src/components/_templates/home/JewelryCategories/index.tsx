@@ -50,17 +50,14 @@ export default function JewelryCategories({ savisCats }: any) {
             زیورالات نیسا
           </span>
 
-          {/* category */}
           <Swiper
             slidesPerView={8}
             breakpoints={{
               0: {
                 slidesPerView: 4,
-                // spaceBetween: 50,
               },
               425: {
                 slidesPerView: 6,
-                // spaceBetween: 50,
               },
               1024: {
                 slidesPerView: 8,
