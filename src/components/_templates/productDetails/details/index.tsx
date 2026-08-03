@@ -274,7 +274,7 @@ export default function ProductDataDetails({
   const availableColors = (colors || []).filter(Boolean);
 
   const hasColorSelector = availableColors.length >= 1;
-
+  
   return (
     <>
       <div className="mb-10 grid grid-cols-1 gap-y-6 lg:grid-cols-5 lg:gap-x-10">
