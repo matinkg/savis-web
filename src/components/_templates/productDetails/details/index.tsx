@@ -274,7 +274,7 @@ export default function ProductDataDetails({
   const availableColors = (colors || []).filter(Boolean);
 
   const hasColorSelector = availableColors.length >= 1;
-
+  
   return (
     <>
       <div className="mb-10 grid grid-cols-1 gap-y-6 lg:grid-cols-5 lg:gap-x-10">
@@ -338,7 +338,9 @@ export default function ProductDataDetails({
                 </span>
               )}
 
-              <div className="group relative inline-block cursor-pointer ml-4">
+              <div
+                className={`group relative inline-block ms-auto ml-1 -mt-2 cursor-pointer`}
+              >
                 <div className="absolute bottom-1 hidden w-full whitespace-nowrap pr-0.5 group-hover:block calc-price">
                   <div className="flex translate-y-full flex-col-reverse items-center justify-start">
                     <div className="cursor-default rounded-lg bg-secendry px-3 py-2 font-peyda-400 text-[10px] text-white shadow-md ml-1">

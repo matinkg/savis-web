@@ -29,7 +29,7 @@ export default function useSettingOperation() {
   const HomeCategories_baseOnPriceData = data?.HomeCategories_baseOnPriceData || {};
   const giftCardBannerData = data?.giftCardPost || {};
   const customerClubHomeData = data?.customerClubHomeData || {};
-  const savisOffers = data?.savisOffers || {};
+  const savisOffers = data?.savisOffers || [];
   const gifts = data?.gifts || {};
   const instagram = data?.instagram || {};
 

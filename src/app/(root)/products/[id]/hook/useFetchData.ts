@@ -267,17 +267,40 @@ export default function useFetchData() {
 
   const handleWeightClick = (weight: string) => {
     setSelectedWeight(weight);
-
+  
     if (!variationsData?.length) return;
-
+  
     const variation = variationsData.find((v: any) => v.weight === weight);
-
+  
     if (!variation) return;
-
+  
     setSelectedVariations(variation);
 
+    const size = variation.attributes?.find(
+      (attr: any) => attr.name === "سایز" || attr.name === "طول",
+    )?.value;
+  
+    if (size) {
+      setSelectedSize(size);
+    }
+    const color = variation.attributes?.find(
+      (attr: any) => attr.name === "رنگ",
+    )?.value;
+  
+    if (color) {
+      setSelectedColor(color.value);
+    }
+
+    const chain = getChainAttribute(variation);
+  
+    if (chain) {
+      setSelectedChain(chain);
+    }
+  
     setSelectedColorData((prev: any) => ({
       ...prev,
+      color: color?.value || prev.color,
+      color_name: color?.value || prev.color_name,
       gallery: variation.gallery || [],
       stock: variation.stock || 0,
       price: variation.price || 0,
